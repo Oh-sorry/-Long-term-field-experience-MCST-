@@ -16,10 +16,12 @@
 package egovframework.example.sample.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.SampleVO;
@@ -133,13 +135,6 @@ public class SampleDAO extends EgovAbstractDAO {
 	}
 	//update test
 	public void updateTest(SampleDefaultVO searchVO) throws Exception{
-		System.out.println("********UPDATE DAO**********");
-		System.out.println("제목 : " +  searchVO.getTitle());
-		System.out.println("작성자 : " + searchVO.getWriter());
-		System.out.println("내용 : " + searchVO.getContent());
-		System.out.println("아이디 : " + searchVO.getIdx());
-		System.out.println("날짜 : " + searchVO.getRegDate());
-
 		update("sampleDAO.updateTest", searchVO);
 	}
 	//delete test
@@ -147,4 +142,17 @@ public class SampleDAO extends EgovAbstractDAO {
 		delete("sampleDAO.deleteTest", searchVO);
 	}
 
+	/** 첩부 파일 **/
+	//첨부파일 업로드
+	public void insertFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
+		insert("sampleDAO.insertFile", file);
+	}
+	//첨부파일 조회
+	
+	//첨부파일 다운로드
+	
+	//첨부파일 수정
+	
+	//첨부파일 삭제
+	
 }

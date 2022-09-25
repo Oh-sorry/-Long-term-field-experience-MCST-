@@ -15,7 +15,14 @@
  */
 package egovframework.example.sample.web;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import egovframework.example.sample.service.EgovSampleService;
 import egovframework.example.sample.service.SampleDefaultVO;
@@ -25,7 +32,10 @@ import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -216,6 +226,8 @@ public class EgovSampleController {
 	}
 	
 	/** ver.2 testList **/
+	
+	
 	@RequestMapping(value="/testList.do")
 	public String testList(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
 		
@@ -253,10 +265,12 @@ public class EgovSampleController {
 		model.addAttribute("content", testListDetail.get(0).getContent());
 		model.addAttribute("idx", testListDetail.get(0).getIdx());
 		model.addAttribute("regDate", testListDetail.get(0).getRegDate());
+		model.addAttribute("code", testListDetail.get(0).getCode());
+		model.addAttribute("fileName", testListDetail.get(0).getFileName());
 
 		return "sample/testListDetail";
 	}
-	
+
 	//등록 페이지 
 	@RequestMapping(value="/testListInsert.do")
 	public String testListInsert(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
@@ -266,11 +280,36 @@ public class EgovSampleController {
 	
 	//글 등록
 	@RequestMapping(value="/insertTest.do")
-	public String insertTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
-		sampleService.insertTest(searchVO);
+	public String insertTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file) throws Exception {
+		sampleService.insertTest(searchVO, file);
+		  //파일 업로드 
+		String uploadPath = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file";
+		String boardIDX = String.valueOf(searchVO.getCode());
+		
+		for(MultipartFile multipartFile : file) {
+			String orgFileName = multipartFile.getOriginalFilename();
+			String orgFileExtension = orgFileName.substring(orgFileName.lastIndexOf("."));
+			String saveFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
+			Long saveFileSize = multipartFile.getSize();
+			
+			System.out.println("================== file start ==================");
+			System.out.println("파일 이름: " + orgFileName);
+			System.out.println("파일 실제 이름: " + saveFileName);
+			System.out.println("파일 크기: " + saveFileSize);
+			System.out.println("content type: " + multipartFile.getContentType());
+			System.out.println("================== file   end ==================");
+			
+			File target = new File(uploadPath, saveFileName);
+			try {
+				multipartFile.transferTo(target);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			Map<String, String> param = new HashMap<String, String>();
+		}
 		return "redirect:testList.do";
 	}
-	
+
 	//수정 페이지
 	@GetMapping(value="/testListUpdate.do")
 	public String testListUpdate(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
@@ -281,6 +320,7 @@ public class EgovSampleController {
 		model.addAttribute("writer", testListUpdate.get(0).getWriter());
 		model.addAttribute("content", testListUpdate.get(0).getContent());
 		model.addAttribute("idx", testListUpdate.get(0).getIdx());
+		model.addAttribute("code", testListUpdate.get(0).getCode());
 		model.addAttribute("regDate", testListUpdate.get(0).getRegDate());
 		return "sample/testListUpdate";
 	}
@@ -288,30 +328,45 @@ public class EgovSampleController {
 	//글 수정
 	@PostMapping(value="/updateTest.do")
 	public String updateTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
-		System.out.println("********UPDATE TEST**********");
-		System.out.println("제목 : " +  searchVO.getTitle());
-		System.out.println("작성자 : " + searchVO.getWriter());
-		System.out.println("내용 : " + searchVO.getContent());
-		System.out.println("아이디 : " + searchVO.getIdx());
-		System.out.println("날짜 : " + searchVO.getRegDate());
-
-		//테스트
-		// List<SampleDefaultVO> testListUpdate=sampleService.testListUpdate(searchVO);
-
+		/*
+		 * String fileName=null; MultipartFile uploadFile = searchVO.getUploadFile(); if
+		 * (!uploadFile.isEmpty()) { String originalFileName =
+		 * uploadFile.getOriginalFilename(); String ext =
+		 * FilenameUtils.getExtension(originalFileName); //확장자 구하기 UUID uuid =
+		 * UUID.randomUUID(); //UUID 구하기 fileName=uuid+"."+ext;
+		 * uploadFile.transferTo(new
+		 * File("C:\\Users\\aug2322\\eclipse-workspace\\board_project\\filesave\\" +
+		 * fileName)); searchVO.setFileName(fileName); } else {
+		 * sampleService.updateTest(searchVO); return "redirect:testListDetail.do?code="
+		 * + searchVO.getCode(); } sampleService.updateTest(searchVO); return
+		 * "redirect:testListDetail.do?code=" + searchVO.getCode();
+		 */
 		
-		sampleService.updateTest(searchVO);
-		
-		return "redirect:/testList.do";
-		
+		  System.out.println("********UPDATE TEST**********");
+		  System.out.println("제목 : " + searchVO.getTitle());
+		  System.out.println("작성자 : " + searchVO.getWriter());
+		  System.out.println("내용 : " + searchVO.getContent());
+		  System.out.println("아이디 : " + searchVO.getIdx()); 
+		  System.out.println("code" + searchVO.getCode()); 
+		  System.out.println("날짜 : " + searchVO.getRegDate());
+		  
+		  sampleService.updateTest(searchVO);
+		  
+		  return "redirect:/testList.do";
+		 	
 	}
 
 	//글 삭제
 	@RequestMapping(value="/deleteTest.do")
 	public String deleteTest(SampleVO sampleVO, @ModelAttribute("searchVO") SampleDefaultVO searchVO) throws Exception {
 		System.out.println("********DELETE TEST**********");
-		System.out.println("삭제 제목 : " +  searchVO.getTitle());
 		
 		sampleService.deleteTest(searchVO);
 		return "forward:/testList.do";
+	}
+	//파일 insert
+	@RequestMapping(value="/insertFile.do")
+	public void insertFile(SampleDefaultVO searchVO, MultipartFile[] file) {
+		
 	}
 }

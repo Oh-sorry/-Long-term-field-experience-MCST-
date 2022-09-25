@@ -25,21 +25,23 @@
 		document.listForm.submit();
 	}
 </script>
+<script type="text/javaScript" language="javascript" defer="defer">
+        /* 글 목록 화면 function */
+        function fn_egov_selectList() {
+        	document.listForm.action = "<c:url value='/testList.do'/>";
+           	document.listForm.submit();
+        }
 
-
+    </script>
 <body style="text-align: center; margin:0 auto; display: inline; padding-top: 100px;">
 	<!-- nav bar -->
 	<nav class="navbar" style="background-color: #d6e6f5;">
 		<div class="container-fluid">
 			<a class="navbar-brand" style = "bold">Main Board</a>
-			<form class="d-flex" role="search">
-				<input class="form-control me-2" type="search" placeholder="Search"
-					aria-label="Search">
-				<button class="btn btn-outline-success" type="submit">Search</button>
-			</form>
+			
 		</div>
 	</nav>
-
+	
 	<form:form commandName="searchVO" id="listForm" name="listForm" method="post">
 		<div id="table" margin="auto">
 			<br><br>
@@ -59,7 +61,7 @@
 				<c:forEach var="result" items="${resultList}" varStatus="status">
 					<tr>
 						<td align="center" class="listtd"><c:out value="${result.rnum}"/>&nbsp;</td>
-						<td align="center" class="listtd"><a href="testListDetail.do?title=<c:out value="${result.title}"/>"><c:out value="${result.title}"/>&nbsp;</a></td>
+						<td align="center" class="listtd"><a href="testListDetail.do?code=<c:out value="${result.code}"/>"><c:out value="${result.title}"/>&nbsp;</a></td>
 						<td align="center" class="listtd"><c:out value="${result.writer}"/>&nbsp;</td>
 						<td align="center" class="listtd"><c:out value="${result.regDate}"/>&nbsp;</td>
 					</tr>
@@ -69,6 +71,23 @@
 			<br>
 			<a href="testListInsert.do" type="button" class="btn btn-sm btn-primary"style="float: right">글쓰기</a>
 			
+		</div>
+		<!-- searching -->
+		<div id="search">
+			<label for="searchCondition" style="visibility: hidden;">
+			<spring:message code="search.choose" /></label>
+			<form:select path="searchCondition" cssClass="use">
+				<form:option value="writer" label="Name" />
+				<form:option value="idx" label="ID" />
+				<form:option value="title" label="TITLE" />
+			</form:select>
+
+			<label for="searchKeyword" style="visibility: hidden; display: none;">
+			<spring:message code="search.keyword" /></label>
+			<form:input path="searchKeyword" cssClass="txt" />
+			<span> 
+			<a href="javascript:fn_egov_selectList();" class="btn btn-outline btn-primary"><spring:message code="button.search" /></a>
+			</span>
 		</div>
 		<!-- paging -->
 		<div id="paging">

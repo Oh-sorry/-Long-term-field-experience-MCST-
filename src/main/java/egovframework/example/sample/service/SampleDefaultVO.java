@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Class Name : SampleDefaultVO.java
@@ -35,6 +36,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * @see
  *
  *  Copyright (C) by MOPAS All right reserved.
+ */
+/**
+ * @author aug2322
+ *
  */
 public class SampleDefaultVO implements Serializable {
 
@@ -148,16 +153,6 @@ public class SampleDefaultVO implements Serializable {
 	}
 	// code
 	
-	  private int code;
-
-	public int getCode() {
-		return code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
-	}
-
 	/** ver.2 testList **/
 	private String idx;
 	private String writer;
@@ -204,5 +199,81 @@ public class SampleDefaultVO implements Serializable {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
+	private int code;
 
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	/* file upload */
+	private int idx2;
+	private int boardIdx;
+	private String orgFileName;
+	private String saveFileName;
+	private int fileSize;
+
+	public int getIdx2() {
+		return idx2;
+	}
+
+	public void setIdx2(int idx2) {
+		this.idx2 = idx2;
+	}
+
+	public int getBoardIdx() {
+		return boardIdx;
+	}
+
+	public void setBoardIdx(int boardIdx) {
+		this.boardIdx = boardIdx;
+	}
+
+	public String getOrgFileName() {
+		return orgFileName;
+	}
+
+	public void setOrgFileName(String orgFileName) {
+		this.orgFileName = orgFileName;
+	}
+
+	public String getSaveFileName() {
+		return saveFileName;
+	}
+
+	public void setSaveFileName(String saveFileName) {
+		this.saveFileName = saveFileName;
+	}
+
+	public int getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(int fileSize) {
+		this.fileSize = fileSize;
+	}
+	
+	// file upload test
+	private String fileName;
+	private MultipartFile uploadFile;
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+	
 }

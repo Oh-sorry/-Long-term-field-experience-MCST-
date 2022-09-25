@@ -29,7 +29,7 @@
 	$(document).ready(function() {
 		$('#summernote').summernote({
 			placeholder : 'content',
-			minHeight : 370,
+			minHeight : 300,
 			maxHeight : null,
 			focus : true,
 			lang : 'ko-KR',
@@ -56,7 +56,7 @@
 	<article>
 		<div class="container" role="main">
 			<form name="form" id="form" role="form" method="post"
-				action="updateTest.do" encType="multipart/form-data">
+				action="updateTest.do"<%--  encType="multipart/form-data" --%>>
 				<div class="form-group">
 					<label for="title">제목</label> <input type="text"
 						class="form-control" name="title" id="title"
@@ -76,8 +76,17 @@
 						class="form-control" name="idx" id="idx" value='<c:out value="${idx}"></c:out>' readonly>
 				</div>
 				<div class="form-group">
+					<label for="fileUpload">첨부 파일</label>
+					<a href = "fileDownload.do?fileName=${fileName}">
+					<input type="text" id="filename" value='<c:out value="${fileName}"></c:out>' name="fileName" class="form-control" readonly="readonly"/></a>
+				</div>
+				<div class="form-group">
 					<label for="idx">등록일</label> <input type="text"
 						class="form-control" name="regDate" id="regDate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${regDate}"/>' readonly>
+				</div>
+				<div class="form-group">
+					<label for="code"></label> <input type="hidden"
+						class="form-control" name="code" id="code" value='<c:out value="${code}"></c:out>'>
 				</div>
 			</form>
 			<div style="float: right">
@@ -92,7 +101,7 @@
 
 <script type="text/javascript">
    	$("#btnUpdate").click(function previous() {
-		$(location).attr('href', 'testListUpdate.do?title=${title}');
+		$(location).attr('href', 'testListUpdate.do?code=${code}');
 	 
 	});
     $("#btnList").click(function previous() {

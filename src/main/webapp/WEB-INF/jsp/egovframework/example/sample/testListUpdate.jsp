@@ -29,11 +29,10 @@
 	$(document).ready(function() {
 		$('#summernote').summernote({
 			placeholder : 'content',
-			minHeight : 370,
+			minHeight : 300,
 			maxHeight : null,
 			focus : true,
-			lang : 'ko-KR',
-			toolbar : null
+			lang : 'ko-KR'
 		});
 	});
 </script>
@@ -54,7 +53,7 @@
 	
 	<article>
 		<div class="container" role="main">
-			<form name="form" id="form" role="form" method="post" encType="application/www-form-urlencoded">
+			<form name="form" id="form" role="form" method="post" <%-- encType="application/www-form-urlencoded" --%>>
 				<div class="form-group">
 					<label for="title">제목</label> <input type="text"
 						class="form-control" name="title" id="title"
@@ -70,12 +69,20 @@
 					<textarea id="summernote" rows="5" name="content" id="content">${content}</textarea>
 				</div>
 				<div class="form-group">
-					<label for="idx"></label> <input type="hidden"
-						class="form-control" name="idx" id="idx" value="${idx}">
+					<label for="idx"></label> <input type="text"
+						class="form-control" name="idx" id="idx" value="${idx}" readonly>
+				</div>
+				<div class="form-group" id="file-list">
+					<label for="fileUpload">파일 첨부</label><br>
+					<input type="file" class="form-control" name="uploadFile" size ="70">
 				</div>
 				<div class="form-group">
 					<label for="idx">등록일</label> <input type="text"
 						class="form-control" name="regDate" id="regDate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${regDate}"/>' readonly>
+				</div>
+				<div class="form-group">
+					<label for="code"></label> <input type="hidden"
+						class="form-control" name="code" id="code" value="${code}">
 				</div>
 			</form>
 			<div style="float: right">
@@ -93,7 +100,7 @@
 	$(document).ready(function() {
 	   	$("#btnUpdate").click(function() {
 			document.form.action = "${pageContext.request.contextPath}/updateTest.do"
-			alert(document.form.action)
+			alert("수정하시겠습니까?")
 			
 			document.form.submit();
 		}); 
@@ -104,7 +111,7 @@
     });
 	$("#btnDelete").click(function previous() {
 		alert("( TITLE : ${title} )인 글을 삭제합니다.")
-	    $(location).attr('href', 'deleteTest.do?title=${title}');
+	    $(location).attr('href', 'deleteTest.do?code=${code}');
 	 
 	});
 });

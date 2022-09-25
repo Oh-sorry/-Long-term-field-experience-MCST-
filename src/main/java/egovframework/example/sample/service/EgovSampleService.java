@@ -17,6 +17,11 @@ package egovframework.example.sample.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * @Class Name : EgovSampleService.java
  * @Description : EgovSampleService Class
@@ -97,7 +102,7 @@ public interface EgovSampleService {
 	String testListInsert(SampleDefaultVO searchVO) throws Exception;
 	
 	//insert
-	void insertTest(SampleDefaultVO searchVO) throws Exception;
+	void insertTest(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception;
 	
 	//update page
 	List<SampleDefaultVO> testListUpdate(SampleDefaultVO searchVO) throws Exception;

@@ -15,7 +15,9 @@
  */
 package egovframework.example.sample.service.impl;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import egovframework.example.sample.service.EgovSampleService;
 import egovframework.example.sample.service.SampleDefaultVO;
@@ -24,11 +26,16 @@ import egovframework.example.sample.service.SampleVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 
+import javax.activation.CommandMap;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  * @Class Name : EgovSampleServiceImpl.java
@@ -165,8 +172,12 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 
 	// insert test
 	@Override
-	public void insertTest(SampleDefaultVO searchVO) throws Exception {
+	public void insertTest(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
 		sampleDAO.insertTest(searchVO);
+		/*
+		 * List<Map<String, Object>> fileList = for(int i=0; i<fileList.size(); i++) {
+		 * sampleDAO.insertFile(fileList.get(i)); }
+		 */
 	}
 
 	// update page 
@@ -177,15 +188,6 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	// update
 	@Override
 	public void updateTest(SampleDefaultVO searchVO) throws Exception {
-		
-		System.out.println("***********BoardserviceImpl updateTest Start*********");
-		System.out.println("제목 : " +  searchVO.getTitle());
-		System.out.println("작성자 : " + searchVO.getWriter());
-		System.out.println("내용 : " + searchVO.getContent());
-		System.out.println("아이디 : " + searchVO.getIdx());
-		System.out.println("날짜 : " + searchVO.getRegDate());
-
-
 		sampleDAO.updateTest(searchVO);
 	}
 	
