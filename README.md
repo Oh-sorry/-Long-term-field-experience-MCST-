@@ -10,8 +10,8 @@ JDK : ver. 1.18.0_202
 Server : Tomcat v8.5
 
 FUNCTION
-1. 게시판 CRUD 기능
-2. Paging
-3. Search
-4. 파일 첨부
++ 게시판 CRUD 기능
++ Paging
++ Search
++ 파일 첨부
 + 다중 파일 첨부
