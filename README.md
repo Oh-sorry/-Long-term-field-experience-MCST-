@@ -1,20 +1,17 @@
-# Project Lombok
+# Project Board ( 게시판 작성 )
 
-Project Lombok is a java library that automatically plugs into your editor and build tools, spicing up your java.
-Never write another getter or equals method again, with one annotation your class has a fully featured builder, automate your logging variables, and much more.
+LongTermFieldExperience at MCST (22.09 ~ 22.12)
 
-See [LICENSE] for the Project Lombok license.
+PERIOD : 22.09.01 ~ 22.09.23
 
-Looking for professional support of Project Lombok? Lombok is now part of a [tidelift subscription]!
+SPRING : eGovFrameWorkDev ver.3.10.0 (eclipse)
+DB : Cubrid 11.0
+JDK : ver. 1.18.0_202
+Server : Tomcat v8.5
 
-For a list of all authors, see the [AUTHORS] file. 
-
-For complete project information, see [projectlombok.org]
-
-You can review our security policy via [SECURITY.md]
-
-[LICENSE]: https://github.com/projectlombok/lombok/blob/master/LICENSE
-[AUTHORS]: https://github.com/projectlombok/lombok/blob/master/AUTHORS
-[SECURITY.md]: https://github.com/projectlombok/lombok/blob/master/SECURITY.md
-[projectlombok.org]: https://projectlombok.org/
-[tidelift subscription]: https://tidelift.com/subscription/pkg/maven-org-projectlombok-lombok?utm_source=maven-org-projectlombok-lombok&utm_medium=referral&campaign=website
+FUNCTION
+1. 게시판 CRUD 기능
+2. Paging
+3. Search
+4. 파일 첨부
++ 다중 파일 첨부
