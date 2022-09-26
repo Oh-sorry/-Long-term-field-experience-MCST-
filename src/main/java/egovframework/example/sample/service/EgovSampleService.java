@@ -16,6 +16,7 @@
 package egovframework.example.sample.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -102,7 +103,7 @@ public interface EgovSampleService {
 	String testListInsert(SampleDefaultVO searchVO) throws Exception;
 	
 	//insert
-	void insertTest(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception;
+	void insertTest(SampleDefaultVO searchVO) throws Exception;
 	
 	//update page
 	List<SampleDefaultVO> testListUpdate(SampleDefaultVO searchVO) throws Exception;
@@ -112,4 +113,8 @@ public interface EgovSampleService {
 	
 	//delete
 	void deleteTest(SampleDefaultVO searchVO) throws Exception;
+
+	//insert file
+	void insertFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception;
+
 }

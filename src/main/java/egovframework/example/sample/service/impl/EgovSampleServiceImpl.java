@@ -172,7 +172,7 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 
 	// insert test
 	@Override
-	public void insertTest(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
+	public void insertTest(SampleDefaultVO searchVO) throws Exception {
 		sampleDAO.insertTest(searchVO);
 		/*
 		 * List<Map<String, Object>> fileList = for(int i=0; i<fileList.size(); i++) {
@@ -197,5 +197,16 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 		sampleDAO.deleteTest(searchVO);
 	}
 	
+	//insert file
+	@Override
+	public void insertFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
+		sampleDAO.insertFile(searchVO, file);
+		/*
+		 * System.out.println("================   service ====================");
+		 * System.out.println("VO 파일 이름: " + searchVO.getOrgFileName());
+		 * System.out.println("VO 파일 실제 이름: " + searchVO.getSaveFileName());
+		 * System.out.println("===============================================");
+		 */
+	}
 
 }

@@ -145,7 +145,13 @@ public class SampleDAO extends EgovAbstractDAO {
 	/** 첩부 파일 **/
 	//첨부파일 업로드
 	public void insertFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
-		insert("sampleDAO.insertFile", file);
+		insert("sampleDAO.insertFile", searchVO);
+		/*
+		 * System.out.println("================  DAO     ====================");
+		 * System.out.println("VO 파일 이름: " + searchVO.getOrgFileName());
+		 * System.out.println("VO 파일 실제 이름: " + searchVO.getSaveFileName());
+		 * System.out.println("===============================================");
+		 */
 	}
 	//첨부파일 조회
 	

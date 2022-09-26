@@ -57,9 +57,9 @@
 
 	<article>
 		<div class="container" role="main">
-			<!-- <h2>board Form</h2> -->
-			<form name="form" id="form" role="form" method="post"
-				action="${pageContext.request.contextPath}/insertTest.do" encType = "multipart/form-data">
+			<!-- 게시글 입력-->
+			<form target="1" name="form" id="form" role="form" method="post"
+				action="${pageContext.request.contextPath}/insertTest.do"<%--  encType = "multipart/form-data" --%>>
 				<div class="form-group">
 					<label for="title">제목</label> <input type="text"
 						class="form-control" name="title" id="title"
@@ -79,6 +79,10 @@
 					<label for="idx">아이디</label> <input type="text"
 						class="form-control" name="idx" id="idx" placeholder="ID를 입력해주세요">
 				</div>
+				
+			</form>
+			<!-- 파일 입력 -->
+			<form target="2" name="form1" id="form1" action="${pageContext.request.contextPath}/insertFile.do" method="post" encType = "multipart/form-data">
 				<div class="form-group" id="file-list">
 					<label for="fileUpload">파일 첨부</label>
 					<!-- <input type="file" class="form-control" name="uploadFile" size ="70" multiple> -->
@@ -88,53 +92,19 @@
 					</div>
 				</div>
 			</form>
-			<%-- <form action="${pageContext.request.contextPath}/insertFile.do" method="post" encType = "multipart/form-data">
-				
-			</form> --%>
 			<div style="float: right">
-				<button type="button" class="btn btn-sm btn-primary" id="btnSave">저장</button>
+				<input type="button" class="btn btn-sm btn-primary" onclick="TwoSubmit()" value="저장">
+				<!-- <button type="button" class="btn btn-sm btn-primary" id="btnSave">저장</button> -->
 				<button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button>
+				
 			</div>
 		</div>
 	</article>
 
 </body>
-<!-- <script>
-	function go() {
-		
-		if (document.getElementById("title").value == "") {
-			alert("제목을 입력하세요");
-			document.form.title.focus();
-			exit;
-		}
-		else if (document.getElementById("writer").value == "") {
-			alert("작성자를 입력하세요");
-			document.form.writer.focus();
-			exit;
-		}
-		else if (document.getElementById("content").value == "") {
-			alert("내용을 입력하세요");
-			document.form.content.focus();
-			exit;
-		}
-		else (document.getElementById("idx").value == "") {
-			alert("아이디를 입력하세요");
-			document.form.idx.focus();
-			exit;
-		}
-		document.submit();
-	}
-</script> -->
+
 <script type="text/javascript">
-	    //글쓰기
-	$(document).on('click', '#btnSave', function(e) {
-		$("#form").submit();
-	});
-	//이전 클릭 시 testList로 이동
-	$("#btnList").click(function previous() {
-		$(location).attr('href', 'testList.do');
-	});
-	
+	/* 다중 파일 */
 	$(document).ready(function() {
 		$("a[name='file-delete']").on("click", function(e) {
 			e.preventDefault();
@@ -152,6 +122,23 @@
 	function deleteFile(obj) {
 		obj.parent().remove();
 	}
+    //글쓰기
+	/* $(document).on('click', '#btnSave', function(e) {
+		$("#form").submit();
+
+	});
+	$(document).on('click', '#btnSave', function(e) {
+		$("#form1").submit();
+
+	}); */
+	function TwoSubmit() {
+		document.form1.submit();
+		document.form.submit();
+	}
+	//이전 클릭 시 testList로 이동
+	$("#btnList").click(function previous() {
+		$(location).attr('href', 'testList.do');
+	});
 </script>
 
 </html>

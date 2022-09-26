@@ -134,15 +134,6 @@
 		INSERT INTO test
 		( title, writer, content, idx, regDate, fileName, code)
 		VALUES ( #title#, #writer#, #content#, #idx#, NOW(), #fileName#, serial_code.NEXT_VALUE)
-		<!-- INSERT INTO tb_file (
-			idx2,
-			boardIdx,
-			orgFileName,
-			saveFileName,
-			fileSize
-		) values (
-			serial_idx2.NEXT_VALUE, #idx#, #orgFileName#, #saveFileName#, #fileSize#
-		) -->
 	</insert>
 	<!-- update page -->
 	<select id="sampleDAO.testListUpdate" parameterClass="searchVO" resultClass="searchVO">
@@ -163,20 +154,20 @@
 		WHERE code=#code#
 	</delete>
 	
-<!-- //
-	첨부파일 업로드
-	<insert id ="sampleDAO.insertFile" parameterType="hashMap">
+
+	<!-- 첨부파일 업로드 -->
+	<insert id ="sampleDAO.insertFile" parameterClass="searchVO">
 		INSERT INTO tb_file (
-			idx2,
+			fileId,
 			boardIdx,
 			orgFileName,
 			saveFileName,
 			fileSize
 		) values (
-			serial_idx2.NEXT_VALUE, #boardIdx#, #orgFileName#, #saveFileName#, #fileSize#
+			serial_fileId.NEXT_VALUE, serial_code.CURRENT_VALUE, #orgFileName#, #saveFileName#, #fileSize#
 		)
 	</insert>
-
+<!-- //
 	첨부파일 조회
 	<select id="fileList" parameterType="int" resultType = "hashMap">
 		SELECT boardIdx, orgFileName, round(fileSize/1024, 1) AS fileSize

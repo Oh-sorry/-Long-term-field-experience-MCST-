@@ -210,18 +210,19 @@ public class SampleDefaultVO implements Serializable {
 	}
 
 	/* file upload */
-	private int idx2;
+	private int fileId;
 	private int boardIdx;
 	private String orgFileName;
 	private String saveFileName;
-	private int fileSize;
+	private Long fileSize;
 
-	public int getIdx2() {
-		return idx2;
+
+	public int getFileId() {
+		return fileId;
 	}
 
-	public void setIdx2(int idx2) {
-		this.idx2 = idx2;
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
 	}
 
 	public int getBoardIdx() {
@@ -248,14 +249,14 @@ public class SampleDefaultVO implements Serializable {
 		this.saveFileName = saveFileName;
 	}
 
-	public int getFileSize() {
+	public Long getFileSize() {
 		return fileSize;
 	}
 
-	public void setFileSize(int fileSize) {
+	public void setFileSize(Long fileSize) {
 		this.fileSize = fileSize;
 	}
-	
+
 	// file upload test
 	private String fileName;
 	private MultipartFile uploadFile;
