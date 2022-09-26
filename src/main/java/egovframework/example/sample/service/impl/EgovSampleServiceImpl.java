@@ -174,10 +174,6 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	@Override
 	public void insertTest(SampleDefaultVO searchVO) throws Exception {
 		sampleDAO.insertTest(searchVO);
-		/*
-		 * List<Map<String, Object>> fileList = for(int i=0; i<fileList.size(); i++) {
-		 * sampleDAO.insertFile(fileList.get(i)); }
-		 */
 	}
 
 	// update page 

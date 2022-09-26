@@ -59,7 +59,7 @@
 		<div class="container" role="main">
 			<!-- 게시글 입력-->
 			<form target="1" name="form" id="form" role="form" method="post"
-				action="${pageContext.request.contextPath}/insertTest.do"<%--  encType = "multipart/form-data" --%>>
+				action="${pageContext.request.contextPath}/insertTest.do" encType = "multipart/form-data">
 				<div class="form-group">
 					<label for="title">제목</label> <input type="text"
 						class="form-control" name="title" id="title"
@@ -79,10 +79,7 @@
 					<label for="idx">아이디</label> <input type="text"
 						class="form-control" name="idx" id="idx" placeholder="ID를 입력해주세요">
 				</div>
-				
-			</form>
-			<!-- 파일 입력 -->
-			<form target="2" name="form1" id="form1" action="${pageContext.request.contextPath}/insertFile.do" method="post" encType = "multipart/form-data">
+				<!-- 파일 입력 -->
 				<div class="form-group" id="file-list">
 					<label for="fileUpload">파일 첨부</label>
 					<!-- <input type="file" class="form-control" name="uploadFile" size ="70" multiple> -->
@@ -93,9 +90,10 @@
 				</div>
 			</form>
 			<div style="float: right">
-				<input type="button" class="btn btn-sm btn-primary" onclick="TwoSubmit()" value="저장">
-				<!-- <button type="button" class="btn btn-sm btn-primary" id="btnSave">저장</button> -->
+				<!-- <input type="button" class="btn btn-sm btn-primary" onclick="TwoSubmit()" value="저장"> -->
+				<button type="button" class="btn btn-sm btn-primary" id="btnSave">저장</button>
 				<button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button>
+				
 				
 			</div>
 		</div>
@@ -122,23 +120,21 @@
 	function deleteFile(obj) {
 		obj.parent().remove();
 	}
-    //글쓰기
-	/* $(document).on('click', '#btnSave', function(e) {
-		$("#form").submit();
-
-	});
-	$(document).on('click', '#btnSave', function(e) {
-		$("#form1").submit();
-
-	}); */
-	function TwoSubmit() {
-		document.form1.submit();
-		document.form.submit();
-	}
 	//이전 클릭 시 testList로 이동
 	$("#btnList").click(function previous() {
 		$(location).attr('href', 'testList.do');
 	});
+
+    //글쓰기
+	$(document).on('click', '#btnSave', function(e) {
+		$("#form").submit();
+
+	});
+	/* 
+	$(document).on('click', '#btnSave', function(e) {
+		$("#form1").submit();
+
+	}); */
 </script>
 
 </html>

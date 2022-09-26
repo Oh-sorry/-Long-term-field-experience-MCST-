@@ -289,13 +289,49 @@ public class EgovSampleController {
 
 	// 글 등록
 	@RequestMapping(value = "/insertTest.do")
-	public String insertTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
+	public String insertTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file) throws Exception {
 		sampleService.insertTest(searchVO);
 		System.out.println("================== board start ==================");
 		System.out.println("제목 : " + searchVO.getTitle());
 		System.out.println("작성자 : " + searchVO.getWriter());
 		System.out.println("아이디 : " + searchVO.getIdx());
 		System.out.println("================== board   end ==================");
+
+		// 파일 업로드
+		String uploadPath = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file";
+		String boardIDX = String.valueOf(searchVO.getCode());
+
+		for (MultipartFile multipartFile : file) {
+			String orgFileName = multipartFile.getOriginalFilename();
+			String orgFileExtension = orgFileName.substring(orgFileName.lastIndexOf("."));
+			String saveFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
+			Long saveFileSize = multipartFile.getSize();
+
+			System.out.println("================== file start ==================");
+			System.out.println("파일 이름: " + orgFileName);
+			System.out.println("파일 실제 이름: " + saveFileName);
+			System.out.println("파일 크기: " + saveFileSize);
+			System.out.println("content type: " + multipartFile.getContentType());
+			System.out.println("================== file   end ==================");
+
+			File target = new File(uploadPath, saveFileName);
+			try {
+				multipartFile.transferTo(target);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			searchVO.setOrgFileName(orgFileName);
+			searchVO.setSaveFileName(saveFileName);
+			searchVO.setFileSize(saveFileSize);
+
+			/*
+			 * System.out.println("VO 파일 이름: " + searchVO.getOrgFileName());
+			 * System.out.println("VO 파일 실제 이름: " + searchVO.getSaveFileName());
+			 * System.out.println("===============================================");
+			 */
+			sampleService.insertFile(searchVO, file);
+		}
 		return "redirect:testList.do";
 	}
 
@@ -357,41 +393,8 @@ public class EgovSampleController {
 
 	// 파일 insert
 	@RequestMapping(value = "/insertFile.do")
-	public void insertFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
-		// 파일 업로드
-		String uploadPath = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file";
-		String boardIDX = String.valueOf(searchVO.getCode());
+	public String insertFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
 
-		for (MultipartFile multipartFile : file) {
-			String orgFileName = multipartFile.getOriginalFilename();
-			String orgFileExtension = orgFileName.substring(orgFileName.lastIndexOf("."));
-			String saveFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
-			Long saveFileSize = multipartFile.getSize();
-
-			System.out.println("================== file start ==================");
-			System.out.println("파일 이름: " + orgFileName);
-			System.out.println("파일 실제 이름: " + saveFileName);
-			System.out.println("파일 크기: " + saveFileSize);
-			System.out.println("content type: " + multipartFile.getContentType());
-			System.out.println("================== file   end ==================");
-
-			File target = new File(uploadPath, saveFileName);
-			try {
-				multipartFile.transferTo(target);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-
-			searchVO.setOrgFileName(orgFileName);
-			searchVO.setSaveFileName(saveFileName);
-			searchVO.setFileSize(saveFileSize);
-			
-			/*
-			 * System.out.println("VO 파일 이름: " + searchVO.getOrgFileName());
-			 * System.out.println("VO 파일 실제 이름: " + searchVO.getSaveFileName());
-			 * System.out.println("===============================================");
-			 */
-			sampleService.insertFile(searchVO, file);
-		}
+		return "forward:/testList.do";
 	}
 }
