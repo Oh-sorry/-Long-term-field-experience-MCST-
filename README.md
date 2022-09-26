@@ -2,7 +2,7 @@
 
 LongTermFieldExperience at MCST (22.09 ~ 22.12)
 
-PERIOD : 22.09.01 ~ 22.09.23
+DEV PERIOD : 22.09.01 ~ 22.09.23
 
 SPRING : eGovFrameWorkDev ver.3.10.0 (eclipse)
 DB : Cubrid 11.0
