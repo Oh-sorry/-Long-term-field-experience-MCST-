@@ -130,11 +130,6 @@
 		$("#form").submit();
 
 	});
-	/* 
-	$(document).on('click', '#btnSave', function(e) {
-		$("#form1").submit();
-
-	}); */
 </script>
 
 </html>

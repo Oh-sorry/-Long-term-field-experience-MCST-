@@ -154,6 +154,13 @@ public class SampleDAO extends EgovAbstractDAO {
 		 */
 	}
 	//첨부파일 조회
+	public List<SampleDefaultVO> fileList(SampleDefaultVO searchVO) throws Exception {
+		return (List<SampleDefaultVO>) list("sampleDAO.fileList", searchVO);
+	}
+
+	public void updateFile(SampleDefaultVO searchVO, MultipartFile[] file) {
+		update("sampleDAO.updateFile", searchVO);
+	}
 	
 	//첨부파일 다운로드
 	

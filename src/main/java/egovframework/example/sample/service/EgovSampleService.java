@@ -117,4 +117,10 @@ public interface EgovSampleService {
 	//insert file
 	void insertFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception;
 
+	//detail file
+	List<SampleDefaultVO> fileList(SampleDefaultVO searchVO) throws Exception;
+
+	//update file
+	void updateFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception;
+
 }

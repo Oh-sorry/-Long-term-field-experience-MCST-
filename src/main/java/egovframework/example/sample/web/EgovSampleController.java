@@ -262,7 +262,7 @@ public class EgovSampleController {
 
 	// 상세 페이지
 	@RequestMapping(value = "/testListDetail.do")
-	public String testListDetail(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model)
+	public String testListDetail(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file)
 			throws Exception {
 		// 목록 조회
 		List<SampleDefaultVO> testListDetail = sampleService.testListDetail(searchVO);
@@ -274,8 +274,13 @@ public class EgovSampleController {
 		model.addAttribute("idx", testListDetail.get(0).getIdx());
 		model.addAttribute("regDate", testListDetail.get(0).getRegDate());
 		model.addAttribute("code", testListDetail.get(0).getCode());
-		model.addAttribute("fileName", testListDetail.get(0).getFileName());
-
+		
+		// 파일 조회
+		List<SampleDefaultVO> fileList = sampleService.fileList(searchVO);
+		
+		model.addAttribute("orgFileName", fileList.get(0).getOrgFileName());
+		System.out.println("파일 이름 : " + fileList.get(0).getOrgFileName());
+		
 		return "sample/testListDetail";
 	}
 
@@ -348,26 +353,17 @@ public class EgovSampleController {
 		model.addAttribute("idx", testListUpdate.get(0).getIdx());
 		model.addAttribute("code", testListUpdate.get(0).getCode());
 		model.addAttribute("regDate", testListUpdate.get(0).getRegDate());
+		
+		// 파일 조회
+		List<SampleDefaultVO> fileList = sampleService.fileList(searchVO);
+		model.addAttribute("orgFileName", fileList.get(0).getOrgFileName());
+		
 		return "sample/testListUpdate";
 	}
 
 	// 글 수정
 	@PostMapping(value = "/updateTest.do")
-	public String updateTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
-		/*
-		 * String fileName=null; MultipartFile uploadFile = searchVO.getUploadFile(); if
-		 * (!uploadFile.isEmpty()) { String originalFileName =
-		 * uploadFile.getOriginalFilename(); String ext =
-		 * FilenameUtils.getExtension(originalFileName); //확장자 구하기 UUID uuid =
-		 * UUID.randomUUID(); //UUID 구하기 fileName=uuid+"."+ext;
-		 * uploadFile.transferTo(new
-		 * File("C:\\Users\\aug2322\\eclipse-workspace\\board_project\\filesave\\" +
-		 * fileName)); searchVO.setFileName(fileName); } else {
-		 * sampleService.updateTest(searchVO); return "redirect:testListDetail.do?code="
-		 * + searchVO.getCode(); } sampleService.updateTest(searchVO); return
-		 * "redirect:testListDetail.do?code=" + searchVO.getCode();
-		 */
-
+	public String updateTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file) throws Exception {
 		System.out.println("********UPDATE TEST**********");
 		System.out.println("제목 : " + searchVO.getTitle());
 		System.out.println("작성자 : " + searchVO.getWriter());
@@ -375,9 +371,10 @@ public class EgovSampleController {
 		System.out.println("아이디 : " + searchVO.getIdx());
 		System.out.println("code" + searchVO.getCode());
 		System.out.println("날짜 : " + searchVO.getRegDate());
-
+		System.out.println("********UPDATE END **********");
+		
 		sampleService.updateTest(searchVO);
-
+		
 		return "redirect:/testList.do";
 
 	}
@@ -391,10 +388,5 @@ public class EgovSampleController {
 		return "forward:/testList.do";
 	}
 
-	// 파일 insert
-	@RequestMapping(value = "/insertFile.do")
-	public String insertFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
 
-		return "forward:/testList.do";
-	}
 }

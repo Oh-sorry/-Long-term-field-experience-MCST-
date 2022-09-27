@@ -167,26 +167,29 @@
 			serial_fileId.NEXT_VALUE, serial_code.CURRENT_VALUE, #orgFileName#, #saveFileName#, #fileSize#
 		)
 	</insert>
-<!-- //
-	첨부파일 조회
-	<select id="fileList" parameterType="int" resultType = "hashMap">
-		SELECT boardIdx, orgFileName, round(fileSize/1024, 1) AS fileSize
+
+	<!-- 첨부파일 조회 -->
+	<select id="sampleDAO.fileList" parameterClass="searchVO" resultClass="searchVO">
+		SELECT orgFileName, fileId, boardIdx, saveFileName, round(fileSize/1024, 1) AS fileSize
 		FROM tb_file
-		WHERE idx2 = #idx2#
-		ORDER BY boardIdx ASC
+		WHERE boardIdx = #code#
 	</select>
+	
+	
+	<!-- 첨부파일 수정 -->
+	<update id ="updateFile" parameterClass="searchVO">
+		UPDATE tb_file
+		SET fileId=serial_fileId.CURRENT_VALUE, orgFileName=#orgFileName#, saveFileName=#saveFileName#, fileSize=#fileSize#
+		WHERE boardIdx=#code#
+	</update>
+	<!-- //
 	첨부파일 다운로드
 	<select id="downloadFile" parameterType="hashMap" resultType="hashMap">
 		SELECT saveFileName, orgFileName
 		FROM tb_file
 		WHERE idx2=#idx2#
 	</select>
-	첨부파일 수정
-	<update id ="updateFile" parameterType="hashMap" resultType="hashMap">
-		UPDATE tb_file
-		SET boardIdx=#boardIdx#, orgFileName=#orgFileName#, saveFileName=#saveFileName#, fileSize=#fileSize#
-		WHERE idx2=#idx2#
-	</update>
+	
 	첨부파일 삭제
 	<delete id="deleteFile" parameterType="int">
 		DELETE FROM tb_file

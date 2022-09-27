@@ -204,5 +204,17 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 		 * System.out.println("===============================================");
 		 */
 	}
+	
+	//detail file
+	@Override
+	public List<SampleDefaultVO> fileList(SampleDefaultVO searchVO) throws Exception {
+		return sampleDAO.fileList(searchVO);
+	}
+	
+	//update file
+	@Override
+	public void updateFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
+		sampleDAO.updateFile(searchVO, file);
+	}
 
 }

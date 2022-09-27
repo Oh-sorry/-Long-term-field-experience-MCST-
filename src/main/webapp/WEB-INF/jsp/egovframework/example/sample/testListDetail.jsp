@@ -6,6 +6,7 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,7 +57,7 @@
 	<article>
 		<div class="container" role="main">
 			<form name="form" id="form" role="form" method="post"
-				action="updateTest.do"<%--  encType="multipart/form-data" --%>>
+				action="updateTest.do" encType="multipart/form-data">
 				<div class="form-group">
 					<label for="title">제목</label> <input type="text"
 						class="form-control" name="title" id="title"
@@ -76,9 +77,9 @@
 						class="form-control" name="idx" id="idx" value='<c:out value="${idx}"></c:out>' readonly>
 				</div>
 				<div class="form-group">
-					<label for="fileUpload">첨부 파일</label>
-					<a href = "fileDownload.do?fileName=${fileName}">
-					<input type="text" id="filename" value='<c:out value="${fileName}"></c:out>' name="fileName" class="form-control" readonly="readonly"/></a>
+					<label for="orgFileName">첨부 파일</label>
+					<a href = "fileDownload.do?orgFileName=${orgFileName}">
+					<input type="text" name="orgFileName" id="orgFileName" value='<c:out value="${orgFileName}"></c:out>' class="form-control" readonly="readonly"/></a>
 				</div>
 				<div class="form-group">
 					<label for="idx">등록일</label> <input type="text"

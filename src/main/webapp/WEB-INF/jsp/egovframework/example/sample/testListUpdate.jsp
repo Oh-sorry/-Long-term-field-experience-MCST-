@@ -72,9 +72,15 @@
 					<label for="idx"></label> <input type="text"
 						class="form-control" name="idx" id="idx" value="${idx}" readonly>
 				</div>
+				<!-- 파일 입력 -->
 				<div class="form-group" id="file-list">
-					<label for="fileUpload">파일 첨부</label><br>
-					<input type="file" class="form-control" name="uploadFile" size ="70">
+					<label for="fileUpload">파일 첨부</label>
+					<!-- <input type="file" class="form-control" name="uploadFile" size ="70" multiple> -->
+					<a href="#this" onclick="addFile()" class='btn btn-sm btn-primary' style="float: right">파일 추가</a> 
+					<div class="form-group" id="file-list">
+						<input type="text" name="orgFileName" id="orgFileName" value='<c:out value="${orgFileName}"></c:out>' class="form-control" readonly="readonly"/>
+						<a href='#this' class='btn btn-sm btn-danger' name='file-delete'>삭제</a> 
+					</div>
 				</div>
 				<div class="form-group">
 					<label for="idx">등록일</label> <input type="text"
@@ -97,24 +103,48 @@
 </body>
 
 <script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+						$("#btnUpdate")
+								.click(
+										function() {
+											document.form.action = "${pageContext.request.contextPath}/updateTest.do"
+											alert("수정하시겠습니까?")
+
+											document.form.submit();
+										});
+
+						$("#btnList").click(function previous() {
+							$(location).attr('href', 'testList.do');
+
+						});
+						$("#btnDelete").click(
+								function previous() {
+									alert("( TITLE : ${title} )인 글을 삭제합니다.")
+									$(location).attr('href',
+											'deleteTest.do?code=${code}');
+
+								});
+					});
+	/* 다중 파일 */
 	$(document).ready(function() {
-	   	$("#btnUpdate").click(function() {
-			document.form.action = "${pageContext.request.contextPath}/updateTest.do"
-			alert("수정하시겠습니까?")
-			
-			document.form.submit();
-		}); 
-		
-    $("#btnList").click(function previous() {
-        $(location).attr('href', 'testList.do');
- 
-    });
-	$("#btnDelete").click(function previous() {
-		alert("( TITLE : ${title} )인 글을 삭제합니다.")
-	    $(location).attr('href', 'deleteTest.do?code=${code}');
-	 
-	});
-});
+		$("a[name='file-delete']").on("click", function(e) {
+			e.preventDefault();
+			deleteFile($(this));
+		});
+	})
+	function addFile() {
+		var str = "<div class='form-group' id='file-list'><input type='file' name = 'file'><a href='#this' class='btn btn-sm btn-danger' name = 'file-delete'>삭제</a></div>";
+		$("#file-list").append(str);
+		$("a[name='file-delete']").on("click", function(e) {
+			e.preventDefault();
+			deleteFile($(this));
+		});
+	}
+	function deleteFile(obj) {
+		obj.parent().remove();
+	}
 </script>
 
 </html>
