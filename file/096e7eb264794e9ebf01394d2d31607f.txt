@@ -1,0 +1,7 @@
+파일 삭제
+
+	//파일 삭제
+	@RequestMapping(value="/deleteFile.do")
+	public void deleteFile(SampleDefaultVO sampleVO) throws Exception {
+		sampleService.deleteFile(sampleVO);
+	}

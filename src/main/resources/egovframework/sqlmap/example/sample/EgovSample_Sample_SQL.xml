@@ -174,26 +174,25 @@
 		FROM tb_file
 		WHERE boardIdx = #code#
 	</select>
-	
-	
-	<!-- 첨부파일 수정 -->
-	<update id ="updateFile" parameterClass="searchVO">
+<!-- 	
+	첨부파일 수정
+	<update id ="sampleDAO.updateFile" parameterClass="searchVO">
 		UPDATE tb_file
 		SET fileId=serial_fileId.CURRENT_VALUE, orgFileName=#orgFileName#, saveFileName=#saveFileName#, fileSize=#fileSize#
-		WHERE boardIdx=#code#
+		WHERE boardIdx = #code#
 	</update>
-	<!-- //
-	첨부파일 다운로드
-	<select id="downloadFile" parameterType="hashMap" resultType="hashMap">
+	 -->
+	<!-- 첨부파일 다운로드 -->
+	<select id="sampleDAO.downloadFile" parameterClass="searchVO" resultClass="searchVO">
 		SELECT saveFileName, orgFileName
 		FROM tb_file
-		WHERE idx2=#idx2#
+		WHERE fileId = #fileId#
 	</select>
-	
-	첨부파일 삭제
-	<delete id="deleteFile" parameterType="int">
+
+	<!-- 첨부파일 삭제 -->
+	<delete id="sampleDAO.deleteFile" parameterClass="int">
 		DELETE FROM tb_file
-		where idx2=#idx2#
+		where fileId=#fileId#
 	</delete>
-//	 -->
+
 </sqlMap>

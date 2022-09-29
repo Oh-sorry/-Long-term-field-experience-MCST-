@@ -83,10 +83,13 @@
 				<div class="form-group" id="file-list">
 					<label for="fileUpload">파일 첨부</label>
 					<!-- <input type="file" class="form-control" name="uploadFile" size ="70" multiple> -->
-					<a href="#this" onclick="addFile()" class='btn btn-sm btn-primary' style="float: right">파일 추가</a> 
+					<a href="#this" onclick="addFile()" class='btn btn-sm btn-primary' style="float: right">파일 추가</a>
+					<c:if test="${orgFileName ne null}">
+					
 					<div class="form-group" id="file-list">
 						<input type="file" name="file"><a href='#this' class='btn btn-sm btn-danger' name='file-delete'>삭제</a> 
 					</div>
+					</c:if>
 				</div>
 			</form>
 			<div style="float: right">

@@ -29,7 +29,7 @@
 	$(document).ready(function() {
 		$('#summernote').summernote({
 			placeholder : 'content',
-			minHeight : 300,
+			minHeight : 200,
 			maxHeight : null,
 			focus : true,
 			lang : 'ko-KR'
@@ -53,7 +53,7 @@
 	
 	<article>
 		<div class="container" role="main">
-			<form name="form" id="form" role="form" method="post" <%-- encType="application/www-form-urlencoded" --%>>
+			<form name="form" id="form" role="form" method="post" encType="multipart/form-data">
 				<div class="form-group">
 					<label for="title">제목</label> <input type="text"
 						class="form-control" name="title" id="title"
@@ -75,76 +75,84 @@
 				<!-- 파일 입력 -->
 				<div class="form-group" id="file-list">
 					<label for="fileUpload">파일 첨부</label>
-					<!-- <input type="file" class="form-control" name="uploadFile" size ="70" multiple> -->
 					<a href="#this" onclick="addFile()" class='btn btn-sm btn-primary' style="float: right">파일 추가</a> 
-					<div class="form-group" id="file-list">
-						<input type="text" name="orgFileName" id="orgFileName" value='<c:out value="${orgFileName}"></c:out>' class="form-control" readonly="readonly"/>
-						<a href='#this' class='btn btn-sm btn-danger' name='file-delete'>삭제</a> 
-					</div>
+					<c:forEach items="${orgFileName}" var="result" varStatus="status">
+						
+						<!-- <input type="file" class="form-control" name="uploadFile" size ="70" multiple> -->
+						<div class="form-group" id="file-list">
+							<input type="text" name="orgFileName" id="orgFileName" value='<c:out value="${result.orgFileName}"></c:out>' class="form-control" readonly="readonly"/>
+							<a href='deleteFile.do?fileId=${result.fileId}' class='btn btn-sm btn-danger' id='file-delete' name='file-delete1' style="float: right">삭제</a>
+						</div>
+						
+					</c:forEach>
 				</div>
+				
+				
 				<div class="form-group">
 					<label for="idx">등록일</label> <input type="text"
 						class="form-control" name="regDate" id="regDate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${regDate}"/>' readonly>
 				</div>
 				<div class="form-group">
-					<label for="code"></label> <input type="hidden"
+					<input type="hidden"
 						class="form-control" name="code" id="code" value="${code}">
+					<input type="hidden"
+						class="form-control" name="fileId" id="fileId" value="${fileId}">
 				</div>
-			</form>
-			<div style="float: right">
+				<div style="float: right">
 				<button type="button" class="btn btn-sm btn-warning" id="btnUpdate">수정</button>
 				<button type="button" class="btn btn-sm btn-info" id="btnList">목록</button>
 				<button type="button" class="btn btn-sm btn-danger" id="btnDelete">삭제</button>
 				
 			</div>
+			</form>
+			
+			<br>
 		</div>
 	</article>
 
 </body>
 
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$("#btnUpdate")
-								.click(
-										function() {
-											document.form.action = "${pageContext.request.contextPath}/updateTest.do"
-											alert("수정하시겠습니까?")
-
-											document.form.submit();
-										});
-
-						$("#btnList").click(function previous() {
-							$(location).attr('href', 'testList.do');
-
-						});
-						$("#btnDelete").click(
-								function previous() {
-									alert("( TITLE : ${title} )인 글을 삭제합니다.")
-									$(location).attr('href',
-											'deleteTest.do?code=${code}');
-
-								});
-					});
-	/* 다중 파일 */
+/* 다중 파일 */
+$(document).ready(function() {
+	$("a[name='file-delete']").on("click", function(e) {
+		e.preventDefault();
+		deleteFile($(this));
+	});
+	$("a[id='file-delete']").click(function previous() {
+		alert("선택한 파일을 삭제합니다.")
+		$(location).attr('href', 'deleteFile.do?fileId=${fileId}');
+	});
+})
+function addFile() {
+	var str = "<div class='form-group' id='file-list'><input type='file' name = 'file'><a href='#this' class='btn btn-sm btn-danger' id='file-delete1' name = 'file-delete'>삭제</a></div>";
+	$("#file-list").append(str);
+	$("a[name='file-delete']").on("click", function(e) {
+		e.preventDefault();
+		deleteFile($(this));
+	});
+}
+function deleteFile(obj) {
+	obj.parent().remove();
+}
 	$(document).ready(function() {
-		$("a[name='file-delete']").on("click", function(e) {
-			e.preventDefault();
-			deleteFile($(this));
+		$("#btnUpdate").click(function() {
+			document.form.action = "${pageContext.request.contextPath}/updateTest.do"
+			alert("수정하시겠습니까?")
+			document.form.submit();
 		});
-	})
-	function addFile() {
-		var str = "<div class='form-group' id='file-list'><input type='file' name = 'file'><a href='#this' class='btn btn-sm btn-danger' name = 'file-delete'>삭제</a></div>";
-		$("#file-list").append(str);
-		$("a[name='file-delete']").on("click", function(e) {
-			e.preventDefault();
-			deleteFile($(this));
+
+		$("#btnList").click(function previous() {
+			$(location).attr('href', 'testList.do');
 		});
-	}
-	function deleteFile(obj) {
-		obj.parent().remove();
-	}
+		
+		$("#btnDelete").click(function previous() {
+			alert("( TITLE : ${title} )인 글을 삭제합니다.")
+			$(location).attr('href','deleteTest.do?code=${code}');
+		});
+		
+	});
+	
 </script>
 
 </html>

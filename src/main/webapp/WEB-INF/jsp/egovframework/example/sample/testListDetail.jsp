@@ -76,10 +76,22 @@
 					<label for="idx">아이디</label> <input type="text"
 						class="form-control" name="idx" id="idx" value='<c:out value="${idx}"></c:out>' readonly>
 				</div>
+				
 				<div class="form-group">
 					<label for="orgFileName">첨부 파일</label>
-					<a href = "fileDownload.do?orgFileName=${orgFileName}">
-					<input type="text" name="orgFileName" id="orgFileName" value='<c:out value="${orgFileName}"></c:out>' class="form-control" readonly="readonly"/></a>
+					<c:forEach items="${orgFileName}" var="result" varStatus="status">
+						<%-- <div class="form-group">
+						<label for="orgFileName">첨부 파일</label>
+						<a href = "fileDownload.do?code=${code}">
+						<input type="text" name="orgFileName" id="orgFileName" value='<c:out value="${orgFileName}"></c:out>' class="form-control" readonly="readonly"/></a>
+					</div> --%>
+						<c:if test="${result.saveFileName ne null}">
+						<a href="fileDownload.do?saveFileName=${result.saveFileName}&code=${result.boardIdx}&orgFileName=${result.orgFileName}"> <input type="text"
+							name="orgFileName" id="orgFileName"
+							value='<c:out value="${result.orgFileName}"></c:out>'
+							class="form-control" readonly="readonly" /></a>
+						</c:if>
+					</c:forEach>
 				</div>
 				<div class="form-group">
 					<label for="idx">등록일</label> <input type="text"

@@ -46,67 +46,6 @@ import egovframework.rte.psl.dataaccess.EgovAbstractDAO;
 
 @Repository("sampleDAO")
 public class SampleDAO extends EgovAbstractDAO {
-
-
-	/**
-	 * 글을 등록한다.
-	 * @param vo - 등록할 정보가 담긴 SampleVO
-	 * @return 등록 결과
-	 * @exception Exception
-	 */
-	public String insertSample(SampleVO vo) throws Exception {
-		return (String) insert("sampleDAO.insertSample", vo);
-	}
-
-	/**
-	 * 글을 수정한다.
-	 * @param vo - 수정할 정보가 담긴 SampleVO
-	 * @return void형
-	 * @exception Exception
-	 */
-	public void updateSample(SampleVO vo) throws Exception {
-		update("sampleDAO.updateSample", vo);
-	}
-
-	/**
-	 * 글을 삭제한다.
-	 * @param vo - 삭제할 정보가 담긴 SampleVO
-	 * @return void형
-	 * @exception Exception
-	 */
-	public void deleteSample(SampleVO vo) throws Exception {
-		delete("sampleDAO.deleteSample", vo);
-	}
-
-	/**
-	 * 글을 조회한다.
-	 * @param vo - 조회할 정보가 담긴 SampleVO
-	 * @return 조회한 글
-	 * @exception Exception
-	 */
-	public SampleVO selectSample(SampleVO vo) throws Exception {
-		return (SampleVO) select("sampleDAO.selectSample", vo);
-	}
-
-	/**
-	 * 글 목록을 조회한다.
-	 * @param searchMap - 조회할 정보가 담긴 Map
-	 * @return 글 목록
-	 * @exception Exception
-	 */
-	public List<?> selectSampleList(SampleDefaultVO searchVO) throws Exception {
-		return list("sampleDAO.selectSampleList", searchVO);
-	}
-
-	/**
-	 * 글 총 갯수를 조회한다.
-	 * @param searchMap - 조회할 정보가 담긴 Map
-	 * @return 글 총 갯수
-	 * @exception
-	 */
-	public int selectSampleListTotCnt(SampleDefaultVO searchVO) {
-		return (Integer) select("sampleDAO.selectSampleListTotCnt", searchVO);
-	}
 	
 	/** ver.2 testList **/
 	public List<?> testList(SampleDefaultVO searchVO) throws Exception{
@@ -146,25 +85,32 @@ public class SampleDAO extends EgovAbstractDAO {
 	//첨부파일 업로드
 	public void insertFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
 		insert("sampleDAO.insertFile", searchVO);
+		
 		/*
 		 * System.out.println("================  DAO     ====================");
 		 * System.out.println("VO 파일 이름: " + searchVO.getOrgFileName());
 		 * System.out.println("VO 파일 실제 이름: " + searchVO.getSaveFileName());
 		 * System.out.println("===============================================");
 		 */
+		 
 	}
 	//첨부파일 조회
 	public List<SampleDefaultVO> fileList(SampleDefaultVO searchVO) throws Exception {
 		return (List<SampleDefaultVO>) list("sampleDAO.fileList", searchVO);
 	}
-
-	public void updateFile(SampleDefaultVO searchVO, MultipartFile[] file) {
+	//첨부파일 수정
+	public void updateFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
 		update("sampleDAO.updateFile", searchVO);
 	}
+	//첨부파일 삭제
+	public void deleteFile(Integer fileId) throws Exception {
+		delete("sampleDAO.deleteFile", fileId);
+		/*
+		 * System.out.println("====================deleteDAO=================");
+		 * System.out.println("DAO 삭제파일번호 :" + fileId);
+		 */
+	}
 	
-	//첨부파일 다운로드
-	
-	//첨부파일 수정
 	
 	//첨부파일 삭제
 	

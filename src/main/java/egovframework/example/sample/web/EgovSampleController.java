@@ -16,6 +16,8 @@
 package egovframework.example.sample.web;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -81,158 +83,6 @@ public class EgovSampleController {
 	@Resource(name = "beanValidator")
 	protected DefaultBeanValidator beanValidator;
 
-	/**
-	 * 글 목록을 조회한다. (pageing)
-	 * 
-	 * @param searchVO - 조회할 정보가 담긴 SampleDefaultVO
-	 * @param model
-	 * @return "egovSampleList"
-	 * @exception Exception
-	 */
-	@RequestMapping(value = "/egovSampleList.do")
-	public String selectSampleList(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model)
-			throws Exception {
-
-		/** EgovPropertyService.sample */
-		searchVO.setPageUnit(propertiesService.getInt("pageUnit"));
-		searchVO.setPageSize(propertiesService.getInt("pageSize"));
-
-		/** pageing setting */
-		PaginationInfo paginationInfo = new PaginationInfo();
-		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
-		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
-		paginationInfo.setPageSize(searchVO.getPageSize());
-
-		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
-		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
-		List<?> sampleList = sampleService.selectSampleList(searchVO);
-		model.addAttribute("resultList", sampleList);
-
-		int totCnt = sampleService.selectSampleListTotCnt(searchVO);
-		paginationInfo.setTotalRecordCount(totCnt);
-		model.addAttribute("paginationInfo", paginationInfo);
-		model.addAttribute("totCnt", totCnt);
-
-		return "sample/egovSampleList";
-	}
-
-	/**
-	 * 글 등록 화면을 조회한다.
-	 * 
-	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
-	 * @param model
-	 * @return "egovSampleRegister"
-	 * @exception Exception
-	 */
-	@RequestMapping(value = "/addSample.do", method = RequestMethod.GET)
-	public String addSampleView(@ModelAttribute("searchVO") SampleDefaultVO searchVO, Model model) throws Exception {
-		model.addAttribute("sampleVO", new SampleVO());
-		return "sample/egovSampleRegister";
-	}
-
-	/**
-	 * 글을 등록한다.
-	 * 
-	 * @param sampleVO - 등록할 정보가 담긴 VO
-	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
-	 * @param status
-	 * @return "forward:/egovSampleList.do"
-	 * @exception Exception
-	 */
-	@RequestMapping(value = "/addSample.do", method = RequestMethod.POST)
-	public String addSample(@ModelAttribute("searchVO") SampleDefaultVO searchVO, SampleVO sampleVO,
-			BindingResult bindingResult, Model model, SessionStatus status) throws Exception {
-
-		// Server-Side Validation
-		beanValidator.validate(sampleVO, bindingResult);
-
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("sampleVO", sampleVO);
-			return "sample/egovSampleRegister";
-		}
-
-		sampleService.insertSample(sampleVO);
-		status.setComplete();
-		return "forward:/egovSampleList.do";
-	}
-
-	/**
-	 * 글 수정화면을 조회한다.
-	 * 
-	 * @param id       - 수정할 글 id
-	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
-	 * @param model
-	 * @return "egovSampleRegister"
-	 * @exception Exception
-	 */
-	@RequestMapping("/updateSampleView.do")
-	public String updateSampleView(@RequestParam("selectedId") String id,
-			@ModelAttribute("searchVO") SampleDefaultVO searchVO, Model model) throws Exception {
-		SampleVO sampleVO = new SampleVO();
-		sampleVO.setId(id);
-		// 변수명은 CoC 에 따라 sampleVO
-		model.addAttribute(selectSample(sampleVO, searchVO));
-		return "sample/egovSampleRegister";
-	}
-
-	/**
-	 * 글을 조회한다.
-	 * 
-	 * @param sampleVO - 조회할 정보가 담긴 VO
-	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
-	 * @param status
-	 * @return @ModelAttribute("sampleVO") - 조회한 정보
-	 * @exception Exception
-	 */
-	public SampleVO selectSample(SampleVO sampleVO, @ModelAttribute("searchVO") SampleDefaultVO searchVO)
-			throws Exception {
-		return sampleService.selectSample(sampleVO);
-	}
-
-	/**
-	 * 글을 수정한다.
-	 * 
-	 * @param sampleVO - 수정할 정보가 담긴 VO
-	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
-	 * @param status
-	 * @return "forward:/egovSampleList.do"
-	 * @exception Exception
-	 */
-	@RequestMapping("/updateSample.do")
-	public String updateSample(@ModelAttribute("searchVO") SampleDefaultVO searchVO, SampleVO sampleVO,
-			BindingResult bindingResult, Model model, SessionStatus status) throws Exception {
-
-		beanValidator.validate(sampleVO, bindingResult);
-
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("sampleVO", sampleVO);
-			return "sample/egovSampleRegister";
-		}
-
-		sampleService.updateSample(sampleVO);
-		status.setComplete();
-		return "forward:/egovSampleList.do";
-	}
-
-	/**
-	 * 글을 삭제한다.
-	 * 
-	 * @param sampleVO - 삭제할 정보가 담긴 VO
-	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
-	 * @param status
-	 * @return "forward:/egovSampleList.do"
-	 * @exception Exception
-	 */
-	@RequestMapping("/deleteSample.do")
-	public String deleteSample(SampleVO sampleVO, @ModelAttribute("searchVO") SampleDefaultVO searchVO,
-			SessionStatus status) throws Exception {
-		sampleService.deleteSample(sampleVO);
-		status.setComplete();
-		return "forward:/egovSampleList.do";
-	}
-
 	/** ver.2 testList **/
 
 	@RequestMapping(value = "/testList.do")
@@ -277,9 +127,9 @@ public class EgovSampleController {
 		
 		// 파일 조회
 		List<SampleDefaultVO> fileList = sampleService.fileList(searchVO);
-		
-		model.addAttribute("orgFileName", fileList.get(0).getOrgFileName());
-		System.out.println("파일 이름 : " + fileList.get(0).getOrgFileName());
+		/* model.addAttribute("orgFileName", fileList.get(0).getOrgFileName()); */
+		model.addAttribute("orgFileName", fileList);
+		/* System.out.println("파일 이름 : " + fileList.get(0).getOrgFileName()); */
 		
 		return "sample/testListDetail";
 	}
@@ -294,7 +144,8 @@ public class EgovSampleController {
 
 	// 글 등록
 	@RequestMapping(value = "/insertTest.do")
-	public String insertTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file) throws Exception {
+	public String insertTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file)
+			throws Exception {
 		sampleService.insertTest(searchVO);
 		System.out.println("================== board start ==================");
 		System.out.println("제목 : " + searchVO.getTitle());
@@ -304,7 +155,7 @@ public class EgovSampleController {
 
 		// 파일 업로드
 		String uploadPath = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file";
-		String boardIDX = String.valueOf(searchVO.getCode());
+		/* String boardIDX = String.valueOf(searchVO.getCode()); */
 
 		for (MultipartFile multipartFile : file) {
 			String orgFileName = multipartFile.getOriginalFilename();
@@ -312,7 +163,7 @@ public class EgovSampleController {
 			String saveFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
 			Long saveFileSize = multipartFile.getSize();
 
-			System.out.println("================== file start ==================");
+			System.out.println("================== file insert ==================");
 			System.out.println("파일 이름: " + orgFileName);
 			System.out.println("파일 실제 이름: " + saveFileName);
 			System.out.println("파일 크기: " + saveFileSize);
@@ -353,17 +204,21 @@ public class EgovSampleController {
 		model.addAttribute("idx", testListUpdate.get(0).getIdx());
 		model.addAttribute("code", testListUpdate.get(0).getCode());
 		model.addAttribute("regDate", testListUpdate.get(0).getRegDate());
-		
+		model.addAttribute("fileId", testListUpdate.get(0).getFileId());
+		model.addAttribute("code", testListUpdate.get(0).getCode());
 		// 파일 조회
 		List<SampleDefaultVO> fileList = sampleService.fileList(searchVO);
-		model.addAttribute("orgFileName", fileList.get(0).getOrgFileName());
+		model.addAttribute("orgFileName", fileList);
+		/* model.addAttribute("fileId", fileList.get(0).getFileId()); */
+		/* model.addAttribute("code", fileList.get(0).getCode()); */
 		
 		return "sample/testListUpdate";
 	}
 
 	// 글 수정
 	@PostMapping(value = "/updateTest.do")
-	public String updateTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file) throws Exception {
+	public String updateTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file)
+			throws Exception {
 		System.out.println("********UPDATE TEST**********");
 		System.out.println("제목 : " + searchVO.getTitle());
 		System.out.println("작성자 : " + searchVO.getWriter());
@@ -372,9 +227,45 @@ public class EgovSampleController {
 		System.out.println("code" + searchVO.getCode());
 		System.out.println("날짜 : " + searchVO.getRegDate());
 		System.out.println("********UPDATE END **********");
-		
+		//게시글 정보 update
 		sampleService.updateTest(searchVO);
+
 		
+		//file update
+		String uploadPath = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file";
+		/* String boardIDX = String.valueOf(searchVO.getCode()); */
+
+		for (MultipartFile multipartFile : file) {
+			String orgFileName = multipartFile.getOriginalFilename();
+			String orgFileExtension = orgFileName.substring(orgFileName.lastIndexOf("."));
+			String saveFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
+			Long saveFileSize = multipartFile.getSize();
+
+			System.out.println("================== update file ==================");
+			System.out.println("파일 이름: " + orgFileName);
+			System.out.println("파일 실제 이름: " + saveFileName);
+			System.out.println("파일 크기: " + saveFileSize);
+			System.out.println("content type: " + multipartFile.getContentType());
+			System.out.println("================== update end ==================");
+
+			File target = new File(uploadPath, saveFileName);
+			try {
+				multipartFile.transferTo(target);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			searchVO.setOrgFileName(orgFileName);
+			searchVO.setSaveFileName(saveFileName);
+			searchVO.setFileSize(saveFileSize);
+
+			/*
+			 * System.out.println("VO 파일 이름: " + searchVO.getOrgFileName());
+			 * System.out.println("VO 파일 실제 이름: " + searchVO.getSaveFileName());
+			 * System.out.println("===============================================");
+			 */
+			sampleService.insertFile(searchVO, file);
+		}
 		return "redirect:/testList.do";
 
 	}
@@ -382,11 +273,56 @@ public class EgovSampleController {
 	// 글 삭제
 	@RequestMapping(value = "/deleteTest.do")
 	public String deleteTest(SampleVO sampleVO, @ModelAttribute("searchVO") SampleDefaultVO searchVO) throws Exception {
-		System.out.println("********DELETE TEST**********");
+		System.out.println("********DELETE BOARD**********");
 
 		sampleService.deleteTest(searchVO);
 		return "forward:/testList.do";
 	}
 
+	// 파일 다운로드
+	@GetMapping("/fileDownload.do")
+	public void download(SampleDefaultVO sampleVO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
+        	String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\"+ sampleVO.getSaveFileName();
+        	String orgFileName = sampleVO.getOrgFileName();
+        	
+        	System.out.println("********DOWNLOAD TEST**********");
+        	System.out.println("파일 원본: " + sampleVO.getOrgFileName());
+        	System.out.println("글 번호 : " + sampleVO.getCode());
+			System.out.println("파일 이름: " + sampleVO.getSaveFileName());
+			System.out.println("파일 경로: " + path);
+			System.out.println("********DOWNLOAD TEST**********");
+
+        	File file = new File(path);
+        	orgFileName = new String(orgFileName.getBytes("UTF-8"), "ISO-8859-1");  //한글 깨짐 인코딩
+        	response.setHeader("Content-Disposition", "attachment;filename=" + orgFileName); // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+        	
+        	FileInputStream fileInputStream = new FileInputStream(path); // 파일 읽어오기 
+        	OutputStream out = response.getOutputStream();
+        	
+        	int read = 0;
+                byte[] buffer = new byte[1024];
+                while ((read = fileInputStream.read(buffer)) != -1) { // 1024바이트씩 계속 읽으면서 outputStream에 저장, -1이 나오면 더이상 읽을 파일이 없음
+                    out.write(buffer, 0, read);
+                }
+                
+        } catch (Exception e) {
+            throw new Exception("download error");
+        }
+	}
+
+	// 파일 삭제
+	@RequestMapping(value = "/deleteFile.do")
+	public String deleteFile(@RequestParam("fileId") Integer fileId, HttpServletRequest request, @ModelAttribute("searchVO") SampleDefaultVO searchVO) throws Exception {
+		System.out.println("====================deleteCon=================");
+		System.out.println("삭제 아이디 : " + fileId);
+		System.out.println("====================deleteCon=================");
+		searchVO.setFileId(fileId);
+		
+		sampleService.deleteFile(fileId);
+		
+		String referer = request.getHeader("Referer");
+		return "redirect:"+ referer;
+	}
 
 }
