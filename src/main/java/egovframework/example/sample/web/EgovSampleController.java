@@ -209,8 +209,6 @@ public class EgovSampleController {
 		// 파일 조회
 		List<SampleDefaultVO> fileList = sampleService.fileList(searchVO);
 		model.addAttribute("orgFileName", fileList);
-		/* model.addAttribute("fileId", fileList.get(0).getFileId()); */
-		/* model.addAttribute("code", fileList.get(0).getCode()); */
 		
 		return "sample/testListUpdate";
 	}
@@ -276,6 +274,7 @@ public class EgovSampleController {
 		System.out.println("********DELETE BOARD**********");
 
 		sampleService.deleteTest(searchVO);
+		sampleService.deleteFileAll(searchVO);
 		return "forward:/testList.do";
 	}
 

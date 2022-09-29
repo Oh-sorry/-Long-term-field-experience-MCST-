@@ -158,4 +158,8 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 		 * System.out.println("serImpl 삭제파일번호 :" + fileId);
 		 */
 	};
+	//delete all file
+	public void deleteFileAll(SampleDefaultVO searchVO) throws Exception {
+		sampleDAO.deleteFileAll(searchVO);
+	}
 }

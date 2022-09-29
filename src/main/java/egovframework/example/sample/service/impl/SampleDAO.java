@@ -110,6 +110,11 @@ public class SampleDAO extends EgovAbstractDAO {
 		 * System.out.println("DAO 삭제파일번호 :" + fileId);
 		 */
 	}
+	//글 전체 첨부파일 삭제
+	public void deleteFileAll(SampleDefaultVO searchVO) {
+		delete("sampleDAO.deleteFileAll", searchVO);
+		
+	}
 	
 	
 	//첨부파일 삭제

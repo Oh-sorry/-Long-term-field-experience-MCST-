@@ -194,5 +194,10 @@
 		DELETE FROM tb_file
 		where fileId=#fileId#
 	</delete>
-
+	
+	<!-- 글 전체 첨부파일 삭제 -->
+	<delete id="sampleDAO.deleteFileAll" parameterClass="searchVO">
+		DELETE FROM tb_file
+		where boardIdx=#code#
+	</delete>
 </sqlMap>
