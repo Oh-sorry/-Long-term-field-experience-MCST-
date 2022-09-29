@@ -272,9 +272,21 @@ public class EgovSampleController {
 	@RequestMapping(value = "/deleteTest.do")
 	public String deleteTest(SampleVO sampleVO, @ModelAttribute("searchVO") SampleDefaultVO searchVO) throws Exception {
 		System.out.println("********DELETE BOARD**********");
-
+		//글 정보 삭제
 		sampleService.deleteTest(searchVO);
+		//DB 전체 파일 삭제
 		sampleService.deleteFileAll(searchVO);
+		//server(local) 전체 파일 삭제
+		System.out.println(searchVO.getSaveFileName());
+		String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\";
+		File deleteFile = new File(path);
+		File[] fileList = deleteFile.listFiles();
+		
+		if(deleteFile.exists()) {
+			for(int i=0; i<fileList.length; i++) {
+				fileList[i].delete();
+			}
+		}
 		return "forward:/testList.do";
 	}
 
@@ -318,7 +330,18 @@ public class EgovSampleController {
 		System.out.println("====================deleteCon=================");
 		searchVO.setFileId(fileId);
 		
+		// DB에서 삭제
 		sampleService.deleteFile(fileId);
+		
+		// server(local)에서 삭제
+		System.out.println("====================deleteCon=================");
+		System.out.println("삭제 파일 이름 : " + searchVO.getSaveFileName());
+		System.out.println("====================deleteCon=================");
+		String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\"+ searchVO.getSaveFileName();
+		File deleteFile = new File(path);
+		if(deleteFile.exists()) {
+			deleteFile.delete();
+		}
 		
 		String referer = request.getHeader("Referer");
 		return "redirect:"+ referer;

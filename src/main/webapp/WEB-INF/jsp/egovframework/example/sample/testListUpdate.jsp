@@ -81,7 +81,7 @@
 						<!-- <input type="file" class="form-control" name="uploadFile" size ="70" multiple> -->
 						<div class="form-group" id="file-list">
 							<input type="text" name="orgFileName" id="orgFileName" value='<c:out value="${result.orgFileName}"></c:out>' class="form-control" readonly="readonly"/>
-							<a href='deleteFile.do?fileId=${result.fileId}' class='btn btn-sm btn-danger' id='file-delete' name='file-delete1' style="float: right">삭제</a>
+							<a href='deleteFile.do?fileId=${result.fileId}&saveFileName=${result.saveFileName}' class='btn btn-sm btn-danger' id='file-delete' name='file-delete1' style="float: right">삭제</a>
 						</div>
 						
 					</c:forEach>
@@ -97,6 +97,8 @@
 						class="form-control" name="code" id="code" value="${code}">
 					<input type="hidden"
 						class="form-control" name="fileId" id="fileId" value="${fileId}">
+					<input type="hidden"
+						class="form-control" name="saveFileName" id="saveFileName" value="${saveFileName}">
 				</div>
 				<div style="float: right">
 				<button type="button" class="btn btn-sm btn-warning" id="btnUpdate">수정</button>
@@ -148,7 +150,7 @@ function deleteFile(obj) {
 		
 		$("#btnDelete").click(function previous() {
 			alert("( TITLE : ${title} )인 글을 삭제합니다.")
-			$(location).attr('href','deleteTest.do?code=${code}');
+			$(location).attr('href','deleteTest.do?code=${code}&saveFileName=${result.saveFileName}');
 		});
 		
 	});
