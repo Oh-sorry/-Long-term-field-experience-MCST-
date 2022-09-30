@@ -174,14 +174,7 @@
 		FROM tb_file
 		WHERE boardIdx = #code#
 	</select>
-<!-- 	
-	첨부파일 수정
-	<update id ="sampleDAO.updateFile" parameterClass="searchVO">
-		UPDATE tb_file
-		SET fileId=serial_fileId.CURRENT_VALUE, orgFileName=#orgFileName#, saveFileName=#saveFileName#, fileSize=#fileSize#
-		WHERE boardIdx = #code#
-	</update>
-	 -->
+
 	<!-- 첨부파일 다운로드 -->
 	<select id="sampleDAO.downloadFile" parameterClass="searchVO" resultClass="searchVO">
 		SELECT saveFileName, orgFileName
@@ -200,4 +193,12 @@
 		DELETE FROM tb_file
 		where boardIdx=#code#
 	</delete>
+	
+	<!-- excel -->
+	<select id="sampleDAO.getReserveExcel" parameterClass="searchVO" resultClass="searchVO">
+		SELECT ROWNUM RNUM, TITLE, WRITER, regDate
+		FROM test
+		WHERE code=96
+		ORDER BY code DESC;
+	</select>
 </sqlMap>

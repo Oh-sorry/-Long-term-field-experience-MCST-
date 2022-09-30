@@ -48,8 +48,8 @@ import egovframework.rte.psl.dataaccess.EgovAbstractDAO;
 public class SampleDAO extends EgovAbstractDAO {
 	
 	/** ver.2 testList **/
-	public List<?> testList(SampleDefaultVO searchVO) throws Exception{
-		return list("sampleDAO.testList", searchVO);
+	public List<SampleDefaultVO> testList(SampleDefaultVO searchVO) throws Exception{
+		return (List<SampleDefaultVO>) list("sampleDAO.testList", searchVO);
 	}
 	//paging cnt
 	public int testListCnt(SampleDefaultVO searchVO) {
@@ -115,8 +115,9 @@ public class SampleDAO extends EgovAbstractDAO {
 		delete("sampleDAO.deleteFileAll", searchVO);
 		
 	}
-	
-	
-	//첨부파일 삭제
+	public List<SampleDefaultVO> getReserveExcel(SampleDefaultVO searchVO) throws Exception {
+		System.out.println("===================EXCEL DAO=================");
+		return (List<SampleDefaultVO>) select("sampleDAO.getReserveExcel", searchVO);
+	}
 	
 }

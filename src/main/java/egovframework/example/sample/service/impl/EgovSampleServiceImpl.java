@@ -1,18 +1,3 @@
-/*
- * Copyright 2008-2009 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package egovframework.example.sample.service.impl;
 
 import java.util.Iterator;
@@ -31,6 +16,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -63,24 +56,14 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	// TODO ibatis 사용
 	@Resource(name = "sampleDAO")
 	private SampleDAO sampleDAO;
-	// TODO mybatis 사용
-	//  @Resource(name="sampleMapper")
-	//	private SampleMapper sampleDAO;
 
 	/** ID Generation */
 	@Resource(name = "egovIdGnrService")
 	private EgovIdGnrService egovIdGnrService;
 
-	/**
-	 * 글을 등록한다.
-	 * @param vo - 등록할 정보가 담긴 SampleVO
-	 * @return 등록 결과
-	 * @exception Exception
-	 */
-	
 	/** ver.2 testList **/
 	@Override
-	public List<?> testList(SampleDefaultVO searchVO) throws Exception {
+	public List<SampleDefaultVO> testList(SampleDefaultVO searchVO) throws Exception {
 		return sampleDAO.testList(searchVO);
 	}
 	//paging test cnt
@@ -157,9 +140,18 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 		 * System.out.println("====================deleteSerImpl=================");
 		 * System.out.println("serImpl 삭제파일번호 :" + fileId);
 		 */
-	};
+	}
 	//delete all file
+	@Override
 	public void deleteFileAll(SampleDefaultVO searchVO) throws Exception {
 		sampleDAO.deleteFileAll(searchVO);
 	}
+	
+	//excel
+	@Override
+	public List<SampleDefaultVO> getReserveExcel(SampleDefaultVO searchVO, HttpServletResponse response) throws Exception {
+		System.out.println("===================EXCEL IMPL START=================");
+		return sampleDAO.getReserveExcel(searchVO);
+	}
+	
 }

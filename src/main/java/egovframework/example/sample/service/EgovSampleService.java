@@ -42,7 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface EgovSampleService {
 
 	/** ver.2 testList **/
-	List<?> testList(SampleDefaultVO searchVO) throws Exception;
+	List<SampleDefaultVO> testList(SampleDefaultVO searchVO) throws Exception;
 	
 	//paging
 	int testListCnt(SampleDefaultVO searchVO) throws Exception;
@@ -78,5 +78,8 @@ public interface EgovSampleService {
 	void deleteFile(Integer fileId) throws Exception;
 	//delete all file
 	void deleteFileAll(SampleDefaultVO searchVO) throws Exception;
+
+	//excel
+	List<SampleDefaultVO> getReserveExcel(SampleDefaultVO searchVO, HttpServletResponse response) throws Exception;
 
 }

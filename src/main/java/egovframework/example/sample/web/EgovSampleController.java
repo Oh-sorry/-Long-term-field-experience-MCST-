@@ -17,6 +17,7 @@ package egovframework.example.sample.web;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -38,6 +39,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -105,7 +121,7 @@ public class EgovSampleController {
 		model.addAttribute("totCnt", totCnt);
 
 		/** 목록 조회 **/
-		List<?> testList = sampleService.testList(searchVO);
+		List<SampleDefaultVO> testList = sampleService.testList(searchVO);
 		model.addAttribute("resultList", testList);
 		return "sample/testList";
 	}
@@ -347,4 +363,51 @@ public class EgovSampleController {
 		return "redirect:"+ referer;
 	}
 
+	//엑셀
+	 @GetMapping("/getReserveExcel.do")
+	    public void getReserveExcel(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, HttpServletResponse response) throws Exception {
+		 	System.out.println("===================EXCEL CONTROLLER=================");
+
+		 	//Workbook wb = new HSSFWorkbook();
+	        Workbook wb = new XSSFWorkbook();
+	        Sheet sheet = wb.createSheet("첫번째 시트");
+	        Row row = null;
+	        Cell cell = null;
+	        int rowNum = 0;
+
+	        List<SampleDefaultVO> excelList = sampleService.getReserveExcel(searchVO, response);
+	        // Header
+	        row = sheet.createRow(rowNum++);
+	        cell = row.createCell(0);
+	        cell.setCellValue("번호");
+	        cell = row.createCell(1);
+	        cell.setCellValue("제목");
+	        cell = row.createCell(2);
+	        cell.setCellValue("작성자");
+	        cell = row.createCell(3);
+	        cell.setCellValue("작성일");
+
+	        // Body
+	        for (int i=0; i<3; i++) {
+	            row = sheet.createRow(rowNum++);
+	            cell = row.createCell(0);
+	            cell.setCellValue(i);
+	            cell = row.createCell(1);
+	            cell.setCellValue(i+"_name");
+	            cell = row.createCell(2);
+	            cell.setCellValue(i+"_title");
+	            cell = row.createCell(3);
+	            cell.setCellValue(i+"_title");
+	        }
+
+	        // 컨텐츠 타입과 파일명 지정
+	        response.setContentType("ms-vnd/excel");
+//	        response.setHeader("Content-Disposition", "attachment;filename=example.xls");
+	        response.setHeader("Content-Disposition", "attachment;filename=게시판 정보.xlsx");
+
+	        // Excel File Output
+	        wb.write(response.getOutputStream());
+	        wb.close();
+	    }
 }
+

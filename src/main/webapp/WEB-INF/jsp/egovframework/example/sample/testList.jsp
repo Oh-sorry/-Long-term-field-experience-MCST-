@@ -70,7 +70,7 @@
 			</table>
 			<br>
 			<a href="testListInsert.do" type="button" class="btn btn-sm btn-primary"style="float: right">글쓰기</a>
-			
+			<br>
 		</div>
 		<!-- searching -->
 		<div id="search">
@@ -87,6 +87,7 @@
 			<form:input path="searchKeyword" cssClass="txt" />
 			<span> 
 			<a href="javascript:fn_egov_selectList();" class="btn btn-outline btn-primary"><spring:message code="button.search" /></a>
+			
 			</span>
 		</div>
 		<!-- paging -->
@@ -94,7 +95,10 @@
 			<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page" />
 			<form:hidden path="pageIndex"/>
 		</div>
-		
+		<!-- excel -->
+			<div style="float: right">
+				<a href="getReserveExcel.do" type="button" class="btn btn-sm btn-primary"style="float: right">EXCEL</a>
+			</div>
 	</form:form>
 </body>
 </html>
