@@ -80,6 +80,6 @@ public interface EgovSampleService {
 	void deleteFileAll(SampleDefaultVO searchVO) throws Exception;
 
 	//excel
-	List<SampleDefaultVO> getReserveExcel(SampleDefaultVO searchVO, HttpServletResponse response) throws Exception;
+	List<SampleDefaultVO> excelDownload(SampleDefaultVO searchVO) throws Exception;
 
 }

@@ -149,9 +149,9 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	
 	//excel
 	@Override
-	public List<SampleDefaultVO> getReserveExcel(SampleDefaultVO searchVO, HttpServletResponse response) throws Exception {
+	public List<SampleDefaultVO> excelDownload(SampleDefaultVO searchVO) throws Exception {
 		System.out.println("===================EXCEL IMPL START=================");
-		return sampleDAO.getReserveExcel(searchVO);
+		return sampleDAO.excelDownload(searchVO);
 	}
 	
 }

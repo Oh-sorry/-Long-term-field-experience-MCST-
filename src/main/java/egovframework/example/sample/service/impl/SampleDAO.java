@@ -115,9 +115,10 @@ public class SampleDAO extends EgovAbstractDAO {
 		delete("sampleDAO.deleteFileAll", searchVO);
 		
 	}
-	public List<SampleDefaultVO> getReserveExcel(SampleDefaultVO searchVO) throws Exception {
+	//excel
+	public List<SampleDefaultVO> excelDownload(SampleDefaultVO searchVO) throws Exception {
 		System.out.println("===================EXCEL DAO=================");
-		return (List<SampleDefaultVO>) select("sampleDAO.getReserveExcel", searchVO);
+		return (List<SampleDefaultVO>) select("sampleDAO.excelDownload", searchVO);
 	}
 	
 }

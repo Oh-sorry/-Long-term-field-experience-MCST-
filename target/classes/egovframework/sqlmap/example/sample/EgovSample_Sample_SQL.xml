@@ -106,7 +106,7 @@
 		<isEqual prepend="AND" property="searchCondition" compareValue="title">
 			title LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
-		ORDER BY code DESC
+		ORDER BY code asc
 		LIMIT #recordCountPerPage# OFFSET #firstIndex#
 		<!-- LIMIT #recordCountPerPage# OFFSET #lastIndex# -->
 	</select>
@@ -195,10 +195,10 @@
 	</delete>
 	
 	<!-- excel -->
-	<select id="sampleDAO.getReserveExcel" parameterClass="searchVO" resultClass="searchVO">
-		SELECT ROWNUM RNUM, TITLE, WRITER, regDate
+	<select id="sampleDAO.excelDownload" parameterClass="searchVO">
+		SELECT ROWNUM RNUM, IDX, WRITER, TITLE, regDate, code
 		FROM test
-		WHERE code=96
-		ORDER BY code DESC;
+		WHERE code = 0
+		ORDER BY RNUM ASC
 	</select>
 </sqlMap>

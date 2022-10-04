@@ -97,7 +97,7 @@
 		</div>
 		<!-- excel -->
 			<div style="float: right">
-				<a href="getReserveExcel.do" type="button" class="btn btn-sm btn-primary"style="float: right">EXCEL</a>
+				<a href="excelDownload.do" type="button" class="btn btn-sm btn-info" style="float: right">EXCEL</a>
 			</div>
 	</form:form>
 </body>

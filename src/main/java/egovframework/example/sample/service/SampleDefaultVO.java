@@ -159,6 +159,7 @@ public class SampleDefaultVO implements Serializable {
 	private String title;
 	private String content;
 	private Date regDate;
+	private int code;
 	
 	public String getIdx() {
 		return idx;
@@ -199,7 +200,6 @@ public class SampleDefaultVO implements Serializable {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
-	private int code;
 
 	public int getCode() {
 		return code;

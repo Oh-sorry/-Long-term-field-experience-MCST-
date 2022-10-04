@@ -123,13 +123,14 @@ public class EgovSampleController {
 		/** 목록 조회 **/
 		List<SampleDefaultVO> testList = sampleService.testList(searchVO);
 		model.addAttribute("resultList", testList);
+
 		return "sample/testList";
 	}
 
 	// 상세 페이지
 	@RequestMapping(value = "/testListDetail.do")
-	public String testListDetail(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file)
-			throws Exception {
+	public String testListDetail(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model,
+			MultipartFile[] file) throws Exception {
 		// 목록 조회
 		List<SampleDefaultVO> testListDetail = sampleService.testListDetail(searchVO);
 
@@ -140,13 +141,13 @@ public class EgovSampleController {
 		model.addAttribute("idx", testListDetail.get(0).getIdx());
 		model.addAttribute("regDate", testListDetail.get(0).getRegDate());
 		model.addAttribute("code", testListDetail.get(0).getCode());
-		
+
 		// 파일 조회
 		List<SampleDefaultVO> fileList = sampleService.fileList(searchVO);
 		/* model.addAttribute("orgFileName", fileList.get(0).getOrgFileName()); */
 		model.addAttribute("orgFileName", fileList);
 		/* System.out.println("파일 이름 : " + fileList.get(0).getOrgFileName()); */
-		
+
 		return "sample/testListDetail";
 	}
 
@@ -225,7 +226,7 @@ public class EgovSampleController {
 		// 파일 조회
 		List<SampleDefaultVO> fileList = sampleService.fileList(searchVO);
 		model.addAttribute("orgFileName", fileList);
-		
+
 		return "sample/testListUpdate";
 	}
 
@@ -241,11 +242,10 @@ public class EgovSampleController {
 		System.out.println("code" + searchVO.getCode());
 		System.out.println("날짜 : " + searchVO.getRegDate());
 		System.out.println("********UPDATE END **********");
-		//게시글 정보 update
+		// 게시글 정보 update
 		sampleService.updateTest(searchVO);
 
-		
-		//file update
+		// file update
 		String uploadPath = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file";
 		/* String boardIDX = String.valueOf(searchVO.getCode()); */
 
@@ -288,18 +288,18 @@ public class EgovSampleController {
 	@RequestMapping(value = "/deleteTest.do")
 	public String deleteTest(SampleVO sampleVO, @ModelAttribute("searchVO") SampleDefaultVO searchVO) throws Exception {
 		System.out.println("********DELETE BOARD**********");
-		//글 정보 삭제
+		// 글 정보 삭제
 		sampleService.deleteTest(searchVO);
-		//DB 전체 파일 삭제
+		// DB 전체 파일 삭제
 		sampleService.deleteFileAll(searchVO);
-		//server(local) 전체 파일 삭제
+		// server(local) 전체 파일 삭제
 		System.out.println(searchVO.getSaveFileName());
 		String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\";
 		File deleteFile = new File(path);
 		File[] fileList = deleteFile.listFiles();
-		
-		if(deleteFile.exists()) {
-			for(int i=0; i<fileList.length; i++) {
+
+		if (deleteFile.exists()) {
+			for (int i = 0; i < fileList.length; i++) {
 				fileList[i].delete();
 			}
 		}
@@ -308,106 +308,126 @@ public class EgovSampleController {
 
 	// 파일 다운로드
 	@GetMapping("/fileDownload.do")
-	public void download(SampleDefaultVO sampleVO, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        try {
-        	String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\"+ sampleVO.getSaveFileName();
-        	String orgFileName = sampleVO.getOrgFileName();
-        	
-        	System.out.println("********DOWNLOAD TEST**********");
-        	System.out.println("파일 원본: " + sampleVO.getOrgFileName());
-        	System.out.println("글 번호 : " + sampleVO.getCode());
+	public void download(SampleDefaultVO sampleVO, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		try {
+			String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\" + sampleVO.getSaveFileName();
+			String orgFileName = sampleVO.getOrgFileName();
+
+			System.out.println("********DOWNLOAD TEST**********");
+			System.out.println("파일 원본: " + sampleVO.getOrgFileName());
+			System.out.println("글 번호 : " + sampleVO.getCode());
 			System.out.println("파일 이름: " + sampleVO.getSaveFileName());
 			System.out.println("파일 경로: " + path);
 			System.out.println("********DOWNLOAD TEST**********");
 
-        	File file = new File(path);
-        	orgFileName = new String(orgFileName.getBytes("UTF-8"), "ISO-8859-1");  //한글 깨짐 인코딩
-        	response.setHeader("Content-Disposition", "attachment;filename=" + orgFileName); // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
-        	
-        	FileInputStream fileInputStream = new FileInputStream(path); // 파일 읽어오기 
-        	OutputStream out = response.getOutputStream();
-        	
-        	int read = 0;
-                byte[] buffer = new byte[1024];
-                while ((read = fileInputStream.read(buffer)) != -1) { // 1024바이트씩 계속 읽으면서 outputStream에 저장, -1이 나오면 더이상 읽을 파일이 없음
-                    out.write(buffer, 0, read);
-                }
-                
-        } catch (Exception e) {
-            throw new Exception("download error");
-        }
+			File file = new File(path);
+			orgFileName = new String(orgFileName.getBytes("UTF-8"), "ISO-8859-1"); // 한글 깨짐 인코딩
+			response.setHeader("Content-Disposition", "attachment;filename=" + orgFileName); // 다운로드 되거나 로컬에 저장되는 용도로
+																								// 쓰이는지를 알려주는 헤더
+
+			FileInputStream fileInputStream = new FileInputStream(path); // 파일 읽어오기
+			OutputStream out = response.getOutputStream();
+
+			int read = 0;
+			byte[] buffer = new byte[1024];
+			while ((read = fileInputStream.read(buffer)) != -1) { // 1024바이트씩 계속 읽으면서 outputStream에 저장, -1이 나오면 더이상 읽을
+																	// 파일이 없음
+				out.write(buffer, 0, read);
+			}
+
+		} catch (Exception e) {
+			throw new Exception("download error");
+		}
 	}
 
 	// 파일 삭제
 	@RequestMapping(value = "/deleteFile.do")
-	public String deleteFile(@RequestParam("fileId") Integer fileId, HttpServletRequest request, @ModelAttribute("searchVO") SampleDefaultVO searchVO) throws Exception {
+	public String deleteFile(@RequestParam("fileId") Integer fileId, HttpServletRequest request,
+			@ModelAttribute("searchVO") SampleDefaultVO searchVO) throws Exception {
 		System.out.println("====================deleteCon=================");
 		System.out.println("삭제 아이디 : " + fileId);
 		System.out.println("====================deleteCon=================");
 		searchVO.setFileId(fileId);
-		
+
 		// DB에서 삭제
 		sampleService.deleteFile(fileId);
-		
+
 		// server(local)에서 삭제
 		System.out.println("====================deleteCon=================");
 		System.out.println("삭제 파일 이름 : " + searchVO.getSaveFileName());
 		System.out.println("====================deleteCon=================");
-		String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\"+ searchVO.getSaveFileName();
+		String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\" + searchVO.getSaveFileName();
 		File deleteFile = new File(path);
-		if(deleteFile.exists()) {
+		if (deleteFile.exists()) {
 			deleteFile.delete();
 		}
-		
+
 		String referer = request.getHeader("Referer");
-		return "redirect:"+ referer;
+		return "redirect:" + referer;
 	}
 
-	//엑셀
-	 @GetMapping("/getReserveExcel.do")
-	    public void getReserveExcel(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, HttpServletResponse response) throws Exception {
-		 	System.out.println("===================EXCEL CONTROLLER=================");
+	// 엑셀
+	@SuppressWarnings("resource")
+	@RequestMapping("/excelDownload.do")
+	public void excelDownload(HttpServletResponse response, @ModelAttribute("searchVO") SampleDefaultVO searchVO,
+			ModelMap model) throws Exception {
+		XSSFWorkbook wb = null;
+		Sheet sheet = null;
+		Row row = null;
+		Cell cell = null;
+		wb = new XSSFWorkbook();
+		sheet = wb.createSheet("1page");
 
-		 	//Workbook wb = new HSSFWorkbook();
-	        Workbook wb = new XSSFWorkbook();
-	        Sheet sheet = wb.createSheet("첫번째 시트");
-	        Row row = null;
-	        Cell cell = null;
-	        int rowNum = 0;
+		int cellCount = 0;
+		/*
+		 * row = sheet.createRow(0); // 0번째 행 cell = row.createCell(cellCount++);
+		 * cell.setCellValue("0"); cell = row.createCell(cellCount++);
+		 * cell.setCellValue("가가가"); cell = row.createCell(cellCount++);
+		 * cell.setCellValue("나나나");
+		 * 
+		 * row = sheet.createRow(1); // 1번째 행 cell = row.createCell(0);
+		 * cell.setCellValue("1"); cell = row.createCell(1); cell.setCellValue("AAA");
+		 * cell = row.createCell(2); cell.setCellValue("BBB");
+		 * 
+		 * row = sheet.createRow(2); // 2번째 행 cell = row.createCell(0);
+		 * cell.setCellValue("2"); cell = row.createCell(1); cell.setCellValue("aaa");
+		 * cell = row.createCell(2); cell.setCellValue("bbb");
+		 */
+		List<SampleDefaultVO> excelDownload = sampleService.excelDownload(searchVO);
+		System.out.println("===================EXCEL CON=================");
 
-	        List<SampleDefaultVO> excelList = sampleService.getReserveExcel(searchVO, response);
-	        // Header
-	        row = sheet.createRow(rowNum++);
-	        cell = row.createCell(0);
-	        cell.setCellValue("번호");
-	        cell = row.createCell(1);
-	        cell.setCellValue("제목");
-	        cell = row.createCell(2);
-	        cell.setCellValue("작성자");
-	        cell = row.createCell(3);
-	        cell.setCellValue("작성일");
+		// Header
+		row = sheet.createRow(0);
+		cell = row.createCell(0);
+		cell.setCellValue("번호");
+		cell = row.createCell(1);
+		cell.setCellValue("제목");
+		cell = row.createCell(2);
+		cell.setCellValue("작성자");
+		cell = row.createCell(3);
+		cell.setCellValue("작성일");
 
-	        // Body
-	        for (int i=0; i<3; i++) {
-	            row = sheet.createRow(rowNum++);
-	            cell = row.createCell(0);
-	            cell.setCellValue(i);
-	            cell = row.createCell(1);
-	            cell.setCellValue(i+"_name");
-	            cell = row.createCell(2);
-	            cell.setCellValue(i+"_title");
-	            cell = row.createCell(3);
-	            cell.setCellValue(i+"_title");
-	        }
+		// Body
+		System.out.println("excelList size :" + excelDownload.size());
 
-	        // 컨텐츠 타입과 파일명 지정
-	        response.setContentType("ms-vnd/excel");
-//	        response.setHeader("Content-Disposition", "attachment;filename=example.xls");
-	        response.setHeader("Content-Disposition", "attachment;filename=게시판 정보.xlsx");
+		for (int i = 0; i < excelDownload.size(); i++) {
+			row = sheet.createRow(i + 1);
+			cellCount = 0;
+			cell = row.createCell(cellCount++);
+			cell.setCellValue(i);
+			cell = row.createCell(cellCount++);
+			cell.setCellValue(excelDownload.get(i).getTitle());
+			cell = row.createCell(cellCount++);
+			cell.setCellValue(excelDownload.get(i).getWriter());
+			cell = row.createCell(cellCount++);
+			cell.setCellValue(excelDownload.get(i).getRegDate());
+		}
 
-	        // Excel File Output
-	        wb.write(response.getOutputStream());
-	        wb.close();
-	    }
+		// 컨텐츠 타입과 파일명 지정
+		response.setContentType("ms-vnd/excel");
+		response.setHeader("Content-Disposition", "attachment;filename=excelTest.xlsx"); // 파일이름지정.
+		// response OutputStream에 엑셀 작성
+		wb.write(response.getOutputStream());
+	}
 }
-
