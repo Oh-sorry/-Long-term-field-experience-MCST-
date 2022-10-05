@@ -31,7 +31,7 @@
         	document.listForm.action = "<c:url value='/testList.do'/>";
            	document.listForm.submit();
         }
-
+	
     </script>
 <body style="text-align: center; margin:0 auto; display: inline; padding-top: 100px;">
 	<!-- nav bar -->
@@ -70,6 +70,8 @@
 			</table>
 			<br>
 			<a href="testListInsert.do" type="button" class="btn btn-sm btn-primary"style="float: right">글쓰기</a>
+			<!-- excel -->
+			<a href="excelDownload.do" type="button" class="btn btn-sm btn-info" id="excelDownload" style="float: right">EXCEL</a>
 			<br>
 		</div>
 		<!-- searching -->
@@ -95,10 +97,10 @@
 			<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page" />
 			<form:hidden path="pageIndex"/>
 		</div>
-		<!-- excel -->
-			<div style="float: right">
-				<a href="excelDownload.do" type="button" class="btn btn-sm btn-info" style="float: right">EXCEL</a>
-			</div>
+	
+		<!-- 	<div style="float: right">
+				
+			</div> -->
 	</form:form>
 </body>
 </html>

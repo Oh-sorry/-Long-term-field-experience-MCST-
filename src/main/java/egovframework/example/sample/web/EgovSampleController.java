@@ -21,7 +21,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -370,8 +372,7 @@ public class EgovSampleController {
 	// 엑셀
 	@SuppressWarnings("resource")
 	@RequestMapping("/excelDownload.do")
-	public void excelDownload(HttpServletResponse response, @ModelAttribute("searchVO") SampleDefaultVO searchVO,
-			ModelMap model) throws Exception {
+	public void excelDownload(HttpServletResponse response, @ModelAttribute("searchVO") SampleDefaultVO searchVO) throws Exception {
 		XSSFWorkbook wb = null;
 		Sheet sheet = null;
 		Row row = null;
@@ -380,20 +381,9 @@ public class EgovSampleController {
 		sheet = wb.createSheet("1page");
 
 		int cellCount = 0;
-		/*
-		 * row = sheet.createRow(0); // 0번째 행 cell = row.createCell(cellCount++);
-		 * cell.setCellValue("0"); cell = row.createCell(cellCount++);
-		 * cell.setCellValue("가가가"); cell = row.createCell(cellCount++);
-		 * cell.setCellValue("나나나");
-		 * 
-		 * row = sheet.createRow(1); // 1번째 행 cell = row.createCell(0);
-		 * cell.setCellValue("1"); cell = row.createCell(1); cell.setCellValue("AAA");
-		 * cell = row.createCell(2); cell.setCellValue("BBB");
-		 * 
-		 * row = sheet.createRow(2); // 2번째 행 cell = row.createCell(0);
-		 * cell.setCellValue("2"); cell = row.createCell(1); cell.setCellValue("aaa");
-		 * cell = row.createCell(2); cell.setCellValue("bbb");
-		 */
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
 		List<SampleDefaultVO> excelDownload = sampleService.excelDownload(searchVO);
 		System.out.println("===================EXCEL CON=================");
 
@@ -409,7 +399,7 @@ public class EgovSampleController {
 		cell.setCellValue("작성일");
 
 		// Body
-		System.out.println("excelList size :" + excelDownload.size());
+		System.out.println("게시글 갯수 :" + excelDownload.size());
 
 		for (int i = 0; i < excelDownload.size(); i++) {
 			row = sheet.createRow(i + 1);
@@ -421,12 +411,12 @@ public class EgovSampleController {
 			cell = row.createCell(cellCount++);
 			cell.setCellValue(excelDownload.get(i).getWriter());
 			cell = row.createCell(cellCount++);
-			cell.setCellValue(excelDownload.get(i).getRegDate());
+			cell.setCellValue(sdf.format(excelDownload.get(i).getRegDate()));
 		}
-
+		
 		// 컨텐츠 타입과 파일명 지정
 		response.setContentType("ms-vnd/excel");
-		response.setHeader("Content-Disposition", "attachment;filename=excelTest.xlsx"); // 파일이름지정.
+		response.setHeader("Content-Disposition", "attachment; filename=excelTest (" + sdf1.format(System.currentTimeMillis()) +").xlsx"); // 파일이름지정.
 		// response OutputStream에 엑셀 작성
 		wb.write(response.getOutputStream());
 	}

@@ -195,10 +195,9 @@
 	</delete>
 	
 	<!-- excel -->
-	<select id="sampleDAO.excelDownload" parameterClass="searchVO">
-		SELECT ROWNUM RNUM, IDX, WRITER, TITLE, regDate, code
+	<select id="sampleDAO.excelDownload" parameterClass="searchVO" resultClass="searchVO">
+		SELECT ROWNUM RNUM, IDX, WRITER, TITLE, regDate
 		FROM test
-		WHERE code = 0
 		ORDER BY RNUM ASC
 	</select>
 </sqlMap>

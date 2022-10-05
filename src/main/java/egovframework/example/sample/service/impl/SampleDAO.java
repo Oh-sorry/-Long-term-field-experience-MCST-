@@ -118,7 +118,7 @@ public class SampleDAO extends EgovAbstractDAO {
 	//excel
 	public List<SampleDefaultVO> excelDownload(SampleDefaultVO searchVO) throws Exception {
 		System.out.println("===================EXCEL DAO=================");
-		return (List<SampleDefaultVO>) select("sampleDAO.excelDownload", searchVO);
+		return (List<SampleDefaultVO>) list("sampleDAO.excelDownload", searchVO);
 	}
 	
 }
