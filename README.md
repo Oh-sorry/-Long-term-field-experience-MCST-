@@ -2,6 +2,8 @@
 
 LongTermFieldExperience at MCST (22.09 ~ 22.12)
 
+- board_project (22.09.01 ~ 22.10.05)
+
 DEV PERIOD : 22.09.01 ~ 22.09.23
 
 SPRING : eGovFrameWorkDev ver.3.10.0 (eclipse)
@@ -15,5 +17,10 @@ FUNCTION
 + Search
 + 파일 첨부
 + 다중 파일 첨부
++ 로컬에 파일 저장(UUID.~)
 + 게시글 첨부 파일 조회
 + 다중 파일 
++ 첨부 파일 개별 삭제
++ 첨부 파일 개별 추가
++ 첨부 파일 전체 삭제(글 삭제 시)
++ 게시글 리스트 엑셀화.( 다운로드 )
