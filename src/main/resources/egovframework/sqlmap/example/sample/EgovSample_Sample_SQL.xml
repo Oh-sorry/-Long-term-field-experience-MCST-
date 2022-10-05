@@ -112,9 +112,10 @@
 	</delete>
 	
 	<!-- excel -->
-	<select id="sampleDAO.excelDownload" parameterClass="searchVO" resultClass="searchVO">
+	<select id="sampleDAO.excelDownload" fetchSize="10" parameterClass="searchVO" resultClass="searchVO">
 		SELECT ROWNUM RNUM, IDX, WRITER, TITLE, regDate
 		FROM test
+		where 1=1
 		<isEqual prepend="AND" property="searchCondition" compareValue="idx">
 			idx LIKE '%' || #searchKeyword# || '%'
 		</isEqual>

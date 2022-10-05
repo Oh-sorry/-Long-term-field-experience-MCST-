@@ -361,7 +361,7 @@ public class EgovSampleController {
 		return "redirect:" + referer;
 	}
 
-	// 엑셀
+	// 엑셀 download
 	@SuppressWarnings("resource")
 	@RequestMapping("/excelDownload.do")
 	public void excelDownload(HttpServletResponse response, @ModelAttribute("searchVO") SampleDefaultVO searchVO) throws Exception {
