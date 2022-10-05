@@ -2,9 +2,9 @@
 
 LongTermFieldExperience at MCST (22.09 ~ 22.12)
 
-- board_project (22.09.01 ~ 22.10.05)
+- board_project -
 
-DEV PERIOD : 22.09.01 ~ 22.09.23
+DEV PERIOD : 22.09.01 ~ 22.10.05
 
 SPRING : eGovFrameWorkDev ver.3.10.0 (eclipse)
 DB : Cubrid 11.0
