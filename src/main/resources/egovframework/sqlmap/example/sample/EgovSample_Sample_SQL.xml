@@ -13,84 +13,6 @@
 		<result property="useYn" column="use_yn"/>
 		<result property="regUser" column="reg_user"/>
 	</resultMap>
-
-	<insert id="sampleDAO.insertSample">
-		<![CDATA[
-			INSERT INTO SAMPLE 
-				( ID
-				  , NAME
-				  , DESCRIPTION
-				  , USE_YN
-				  , REG_USER )
-			VALUES ( #id#
-				  , #name#
-				  , #description#
-				  , #useYn#
-				  , #regUser# )
-		]]>
-	</insert>
-	
-	<update id="sampleDAO.updateSample">
-		<![CDATA[
-			UPDATE SAMPLE
-			SET ID=#id#
-				, NAME=#name#
-				, DESCRIPTION=#description#
-				, USE_YN=#useYn#
-			WHERE ID=#id#
-		]]>
-	</update>
-	
-	<delete id="sampleDAO.deleteSample">
-		<![CDATA[
-			DELETE FROM SAMPLE 
-			WHERE ID=#id#
-		]]>
-	</delete>
-    
-    <select id="sampleDAO.selectSample" resultMap="sample">
-        <![CDATA[
-            SELECT
-                ID, NAME, DESCRIPTION, USE_YN, REG_USER
-            FROM SAMPLE 
-            WHERE ID=#id#
-        ]]>
-    </select>
-	
-	<select id="sampleDAO.selectSampleList" parameterClass="searchVO" resultClass="egovMap">
-
-			SELECT
-				ID, NAME, DESCRIPTION, USE_YN, REG_USER
-			FROM SAMPLE
-			WHERE 1=1
-			<isEqual prepend="AND" property="searchCondition" compareValue="idx">
-				ID LIKE '%' || #searchKeyword# || '%'
-			</isEqual>
-			<isEqual prepend="AND" property="searchCondition" compareValue="writer">
-				NAME LIKE '%' || #searchKeyword# || '%'
-			</isEqual>
-			<isEqual prepend="AND" property="searchCondition" compareValue="title">
-				TITLE LIKE '%' || #searchKeyword# || '%'
-			</isEqual>
-			ORDER BY ID DESC
-			LIMIT #recordCountPerPage# OFFSET #firstIndex#		
-	</select>
-	
-	<select id="sampleDAO.selectSampleListTotCnt" parameterClass="searchVO" resultClass="int">
-
-			SELECT COUNT(*) totcnt
-			FROM SAMPLE
-			WHERE 1=1
-			<isEqual prepend="AND" property="searchCondition" compareValue="idx">
-				ID LIKE '%' || #searchKeyword# || '%'
-			</isEqual>
-			<isEqual prepend="AND" property="searchCondition" compareValue="writer">
-				NAME LIKE '%' || #searchKeyword# || '%'
-			</isEqual>
-			<isEqual prepend="AND" property="searchCondition" compareValue="title">
-				TITLE LIKE '%' || #searchKeyword# || '%'
-			</isEqual>
-	</select>
 	
 	<!-- ver.2 testList -->
 	<select id="sampleDAO.testList" parameterClass="searchVO" resultClass="egovMap">
@@ -106,22 +28,14 @@
 		<isEqual prepend="AND" property="searchCondition" compareValue="title">
 			title LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
-		ORDER BY code asc
+		ORDER BY code desc
 		LIMIT #recordCountPerPage# OFFSET #firstIndex#
-		<!-- LIMIT #recordCountPerPage# OFFSET #lastIndex# -->
 	</select>
+	
 	<select id="sampleDAO.testListCnt" parameterClass="searchVO" resultClass="int">
 		SELECT COUNT(*) FROM TEST WHERE 1=1
-		<isEqual prepend="AND" property="searchCondition" compareValue="idx">
-			idx LIKE '%' || #searchKeyword# || '%'
-		</isEqual>
-		<isEqual prepend="AND" property="searchCondition" compareValue="writer">
-			writer LIKE '%' || #searchKeyword# || '%'
-		</isEqual>
-		<isEqual prepend="AND" property="searchCondition" compareValue="title">
-			title LIKE '%' || #searchKeyword# || '%'
-		</isEqual>
 	</select>
+	
 	<!-- 상세 페이지 조회 -->
 	<select id="sampleDAO.testListDetail" parameterClass="searchVO" resultClass="searchVO">
 		SELECT rownum rnum, idx, writer, title, CLOB_TO_CHAR(content) as content, regDate, code
@@ -129,12 +43,14 @@
 		WHERE 1=1 AND code=#code#
 		ORDER BY RNUM ASC
 	</select>
+	
 	<!-- insert test -->
 	<insert id="sampleDAO.insertTest" parameterClass="searchVO">
 		INSERT INTO test
 		( title, writer, content, idx, regDate, fileName, code)
 		VALUES ( #title#, #writer#, #content#, #idx#, NOW(), #fileName#, serial_code.NEXT_VALUE)
 	</insert>
+	
 	<!-- update page -->
 	<select id="sampleDAO.testListUpdate" parameterClass="searchVO" resultClass="searchVO">
 		SELECT rownum rnum, idx, writer, title, CLOB_TO_CHAR(content) as content, regDate, code
@@ -142,19 +58,20 @@
 		WHERE 1=1 AND code=#code#
 		ORDER BY RNUM ASC
 	</select>
+	
 	<!-- update -->
 	<update id="sampleDAO.updateTest" parameterClass="searchVO">
 		UPDATE test
 		SET title = #title#, writer=#writer#, content = #content#, regDate = NOW(), idx=#idx#
 		WHERE code=#code#
 	</update>
+	
 	<!-- delete -->
 	<delete id="sampleDAO.deleteTest" parameterClass="searchVO">
 		DELETE FROM test
 		WHERE code=#code#
 	</delete>
 	
-
 	<!-- 첨부파일 업로드 -->
 	<insert id ="sampleDAO.insertFile" parameterClass="searchVO">
 		INSERT INTO tb_file (
@@ -198,6 +115,15 @@
 	<select id="sampleDAO.excelDownload" parameterClass="searchVO" resultClass="searchVO">
 		SELECT ROWNUM RNUM, IDX, WRITER, TITLE, regDate
 		FROM test
+		<isEqual prepend="AND" property="searchCondition" compareValue="idx">
+			idx LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isEqual prepend="AND" property="searchCondition" compareValue="writer">
+			writer LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isEqual prepend="AND" property="searchCondition" compareValue="title">
+			title LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
 		ORDER BY RNUM ASC
 	</select>
 </sqlMap>

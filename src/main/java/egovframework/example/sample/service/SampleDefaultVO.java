@@ -151,7 +151,6 @@ public class SampleDefaultVO implements Serializable {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
 	}
-	// code
 	
 	/** ver.2 testList **/
 	private String idx;

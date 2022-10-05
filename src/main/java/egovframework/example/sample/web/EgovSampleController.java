@@ -102,7 +102,6 @@ public class EgovSampleController {
 	protected DefaultBeanValidator beanValidator;
 
 	/** ver.2 testList **/
-
 	@RequestMapping(value = "/testList.do")
 	public String testList(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
 
@@ -131,8 +130,7 @@ public class EgovSampleController {
 
 	// 상세 페이지
 	@RequestMapping(value = "/testListDetail.do")
-	public String testListDetail(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model,
-			MultipartFile[] file) throws Exception {
+	public String testListDetail(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file) throws Exception {
 		// 목록 조회
 		List<SampleDefaultVO> testListDetail = sampleService.testListDetail(searchVO);
 
@@ -146,25 +144,21 @@ public class EgovSampleController {
 
 		// 파일 조회
 		List<SampleDefaultVO> fileList = sampleService.fileList(searchVO);
-		/* model.addAttribute("orgFileName", fileList.get(0).getOrgFileName()); */
 		model.addAttribute("orgFileName", fileList);
-		/* System.out.println("파일 이름 : " + fileList.get(0).getOrgFileName()); */
 
 		return "sample/testListDetail";
 	}
 
 	// 등록 페이지
 	@RequestMapping(value = "/testListInsert.do")
-	public String testListInsert(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model)
-			throws Exception {
+	public String testListInsert(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
 		model.addAttribute("sampleVO", new SampleVO());
 		return "sample/testListInsert";
 	}
 
 	// 글 등록
 	@RequestMapping(value = "/insertTest.do")
-	public String insertTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file)
-			throws Exception {
+	public String insertTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file) throws Exception {
 		sampleService.insertTest(searchVO);
 		System.out.println("================== board start ==================");
 		System.out.println("제목 : " + searchVO.getTitle());
@@ -174,7 +168,6 @@ public class EgovSampleController {
 
 		// 파일 업로드
 		String uploadPath = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file";
-		/* String boardIDX = String.valueOf(searchVO.getCode()); */
 
 		for (MultipartFile multipartFile : file) {
 			String orgFileName = multipartFile.getOriginalFilename();
@@ -234,8 +227,7 @@ public class EgovSampleController {
 
 	// 글 수정
 	@PostMapping(value = "/updateTest.do")
-	public String updateTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file)
-			throws Exception {
+	public String updateTest(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model, MultipartFile[] file) throws Exception {
 		System.out.println("********UPDATE TEST**********");
 		System.out.println("제목 : " + searchVO.getTitle());
 		System.out.println("작성자 : " + searchVO.getWriter());
@@ -244,12 +236,12 @@ public class EgovSampleController {
 		System.out.println("code" + searchVO.getCode());
 		System.out.println("날짜 : " + searchVO.getRegDate());
 		System.out.println("********UPDATE END **********");
+		
 		// 게시글 정보 update
 		sampleService.updateTest(searchVO);
 
 		// file update
 		String uploadPath = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file";
-		/* String boardIDX = String.valueOf(searchVO.getCode()); */
 
 		for (MultipartFile multipartFile : file) {
 			String orgFileName = multipartFile.getOriginalFilename();
@@ -290,10 +282,13 @@ public class EgovSampleController {
 	@RequestMapping(value = "/deleteTest.do")
 	public String deleteTest(SampleVO sampleVO, @ModelAttribute("searchVO") SampleDefaultVO searchVO) throws Exception {
 		System.out.println("********DELETE BOARD**********");
+		
 		// 글 정보 삭제
 		sampleService.deleteTest(searchVO);
+		
 		// DB 전체 파일 삭제
 		sampleService.deleteFileAll(searchVO);
+		
 		// server(local) 전체 파일 삭제
 		System.out.println(searchVO.getSaveFileName());
 		String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\";
@@ -310,31 +305,28 @@ public class EgovSampleController {
 
 	// 파일 다운로드
 	@GetMapping("/fileDownload.do")
-	public void download(SampleDefaultVO sampleVO, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public void download(SampleDefaultVO sampleVO, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
 			String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\" + sampleVO.getSaveFileName();
 			String orgFileName = sampleVO.getOrgFileName();
 
-			System.out.println("********DOWNLOAD TEST**********");
+			System.out.println("********DOWNLOAD FILE**********");
 			System.out.println("파일 원본: " + sampleVO.getOrgFileName());
 			System.out.println("글 번호 : " + sampleVO.getCode());
 			System.out.println("파일 이름: " + sampleVO.getSaveFileName());
 			System.out.println("파일 경로: " + path);
-			System.out.println("********DOWNLOAD TEST**********");
+			System.out.println("********DOWNLOAD FILE**********");
 
 			File file = new File(path);
 			orgFileName = new String(orgFileName.getBytes("UTF-8"), "ISO-8859-1"); // 한글 깨짐 인코딩
-			response.setHeader("Content-Disposition", "attachment;filename=" + orgFileName); // 다운로드 되거나 로컬에 저장되는 용도로
-																								// 쓰이는지를 알려주는 헤더
+			response.setHeader("Content-Disposition", "attachment;filename=" + orgFileName); // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
 
 			FileInputStream fileInputStream = new FileInputStream(path); // 파일 읽어오기
 			OutputStream out = response.getOutputStream();
 
 			int read = 0;
 			byte[] buffer = new byte[1024];
-			while ((read = fileInputStream.read(buffer)) != -1) { // 1024바이트씩 계속 읽으면서 outputStream에 저장, -1이 나오면 더이상 읽을
-																	// 파일이 없음
+			while ((read = fileInputStream.read(buffer)) != -1) { // 1024바이트씩 계속 읽으면서 outputStream에 저장, -1이 나오면 더이상 읽을 파일이 없음
 				out.write(buffer, 0, read);
 			}
 

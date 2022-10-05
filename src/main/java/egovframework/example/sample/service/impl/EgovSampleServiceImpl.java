@@ -110,14 +110,6 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	@Override
 	public void insertFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
 		sampleDAO.insertFile(searchVO, file);
-		
-		/*
-		 * System.out.println("================   service ====================");
-		 * System.out.println("VO 파일 이름: " + searchVO.getOrgFileName());
-		 * System.out.println("VO 파일 실제 이름: " + searchVO.getSaveFileName());
-		 * System.out.println("===============================================");
-		 */
-		 
 	}
 	
 	//detail file
@@ -136,10 +128,6 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	@Override
 	public void deleteFile(Integer fileId) throws Exception{
 		sampleDAO.deleteFile(fileId);
-		/*
-		 * System.out.println("====================deleteSerImpl=================");
-		 * System.out.println("serImpl 삭제파일번호 :" + fileId);
-		 */
 	}
 	//delete all file
 	@Override

@@ -76,6 +76,7 @@ public interface EgovSampleService {
 
 	//delete file
 	void deleteFile(Integer fileId) throws Exception;
+	
 	//delete all file
 	void deleteFileAll(SampleDefaultVO searchVO) throws Exception;
 
