@@ -1,18 +1,3 @@
-/*
- * Copyright 2008-2009 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package egovframework.example.sample.service;
 
 import java.io.Serializable;
@@ -21,31 +6,9 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * @Class Name : SampleDefaultVO.java
- * @Description : SampleDefaultVO Class
- * @Modification Information
- * @
- * @  수정일      수정자              수정내용
- * @ ---------   ---------   -------------------------------
- * @ 2009.03.16           최초생성
- *
- * @author 개발프레임웍크 실행환경 개발팀
- * @since 2009. 03.16
- * @version 1.0
- * @see
- *
- *  Copyright (C) by MOPAS All right reserved.
- */
-/**
- * @author aug2322
- *
- */
 public class SampleDefaultVO implements Serializable {
 
-	/**
-	 *  serialVersion UID
-	 */
+	/* serialVersion UID */
 	private static final long serialVersionUID = -858838578081269359L;
 
 	/** 검색조건 */
@@ -152,14 +115,60 @@ public class SampleDefaultVO implements Serializable {
 		return ToStringBuilder.reflectionToString(this);
 	}
 	
-	/** ver.2 testList **/
+	/** DataBase TEST **/
+	/* 게시글 작성자 아이디 */
 	private String idx;
+	/* 게시글 작성자 */
 	private String writer;
+	/* 게시글 제목 */
 	private String title;
+	/* 게시글 내용 */
 	private String content;
+	/* 게시글 등록일 */
 	private Date regDate;
+	/* 게시글 번호(pk) */
 	private int code;
 	
+	/*  DataBase tb_File */
+	/* 첨부 파일 번호(pk) */
+	private int fileId;
+	/* 게시글 번호 == code(fk) */
+	private int boardIdx;
+	/* 첨부 파일 원본 이름 */
+	private String orgFileName;
+	/* 첨부 파일 저장 이름 */
+	private String saveFileName;
+	/* 첨부 파일 사이즈 */
+	private Long fileSize;
+	
+	// file upload test
+	private String fileName;
+	private MultipartFile uploadFile;
+	
+	/* DataBase Member(회원 관리) */
+	/* 회원 아이디(pk) == test.idx */
+	private String userId;
+	/* 회원 비밀번호 */
+	private String userPw;
+	/* 회원 이름 */
+	private String userName;
+	/*회원 이메일*/
+	private String email;
+	/* 회원 가입 일자 */
+	private Date joinDate;
+	
+	/* DateBase tb_reply(댓글 관리) */
+	/* 댓글 고유 번호 */
+	private int rno;
+	/* 게시물 고유 번호(px, fk) */
+	private int replyIdx;
+	/* 댓글 작성자 */
+	private String replyWriter;
+	/* 댓글 내용 */
+	private String replyContent;
+	/* 댓글 작성일자 */
+	private Date replyDate;
+
 	public String getIdx() {
 		return idx;
 	}
@@ -208,14 +217,6 @@ public class SampleDefaultVO implements Serializable {
 		this.code = code;
 	}
 
-	/* file upload */
-	private int fileId;
-	private int boardIdx;
-	private String orgFileName;
-	private String saveFileName;
-	private Long fileSize;
-
-
 	public int getFileId() {
 		return fileId;
 	}
@@ -256,10 +257,6 @@ public class SampleDefaultVO implements Serializable {
 		this.fileSize = fileSize;
 	}
 
-	// file upload test
-	private String fileName;
-	private MultipartFile uploadFile;
-
 	public String getFileName() {
 		return fileName;
 	}
@@ -275,5 +272,85 @@ public class SampleDefaultVO implements Serializable {
 	public void setUploadFile(MultipartFile uploadFile) {
 		this.uploadFile = uploadFile;
 	}
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserPw() {
+		return userPw;
+	}
+
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Date getJoinDate() {
+		return joinDate;
+	}
+
+	public void setJoinDate(Date joinDate) {
+		this.joinDate = joinDate;
+	}
+
+	public int getRno() {
+		return rno;
+	}
+
+	public void setRno(int rno) {
+		this.rno = rno;
+	}
+
+	public int getReplyIdx() {
+		return replyIdx;
+	}
+
+	public void setReplyIdx(int replyIdx) {
+		this.replyIdx = replyIdx;
+	}
+
+	public String getReplyWriter() {
+		return replyWriter;
+	}
+
+	public void setReplyWriter(String replyWriter) {
+		this.replyWriter = replyWriter;
+	}
+
+	public String getReplyContent() {
+		return replyContent;
+	}
+
+	public void setReplyContent(String replyContent) {
+		this.replyContent = replyContent;
+	}
+
+	public Date getReplyDate() {
+		return replyDate;
+	}
+
+	public void setReplyDate(Date replyDate) {
+		this.replyDate = replyDate;
+	}
+
 	
 }

@@ -1,56 +1,21 @@
 package egovframework.example.sample.service.impl;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import egovframework.example.sample.service.EgovSampleService;
 import egovframework.example.sample.service.SampleDefaultVO;
-import egovframework.example.sample.service.SampleVO;
 
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 
-import javax.activation.CommandMap;
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-/**
- * @Class Name : EgovSampleServiceImpl.java
- * @Description : Sample Business Implement Class
- * @Modification Information
- * @
- * @  수정일      수정자              수정내용
- * @ ---------   ---------   -------------------------------
- * @ 2009.03.16           최초생성
- *
- * @author 개발프레임웍크 실행환경 개발팀
- * @since 2009. 03.16
- * @version 1.0
- * @see
- *
- *  Copyright (C) by MOPAS All right reserved.
- */
 
 @Service("sampleService")
 public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements EgovSampleService {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(EgovSampleServiceImpl.class);
 
 	/** SampleDAO */
 	// TODO ibatis 사용
@@ -61,23 +26,25 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	@Resource(name = "egovIdGnrService")
 	private EgovIdGnrService egovIdGnrService;
 
-	/** ver.2 testList **/
+	/** 메인 페이지 **/
 	@Override
 	public List<SampleDefaultVO> testList(SampleDefaultVO searchVO) throws Exception {
 		return sampleDAO.testList(searchVO);
 	}
-	//paging test cnt
+
+	// paging test cnt
 	@Override
 	public int testListCnt(SampleDefaultVO searchVO) throws Exception {
 		return sampleDAO.testListCnt(searchVO);
 	}
-	//testlist detail
+
+	// testList detail
 	@Override
 	public List<SampleDefaultVO> testListDetail(SampleDefaultVO searchVO) throws Exception {
 		return sampleDAO.testListDetail(searchVO);
 	}
-	
-	//testList Insert page
+
+	// testList Insert page
 	@Override
 	public String testListInsert(SampleDefaultVO searchVO) throws Exception {
 		return sampleDAO.testListInsert(searchVO);
@@ -89,57 +56,83 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 		sampleDAO.insertTest(searchVO);
 	}
 
-	// update page 
+	// update page
 	@Override
 	public List<SampleDefaultVO> testListUpdate(SampleDefaultVO searchVO) throws Exception {
 		return sampleDAO.testListUpdate(searchVO);
 	}
+
 	// update
 	@Override
 	public void updateTest(SampleDefaultVO searchVO) throws Exception {
 		sampleDAO.updateTest(searchVO);
 	}
-	
+
 	// delete
 	@Override
-	public void deleteTest(SampleDefaultVO searchVO) throws Exception{
+	public void deleteTest(SampleDefaultVO searchVO) throws Exception {
 		sampleDAO.deleteTest(searchVO);
 	}
-	
-	//insert file
+
+	// insert file
 	@Override
 	public void insertFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
 		sampleDAO.insertFile(searchVO, file);
 	}
-	
-	//detail file
+
+	// detail file
 	@Override
 	public List<SampleDefaultVO> fileList(SampleDefaultVO searchVO) throws Exception {
 		return sampleDAO.fileList(searchVO);
 	}
-	
-	//update file
+
+	// update file
 	@Override
 	public void updateFile(SampleDefaultVO searchVO, MultipartFile[] file) throws Exception {
 		sampleDAO.updateFile(searchVO, file);
 	}
-	
-	//delete file
+
+	// delete file
 	@Override
-	public void deleteFile(Integer fileId) throws Exception{
+	public void deleteFile(Integer fileId) throws Exception {
 		sampleDAO.deleteFile(fileId);
 	}
-	//delete all file
+
+	// delete all file
 	@Override
 	public void deleteFileAll(SampleDefaultVO searchVO) throws Exception {
 		sampleDAO.deleteFileAll(searchVO);
 	}
-	
-	//excel
+
+	// excel
 	@Override
 	public List<SampleDefaultVO> excelDownload(SampleDefaultVO searchVO) throws Exception {
-		System.out.println("===================EXCEL IMPL START=================");
 		return sampleDAO.excelDownload(searchVO);
 	}
+
+	// 댓글 관리
+	// 댓글 조회
+	@Override
+	public List<SampleDefaultVO> replyList(SampleDefaultVO searchVO) throws Exception {
+		return sampleDAO.replyList(searchVO);
+	} 
 	
+	// 댓글 작성
+	@Override
+	public void replyInsert(SampleDefaultVO searchVO) throws Exception {
+		sampleDAO.replyInsert(searchVO); 
+	}
+	
+	// 댓글 수정 
+	//댓글 삭제 
+	@Override
+	public void replyDelete(Integer rno) throws Exception {
+		System.out.println("---------replydelimpl----------");
+		sampleDAO.replyDelete(rno); 
+	}
+	//글 삭제 시 댓글 전체 삭제
+	@Override
+	public void replyDeleteAll(SampleDefaultVO searchVO) {
+		sampleDAO.replyDeleteAll(searchVO);
+	}
 }

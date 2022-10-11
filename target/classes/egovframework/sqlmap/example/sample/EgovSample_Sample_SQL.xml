@@ -14,7 +14,7 @@
 		<result property="regUser" column="reg_user"/>
 	</resultMap>
 	
-	<!-- ver.2 testList -->
+	<!-- 메인 페이지 ( 게시글 리스트 ) -->
 	<select id="sampleDAO.testList" parameterClass="searchVO" resultClass="egovMap">
 		SELECT ROWNUM RNUM, IDX, WRITER, TITLE, regDate, code
 		FROM TEST 
@@ -59,14 +59,18 @@
 		ORDER BY RNUM ASC
 	</select>
 	
-	<!-- update -->
+	<!-- update board-->
 	<update id="sampleDAO.updateTest" parameterClass="searchVO">
 		UPDATE test
-		SET title = #title#, writer=#writer#, content = #content#, regDate = NOW(), idx=#idx#
+		SET title = #title#,
+			writer=#writer#,
+			content = #content#,
+			regDate = NOW(),
+			idx=#idx#
 		WHERE code=#code#
 	</update>
 	
-	<!-- delete -->
+	<!-- delete board -->
 	<delete id="sampleDAO.deleteTest" parameterClass="searchVO">
 		DELETE FROM test
 		WHERE code=#code#
@@ -81,7 +85,11 @@
 			saveFileName,
 			fileSize
 		) values (
-			serial_fileId.NEXT_VALUE, serial_code.CURRENT_VALUE, #orgFileName#, #saveFileName#, #fileSize#
+			serial_fileId.NEXT_VALUE,
+			serial_code.CURRENT_VALUE,
+			#orgFileName#,
+			#saveFileName#,
+			#fileSize#
 		)
 	</insert>
 
@@ -127,4 +135,48 @@
 		</isEqual>
 		ORDER BY RNUM ASC
 	</select>
+	
+	<!-- 댓글 기능 -->
+	<!-- 댓글 조회 -->
+	<select id="sampleDAO.replyList" parameterClass="searchVO" resultClass="searchVO">
+		SELECT rno, replyIdx, replyWriter, replyContent, replyDate
+		FROM tb_reply
+		WHERE replyIdx = #code#
+	</select>
+	
+	<!-- 댓글 작성 -->
+	<insert id="sampleDAO.replyInsert" parameterClass="searchVO">
+		INSERT INTO tb_reply(rno, replyIdx, replyWriter, replyContent, replyDate)
+		VALUES(serial_rno.NEXT_VALUE, #code#, #replyWriter#, #replyContent#, NOW())
+	</insert>
+	<!-- 댓글 수정 -->
+	<!-- 댓글 삭제 -->
+	<delete id="sampleDAO.replyDelete" parameterClass="int">
+		DELETE FROM tb_reply
+		WHERE rno=#rno#
+	</delete>
+	<!-- 글 전체 댓글 삭제 -->
+	<delete id="sampleDAO.replyDeleteAll" parameterClass="searchVO">
+		DELETE FROM tb_reply
+		WHERE replyIdx=#code#
+	</delete>
+	<!-- 회원 관리 -->
+	<!-- 로그인 -->
+	<!-- <select id="sampleDAO.login" resultClass="String">
+		SELECT userName
+		FROM member
+		WHERE userId = #userId# AND userPw = #userPw#
+	</select>
+	로그인 정보
+	<select id="sampleDAO.viewMember" parameterClass="searchVO" resultClass="searchVO">
+		SELECT userId, userPw, userName, email, joinDate
+		FROM member
+		WHERE userId = #userId# AND userPw = #userPw#
+	</select> -->
+	<!-- 회원가입 -->
+<!-- 	<insert id="sampleDAO.signUp" parameterClass="searchVO">
+		INSERT INTO member ( userId, userPw, userName, email, joinDate)
+		VALUES (#userId#, #userPw#, #userName#, #email#, #joinDate#)
+	</insert>
+	 -->
 </sqlMap>

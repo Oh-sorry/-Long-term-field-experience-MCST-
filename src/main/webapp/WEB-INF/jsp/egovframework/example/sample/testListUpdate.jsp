@@ -15,6 +15,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 <script src="/resources/js/summernote-ko-KR.js"></script>
+
 <title>글 정보 수정</title>
 
 <script>
@@ -36,6 +37,7 @@
 		</div>
 	</nav>
 	<br>
+	<!-- 게시글 업데이트 -->
 	<article>
 		<div class="container" role="main">
 			<form name="form" id="form" role="form" method="post" encType="multipart/form-data">

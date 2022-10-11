@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
@@ -11,8 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- include libraries(jQuery, bootstrap) -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
@@ -33,34 +31,31 @@
 	});
 </script>
 </head>
-<body
-	style="text-align: auto; margin: 0 auto; display: inline; padding-top: 100px;">
+<body style="text-align: auto; margin: 0 auto; display: inline; padding-top: 200px;">
 	<nav class="navbar" style="background-color: #d6e6f5;">
 		<div class="container-fluid">
 			<a class="navbar-brand">글 상세 조회</a>
 		</div>
 	</nav>
 	<br>
+	<!-- 게시글 상세 조회 -->
 	<article>
 		<div class="container" role="main">
-			<form name="form" id="form" role="form" method="post"
-				action="updateTest.do" encType="multipart/form-data">
+			<form name="form" id="form" role="form" method="post" action="updateTest.do" encType="multipart/form-data">
 				<div class="form-group">
-					<label for="title">제목</label>
-					<input type="text" class="form-control" name="title" id="title" value='<c:out value="${title}"></c:out>' readonly>
+					<label for="title">제목</label> <input type="text" class="form-control" name="title" id="title" value='<c:out value="${title}"></c:out>' readonly>
 				</div>
 				<div class="form-group">
-					<label for="writer">작성자</label>
-					<input type="text" class="form-control" name="writer" id="writer" value='<c:out value="${writer}"></c:out>' readonly>
+					<label for="writer">작성자</label> <input type="text" class="form-control" name="writer" id="writer" value='<c:out value="${writer}"></c:out>' readonly>
 				</div>
 				<div class="form-group">
 					<label for="content">내용</label>
 					<textarea id="summernote" rows="5" name="content" id="content">${content}</textarea>
 				</div>
 				<div class="form-group">
-					<label for="idx">아이디</label>
-					<input type="text" class="form-control" name="idx" id="idx" value='<c:out value="${idx}"></c:out>' readonly>
+					<label for="idx">아이디</label> <input type="text" class="form-control" name="idx" id="idx" value='<c:out value="${idx}"></c:out>' readonly>
 				</div>
+				<!-- 첨부 파일 시작 -->
 				<div class="form-group">
 					<label for="orgFileName">첨부 파일</label>
 					<c:forEach items="${orgFileName}" var="result" varStatus="status">
@@ -71,29 +66,64 @@
 						</c:if>
 					</c:forEach>
 				</div>
+				<!-- 첨부 파일 끝 -->
 				<div class="form-group">
-					<label for="idx">등록일</label> 
-					<input type="text" class="form-control" name="regDate" id="regDate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${regDate}"/>' readonly>
+					<label for="idx">등록일</label> <input type="text" class="form-control" name="regDate" id="regDate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${regDate}"/>' readonly>
 				</div>
 				<div class="form-group">
-					<label for="code"></label>
-					<input type="hidden" class="form-control" name="code" id="code" value='<c:out value="${code}"></c:out>'>
+					<label for="code"></label> <input type="hidden" class="form-control" name="code" id="code" value='<c:out value="${code}"></c:out>'>
 				</div>
+				<div style="float: right">
+					<button type="button" class="btn btn-sm btn-primary" id="btnUpdate">수정</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button>
+				</div>
+				<br>
+				<!-- 댓글 시작 -->
+				<hr />
+				<div class="form-group" id="file-list">
+					<div class="form-group" id="file-list">
+						<label for="replyWriter">댓글 작성자</label><br> 
+						<input type="text" name="replyWriter" id="replyWriter" placeholder="ID를 입력해주세요"><br>
+						<textarea rows="3" cols="100" name="replyContent" id="replyContent"></textarea>
+						<button type="button" style="float: right" class="btn btn-sm btn-primary" id="replyInsert">댓글 작성</button>
+					</div>
+					<c:forEach items="${reply}" var="reply" varStatus="status">
+						<a>${reply.replyWriter} / <fmt:formatDate value="${reply.replyDate}" pattern="yyyy-MM-dd" />
+						</a>
+						<br>
+						<a>${reply.replyContent}</a>
+						<div style="float: right">
+							<a href="replyDelete.do?rno=${reply.rno}" type="button" class="btn btn-sm btn-danger" id="replyDelete">삭제</a>
+						</div>
+						<hr>
+					</c:forEach>
+				</div>
+				<!-- 댓글 끝 -->
 			</form>
-			<div style="float: right">
-				<button type="button" class="btn btn-sm btn-primary" id="btnUpdate">수정</button>
-				<button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button>
-
-			</div>
+			<br>
 		</div>
 	</article>
 </body>
 <script type="text/javascript">
+	/* 수정 버튼 클릭 시 */
 	$("#btnUpdate").click(function previous() {
 		$(location).attr('href', 'testListUpdate.do?code=${code}');
 	});
+	/* 목록 버튼 클릭 시 */
 	$("#btnList").click(function previous() {
 		$(location).attr('href', 'testList.do');
 	});
+	$("#replyInsert").click(function previous() {
+		alert("댓글을 입력합니다.");
+		document.form.action = "${pageContext.request.contextPath}/replyInsert.do"
+		document.form.submit();
+		
+		
+	});
+	
+	$("#replyDelete").click(function previous() {
+		alert("선택한 댓글을 삭제합니다.")
+	});
+
 </script>
 </html>

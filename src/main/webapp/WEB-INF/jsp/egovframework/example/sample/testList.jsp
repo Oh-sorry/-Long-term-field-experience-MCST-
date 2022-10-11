@@ -44,6 +44,7 @@
 		<div class="container">
 			<div id="table" margin="auto">
 				<br><br>
+				<!-- 게시글 리스트 테이블 -->
 				<table width="100%" border="1" cellpadding="0" cellspacing="0" class = "table table-hover">
 					<colgroup>
 						<col width="10%" />
