@@ -5,7 +5,7 @@ LongTermFieldExperience at MCST (22.09 ~ 22.12)
 
 - board_project -
 
-DEV PERIOD : 22.09.01 ~ 22.10.05
+DEV PERIOD : 22.09.01 ~ 22.10.11
 
 SPRING : eGovFrameWorkDev ver.3.10.0 (eclipse)
 DB : Cubrid 11.0
@@ -25,6 +25,9 @@ FUNCTION
 + 첨부 파일 개별 추가
 + 첨부 파일 전체 삭제(글 삭제 시)
 + 게시글 리스트 엑셀화.( 다운로드 )
++ 댓글 기능
++ 댓글 개별 삭제
++ 댓글 전체 삭제(글 삭제 시)
 
 -메인페이지
 ![메인페이지](https://user-images.githubusercontent.com/33487961/194021946-cf0f2386-e8b3-43a8-85ad-15fd3d762de8.jpg)
@@ -48,3 +51,13 @@ FUNCTION
 ![검색 기능](https://user-images.githubusercontent.com/33487961/194022153-36f6bae4-aec5-483c-9d64-3a66c47f6a4b.jpg)
 - 검색된 데이터만 excel 
 ![검색 결과 따른 엑셀 저장](https://user-images.githubusercontent.com/33487961/194022199-d660d28d-79b5-4dff-a0ae-895ccc8b7653.jpg)
+- 댓글 기능
+![댓글](https://user-images.githubusercontent.com/33487961/195006749-186c8523-0a7e-4812-a5e0-fba335cd26fd.jpg)
+- 댓글 입력
+![댓글 입력](https://user-images.githubusercontent.com/33487961/195006755-cf0b2005-1370-456c-9a0d-0259468f2fda.jpg)
+- 입력된 댓글 조회
+![댓글 입력 조회](https://user-images.githubusercontent.com/33487961/195006754-aa1765c8-f547-47c4-a4ca-12264317319e.jpg)
+- 댓글 삭제
+![댓글 삭제](https://user-images.githubusercontent.com/33487961/195006752-f9103ebc-109d-4ed7-8aa0-770317c227b6.jpg)
+- 글 삭제 시 파일과 동일하게 전체 삭제
+
