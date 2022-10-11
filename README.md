@@ -60,4 +60,3 @@ FUNCTION
 - 댓글 삭제
 ![댓글 삭제](https://user-images.githubusercontent.com/33487961/195006752-f9103ebc-109d-4ed7-8aa0-770317c227b6.jpg)
 - 글 삭제 시 파일과 동일하게 전체 삭제
-
