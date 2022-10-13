@@ -9,6 +9,7 @@ import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
@@ -134,5 +135,59 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	@Override
 	public void replyDeleteAll(SampleDefaultVO searchVO) {
 		sampleDAO.replyDeleteAll(searchVO);
+	}
+	
+	//회원 관리
+	// 회원 로그인 체크
+	@Override
+	public boolean loginCheck(SampleDefaultVO searchVO, HttpSession session) throws Exception {
+		boolean result = sampleDAO.loginCheck(searchVO);
+		if(result) {
+			SampleDefaultVO searchVO2 = viewMember(searchVO);
+			session.setAttribute("userId", searchVO2.getUserId());
+			session.setAttribute("userName", searchVO2.getUserName());
+		}
+		return result;
+	}
+
+	// 회원 로그인 정보
+	@Override
+	public SampleDefaultVO viewMember(SampleDefaultVO searchVO) {
+		return sampleDAO.viewMember(searchVO);
+	}
+
+	// 회원 로그 아웃
+	@Override
+	public void logout(HttpSession session) {
+		session.invalidate();
+	}
+
+	//회원 등록
+	@Override
+	public void memberInsert(SampleDefaultVO searchVO) {
+		sampleDAO.memberInsert(searchVO);
+	}
+	
+	//회원 수정
+	@Override
+	public void memberUpdate(SampleDefaultVO searchVO) {
+		sampleDAO.memberUpdate(searchVO);
+	}
+	//회원 정보 조회
+	@Override
+	public SampleDefaultVO viewUpdate(String userId) {
+		return sampleDAO.viewUpdate(userId);
+	}
+	
+	//회원 정보 삭제
+	@Override
+	public void memberDelete(String userId) {
+		sampleDAO.memberDelete(userId);
+	}
+	
+	//회원 정보 수정 / 삭제 시 비밀번호 체크
+	@Override
+	public boolean checkPw(String userId, String userPw) {
+		return sampleDAO.checkPw(userId, userPw);
 	}
 }

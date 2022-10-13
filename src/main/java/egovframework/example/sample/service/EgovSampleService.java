@@ -2,6 +2,8 @@ package egovframework.example.sample.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public interface EgovSampleService {
@@ -62,5 +64,30 @@ public interface EgovSampleService {
 	
 	//글 삭제 시 댓글 전체 삭제
 	void replyDeleteAll(SampleDefaultVO searchVO);
-		 
+
+	//회원 관리
+	//회원 로그인 체크
+	boolean loginCheck(SampleDefaultVO searchVO, HttpSession session) throws Exception;
+	  
+	//회원 로그인 정보 
+	SampleDefaultVO viewMember(SampleDefaultVO searchVO) throws Exception;
+	  
+	//회원 로그 아웃
+	void logout(HttpSession session);
+
+	//회원 등록
+	void memberInsert(SampleDefaultVO searchVO);
+
+	//회원 수정
+	void memberUpdate(SampleDefaultVO searchVO);
+	//회원 정보 조회
+	SampleDefaultVO viewUpdate(String userId);
+
+	//회원 정보 삭제
+	void memberDelete(String userId);
+	
+	//회원 정보 수정 / 삭제 시 비밀번호 체크
+	boolean checkPw(String userId, String userPw);
+	 
+
 }

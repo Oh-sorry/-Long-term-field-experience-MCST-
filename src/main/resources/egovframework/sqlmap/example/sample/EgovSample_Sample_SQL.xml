@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
+
 <sqlMap namespace="Sample">
 
 	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
@@ -160,23 +161,54 @@
 		DELETE FROM tb_reply
 		WHERE replyIdx=#code#
 	</delete>
+
 	<!-- 회원 관리 -->
-	<!-- 로그인 -->
-	<!-- <select id="sampleDAO.login" resultClass="String">
+	<!-- 로그인 체크 -->
+ 	<select id="sampleDAO.loginCheck" resultClass="String">
 		SELECT userName
 		FROM member
 		WHERE userId = #userId# AND userPw = #userPw#
 	</select>
-	로그인 정보
-	<select id="sampleDAO.viewMember" parameterClass="searchVO" resultClass="searchVO">
-		SELECT userId, userPw, userName, email, joinDate
+	<!-- 로그인 정보 -->
+	<select id="sampleDAO.viewMember" resultClass="searchVO">
+		SELECT userId, userPw, userName, userEmail, userRegdate
 		FROM member
 		WHERE userId = #userId# AND userPw = #userPw#
-	</select> -->
-	<!-- 회원가입 -->
-<!-- 	<insert id="sampleDAO.signUp" parameterClass="searchVO">
-		INSERT INTO member ( userId, userPw, userName, email, joinDate)
-		VALUES (#userId#, #userPw#, #userName#, #email#, #joinDate#)
+	</select>
+	
+	<!-- 회원 등록 -->
+	<insert id="sampleDAO.memberInsert" parameterClass="searchVO">
+		INSERT INTO member(userId, userPw, userName, userEmail, userRegdate)
+		VALUES(#userId#, #userPw#, #userName#, #userEmail#, NOW())
 	</insert>
-	 -->
+	
+	<!-- 회원 수정 -->
+	<update id="sampleDAO.memberUpdate" parameterClass="searchVO">
+		UPDATE member
+		SET userPw = #userPw#,
+			userName=#userName#,
+			userEmail = #userEmail#,
+			userRegdate = NOW()
+		WHERE userId=#userId#
+	</update>
+	
+	<!-- 회원 정보 조회 -->
+	<select id="sampleDAO.viewUpdate" resultClass="searchVO">
+		SELECT userId, userPw, userName, userEmail, userRegdate
+		FROM member
+		WHERE userId = #userId#
+	</select>
+	
+	<!-- 회원 삭제 -->
+	<delete id="sampleDAO.memberDelete">
+		DELETE FROM member
+		WHERE userId=#userId#
+	</delete>
+	
+	<!-- 비밀번호 체크 -->
+	<select id="sampleDAO.checkPw" resultClass="int">
+		SELECT COUNT(*)
+		FROM member
+		WHERE userId=#userId# AND userPw=#userPw#
+	</select>
 </sqlMap>

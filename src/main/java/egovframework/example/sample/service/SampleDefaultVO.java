@@ -145,18 +145,6 @@ public class SampleDefaultVO implements Serializable {
 	private String fileName;
 	private MultipartFile uploadFile;
 	
-	/* DataBase Member(회원 관리) */
-	/* 회원 아이디(pk) == test.idx */
-	private String userId;
-	/* 회원 비밀번호 */
-	private String userPw;
-	/* 회원 이름 */
-	private String userName;
-	/*회원 이메일*/
-	private String email;
-	/* 회원 가입 일자 */
-	private Date joinDate;
-	
 	/* DateBase tb_reply(댓글 관리) */
 	/* 댓글 고유 번호 */
 	private int rno;
@@ -168,7 +156,20 @@ public class SampleDefaultVO implements Serializable {
 	private String replyContent;
 	/* 댓글 작성일자 */
 	private Date replyDate;
-
+	
+	/* DataBase memeber(회원 관리) */
+	/* 회원 아이디 */
+	private String userId;
+	/* 회원 비밀번호 */
+	private String userPw;
+	/* 회원 이름 */
+	private String userName;
+	/* 회원 이메일 */
+	private String userEmail;
+	/* 회원 등록 날짜 */
+	private Date userRegdate;
+	
+	// 게시글 getter, ,setter
 	public String getIdx() {
 		return idx;
 	}
@@ -217,6 +218,7 @@ public class SampleDefaultVO implements Serializable {
 		this.code = code;
 	}
 
+	// 파일 getter setter
 	public int getFileId() {
 		return fileId;
 	}
@@ -272,46 +274,8 @@ public class SampleDefaultVO implements Serializable {
 	public void setUploadFile(MultipartFile uploadFile) {
 		this.uploadFile = uploadFile;
 	}
-	public String getUserId() {
-		return userId;
-	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getUserPw() {
-		return userPw;
-	}
-
-	public void setUserPw(String userPw) {
-		this.userPw = userPw;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Date getJoinDate() {
-		return joinDate;
-	}
-
-	public void setJoinDate(Date joinDate) {
-		this.joinDate = joinDate;
-	}
-
+	// 댓글 getter setter
 	public int getRno() {
 		return rno;
 	}
@@ -351,6 +315,46 @@ public class SampleDefaultVO implements Serializable {
 	public void setReplyDate(Date replyDate) {
 		this.replyDate = replyDate;
 	}
-
 	
+	// 회원 getter setter
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserPw() {
+		return userPw;
+	}
+
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public Date getUserRegdate() {
+		return userRegdate;
+	}
+
+	public void setUserRegdate(Date userRegdate) {
+		this.userRegdate = userRegdate;
+	}
+
 }

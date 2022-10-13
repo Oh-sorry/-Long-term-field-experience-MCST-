@@ -38,6 +38,17 @@
 	<nav class="navbar" style="background-color: #d6e6f5;">
 		<div class="container-fluid">
 			<a class="navbar-brand">Main Board</a>
+			<c:choose>
+				<c:when test="${sessionScope.userId == null }">
+					<a href="${pageContext.request.contextPath}/login.do">로그인</a>
+				</c:when>
+				<c:otherwise>
+					${sessionScope.userName }님이 로그인 중입니다.
+					<a href="${pageContext.request.contextPath}/logout.do">로그아웃</a>
+				</c:otherwise>
+			</c:choose>
+			<br>
+			<button type="button" class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/memberUpdatePage.do?userId=${userId}'">회원 정보 수정</button>
 		</div>
 	</nav>
 	<form:form commandName="searchVO" id="listForm" name="listForm" method="post">

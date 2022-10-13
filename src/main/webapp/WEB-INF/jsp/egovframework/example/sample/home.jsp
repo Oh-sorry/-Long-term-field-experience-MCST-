@@ -1,49 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- include libraries(jQuery, bootstrap) -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<script
-	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script
-	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<title>login</title>
+<meta charset="EUC-KR">
+<title>HOME</title>
 </head>
-<a href="/board/list">°Ô½ÃÆÇ</a>
-<br />
-<script type="text/javascript">
-
-</script>
 <body>
-	<h2>·Î±×ÀÎ</h2>
-	<form name="form1" method="post">    
-		<table width="400px">
-			<tr>
-				<td>¾ÆÀÌµð</td>
-				<td><input name="userId" id="userId"></td>
-			</tr>
-			<tr>
-				<td>ºñ¹Ð¹øÈ£</td>
-				<td><input type="password" name="userPw" id="userPw"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<button type="button" id="btnLogin">·Î±×ÀÎ</button> 
-					<c:if test="${msg == 'failure'}">
-						<div style="color: red">¾ÆÀÌµð ¶Ç´Â ºñ¹Ð¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.</div>
-					</c:if> 
-					<c:if test="${msg == 'logout'}">
-						<div style="color: red">·Î±×¾Æ¿ô µÇ¾ú½À´Ï´Ù.</div>
-					</c:if>
-				</td>
-			</tr>
-		</table>
-	</form>
+<%@ include file = "menu.jsp" %>
+	<c:if test="${msg == 'success'}">
+		<h2>${sessionScope.userName}(${sessionScope.userId})ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤.</h2>
+	</c:if>
 </body>
 </html>

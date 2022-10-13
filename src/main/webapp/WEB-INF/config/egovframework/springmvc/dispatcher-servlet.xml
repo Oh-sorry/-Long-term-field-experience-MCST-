@@ -71,4 +71,5 @@
 	</bean>
 	
     <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>
+    <mvc:default-servlet-handler/>
 </beans>

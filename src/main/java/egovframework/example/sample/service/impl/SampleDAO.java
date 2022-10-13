@@ -1,6 +1,8 @@
 package egovframework.example.sample.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -117,4 +119,49 @@ public class SampleDAO extends EgovAbstractDAO {
 		delete("sampleDAO.replyDeleteAll", searchVO);
 	}
 
+	// 회원 관리
+	// 회원 로그인 체크
+	
+	public boolean loginCheck(SampleDefaultVO searchVO) { 
+		String name = (String) select("sampleDAO.loginCheck", searchVO);
+		return (name == null) ? false : true;
+	}
+
+	// 회원 로그인 정보 
+	public SampleDefaultVO viewMember(SampleDefaultVO searchVO) {
+		return (SampleDefaultVO) select("sampleDAO.viewMember",searchVO);
+	}
+
+	// 회원 로그 아웃
+	public void logout(HttpSession session) { 
+		
+	}
+	//회원 등록
+	public void memberInsert(SampleDefaultVO searchVO) {
+		insert("sampleDAO.memberInsert", searchVO);
+	}
+	//회원 수정
+	public void memberUpdate(SampleDefaultVO searchVO) {
+		update("sampleDAO.memberUpdate", searchVO);
+	}
+	//회원 정보 조회
+	public SampleDefaultVO viewUpdate(String userId) {
+		return (SampleDefaultVO) select("sampleDAO.viewUpdate", userId);
+		
+	}
+	//회원 삭제
+	public void memberDelete(String userId) {
+		delete("sampleDAO.memberDelete", userId);
+	}
+	//회원 정보 수정 / 삭제 시 비밀번호 체크
+	public boolean checkPw(String userId, String userPw) {
+		boolean result = false;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("userPw", userPw);
+		int count = (int) select("sampleDAO.checkPw", map);
+		if (count==1) result=true;
+		return result;
+	}
+	
 }
