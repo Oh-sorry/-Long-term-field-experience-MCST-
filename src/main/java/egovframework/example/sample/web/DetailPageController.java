@@ -27,13 +27,7 @@ public class DetailPageController {
 		// 목록 조회
 		List<SampleDefaultVO> testListDetail = sampleService.testListDetail(searchVO);
 
-		model.addAttribute("resultList", testListDetail);
-		model.addAttribute("title", testListDetail.get(0).getTitle());
-		model.addAttribute("writer", testListDetail.get(0).getWriter());
-		model.addAttribute("content", testListDetail.get(0).getContent());
-		model.addAttribute("idx", testListDetail.get(0).getIdx());
-		model.addAttribute("regDate", testListDetail.get(0).getRegDate());
-		model.addAttribute("code", testListDetail.get(0).getCode());
+		model.addAttribute("resultList", testListDetail.get(0));
 
 		System.out.println("=============== 게시글 조회 ====================");
 		System.out.println("제목 : " + testListDetail.get(0).getTitle());

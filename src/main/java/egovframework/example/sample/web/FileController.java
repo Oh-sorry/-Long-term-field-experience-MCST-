@@ -26,16 +26,20 @@ public class FileController {
 
 	// 파일 다운로드
 	@GetMapping("/fileDownload.do")
-	public void download(SampleDefaultVO sampleVO, HttpServletRequest request, HttpServletResponse response)
+	public void download(@RequestParam("fileId") Integer fileId, SampleDefaultVO searchVO, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		try {
-			String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\" + sampleVO.getSaveFileName();
-			String orgFileName = sampleVO.getOrgFileName();
-
+			searchVO.setFileId(fileId);
+			System.out.println(searchVO.getFileId());
+			SampleDefaultVO downloadFile = sampleService.downloadFile(fileId);
+			
+			String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\" + downloadFile.getSaveFileName();
+			String orgFileName = downloadFile.getOrgFileName();
+			
 			System.out.println("********DOWNLOAD FILE**********");
-			System.out.println("파일 원본: " + sampleVO.getOrgFileName());
-			System.out.println("글 번호 : " + sampleVO.getCode());
-			System.out.println("파일 이름: " + sampleVO.getSaveFileName());
+			System.out.println("파일 원본: " + downloadFile.getOrgFileName());
+			System.out.println("글 번호 : " + downloadFile.getBoardIdx());
+			System.out.println("파일 이름: " + downloadFile.getSaveFileName());
 			System.out.println("파일 경로: " + path);
 			System.out.println("********DOWNLOAD FILE**********");
 

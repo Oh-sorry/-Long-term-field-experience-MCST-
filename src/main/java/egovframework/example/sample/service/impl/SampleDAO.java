@@ -163,5 +163,10 @@ public class SampleDAO extends EgovAbstractDAO {
 		if (count==1) result=true;
 		return result;
 	}
+
+	public SampleDefaultVO downloadFile(Integer fileId) {
+		return(SampleDefaultVO) select("sampleDAO.downloadFile", fileId);
+
+	}
 	
 }

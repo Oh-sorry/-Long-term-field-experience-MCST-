@@ -102,7 +102,7 @@
 	</select>
 
 	<!-- 첨부파일 다운로드 -->
-	<select id="sampleDAO.downloadFile" parameterClass="searchVO" resultClass="searchVO">
+	<select id="sampleDAO.downloadFile" parameterClass="int" resultClass="searchVO">
 		SELECT saveFileName, orgFileName
 		FROM tb_file
 		WHERE fileId = #fileId#

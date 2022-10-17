@@ -190,4 +190,9 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	public boolean checkPw(String userId, String userPw) {
 		return sampleDAO.checkPw(userId, userPw);
 	}
+	
+	@Override
+	public SampleDefaultVO downloadFile(Integer fileId) {
+		return (SampleDefaultVO) sampleDAO.downloadFile(fileId);
+	}
 }

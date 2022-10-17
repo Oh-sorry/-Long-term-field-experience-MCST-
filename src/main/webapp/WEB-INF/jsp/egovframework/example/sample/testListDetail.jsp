@@ -41,26 +41,27 @@
 	<!-- 게시글 상세 조회 -->
 	<article>
 		<div class="container" role="main">
-			<form name="form" id="form" role="form" method="post" action="updateTest.do" encType="multipart/form-data">
+			<form name="form" id="form" role="form" method="post" action="updateTest.do" encType="multipart/form-data" >
 				<div class="form-group">
-					<label for="title">제목</label> <input type="text" class="form-control" name="title" id="title" value='<c:out value="${title}"></c:out>' readonly>
+					<label for="title">제목</label> <input type="text" class="form-control" name="title" id="title" value='<c:out value="${resultList.title}"></c:out>' readonly>
 				</div>
 				<div class="form-group">
-					<label for="writer">작성자</label> <input type="text" class="form-control" name="writer" id="writer" value='<c:out value="${writer}"></c:out>' readonly>
+					<label for="writer">작성자</label> <input type="text" class="form-control" name="writer" id="writer" value='<c:out value="${resultList.writer}"></c:out>' readonly>
 				</div>
 				<div class="form-group">
 					<label for="content">내용</label>
-					<textarea id="summernote" rows="5" name="content" id="content">${content}</textarea>
+					<textarea id="summernote" rows="5" name="content" id="content">${resultList.content}</textarea>
 				</div>
 				<div class="form-group">
-					<label for="idx">아이디</label> <input type="text" class="form-control" name="idx" id="idx" value='<c:out value="${idx}"></c:out>' readonly>
+					<label for="idx">아이디</label> <input type="text" class="form-control" name="idx" id="idx" value='<c:out value="${resultList.idx}"></c:out>' readonly>
 				</div>
 				<!-- 첨부 파일 시작 -->
 				<div class="form-group">
 					<label for="orgFileName">첨부 파일</label>
 					<c:forEach items="${orgFileName}" var="result" varStatus="status">
 						<c:if test="${result.saveFileName ne null}">
-							<a href="fileDownload.do?saveFileName=${result.saveFileName}&code=${result.boardIdx}&orgFileName=${result.orgFileName}">
+							<%-- <a href="fileDownload.do?saveFileName=${result.saveFileName}&code=${result.boardIdx}&orgFileName=${result.orgFileName}"> --%>
+							<a href="fileDownload.do?fileId=${result.fileId}">
 								<input type="text" name="orgFileName" id="orgFileName" value='<c:out value="${result.orgFileName}"></c:out>' class="form-control" readonly="readonly" />
 							</a>
 						</c:if>
@@ -68,10 +69,10 @@
 				</div>
 				<!-- 첨부 파일 끝 -->
 				<div class="form-group">
-					<label for="idx">등록일</label> <input type="text" class="form-control" name="regDate" id="regDate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${regDate}"/>' readonly>
+					<label for="idx">등록일</label> <input type="text" class="form-control" name="regDate" id="regDate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${resultList.regDate}"/>' readonly>
 				</div>
 				<div class="form-group">
-					<label for="code"></label> <input type="hidden" class="form-control" name="code" id="code" value='<c:out value="${code}"></c:out>'>
+					<label for="code"></label> <input type="hidden" class="form-control" name="code" id="code" value='<c:out value="${resultList.code}"></c:out>'>
 				</div>
 				<div style="float: right">
 					<button type="button" class="btn btn-sm btn-primary" id="btnUpdate">수정</button>
@@ -86,6 +87,7 @@
 						<input type="text" name="replyWriter" id="replyWriter" placeholder="ID를 입력해주세요"><br>
 						<textarea rows="3" cols="100" name="replyContent" id="replyContent"></textarea>
 						<button type="button" style="float: right" class="btn btn-sm btn-primary" id="replyInsert">댓글 작성</button>
+						<!-- <a href="replyInsert.do" type="button" class="btn btn-sm btn-primary" id="replyInsert">댓글 작성</a> -->
 					</div>
 					<c:forEach items="${reply}" var="reply" varStatus="status">
 						<a>${reply.replyWriter} / <fmt:formatDate value="${reply.replyDate}" pattern="yyyy-MM-dd" />
@@ -96,6 +98,7 @@
 							<a href="replyDelete.do?rno=${reply.rno}" type="button" class="btn btn-sm btn-danger" id="replyDelete">삭제</a>
 						</div>
 						<hr>
+						
 					</c:forEach>
 				</div>
 				<!-- 댓글 끝 -->
@@ -107,7 +110,7 @@
 <script type="text/javascript">
 	/* 수정 버튼 클릭 시 */
 	$("#btnUpdate").click(function previous() {
-		$(location).attr('href', 'testListUpdate.do?code=${code}');
+		$(location).attr('href', 'testListUpdate.do?code=${resultList.code}');
 	});
 	/* 목록 버튼 클릭 시 */
 	$("#btnList").click(function previous() {
@@ -117,8 +120,6 @@
 		alert("댓글을 입력합니다.");
 		document.form.action = "${pageContext.request.contextPath}/replyInsert.do"
 		document.form.submit();
-		
-		
 	});
 	
 	$("#replyDelete").click(function previous() {

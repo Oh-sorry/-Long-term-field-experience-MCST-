@@ -88,6 +88,8 @@ public interface EgovSampleService {
 	
 	//회원 정보 수정 / 삭제 시 비밀번호 체크
 	boolean checkPw(String userId, String userPw);
+
+	SampleDefaultVO downloadFile(Integer fileId);
 	 
 
 }
