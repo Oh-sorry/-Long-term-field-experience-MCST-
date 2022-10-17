@@ -64,7 +64,7 @@
 					<c:forEach items="${orgFileName}" var="result" varStatus="status">
 						<div class="form-group" id="file-list">
 							<input type="text" name="orgFileName" id="orgFileName" value='<c:out value="${result.orgFileName}"></c:out>' class="form-control" readonly="readonly"/>
-							<a href='deleteFile.do?fileId=${result.fileId}&saveFileName=${result.saveFileName}' class='btn btn-sm btn-danger' id='file-delete' name='file-delete1' style="float: right">삭제</a>
+							<a href='deleteFile.do?fileId=${result.fileId}&boardIdx=${result.boardIdx}' class='btn btn-sm btn-danger' id='file-delete' name='file-delete1' style="float: right">삭제</a>
 						</div>
 					</c:forEach>
 				</div>

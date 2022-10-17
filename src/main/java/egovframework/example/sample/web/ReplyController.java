@@ -33,14 +33,16 @@ public class ReplyController {
 	
 	//댓글 삭제
 	@RequestMapping(value="/replyDelete.do")
-	public String replyDelete(@RequestParam("rno") Integer rno, SampleDefaultVO searchVO, HttpServletRequest request) throws Exception {
+	public String replyDelete(@RequestParam("rno") Integer rno, @RequestParam("replyIdx") Integer replyIdx, SampleDefaultVO searchVO, HttpServletRequest request) throws Exception {
 		searchVO.setRno(rno);
+		searchVO.setReplyIdx(replyIdx);
 		System.out.println("========-delete Reply==========");
 		System.out.println("삭제 댓글 아이디 :" + rno);
 		System.out.println("========-delete Reply==========");
 		sampleService.replyDelete(rno);
-		
-		String referer = request.getHeader("Referer");
-		return "redirect:" + referer;
-	}
+		/*
+		 * String referer = request.getHeader("Referer"); return "redirect:" + referer;
+		 */
+		return "redirect:testListDetail.do?code=" + searchVO.getReplyIdx();
+		}
 }

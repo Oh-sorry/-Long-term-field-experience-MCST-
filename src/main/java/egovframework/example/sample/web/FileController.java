@@ -63,12 +63,13 @@ public class FileController {
 
 	// 파일 삭제
 	@RequestMapping(value = "/deleteFile.do")
-	public String deleteFile(@RequestParam("fileId") Integer fileId, HttpServletRequest request,
+	public String deleteFile(@RequestParam("fileId") Integer fileId, @RequestParam("boardIdx") Integer boardIdx, HttpServletRequest request,
 			@ModelAttribute("searchVO") SampleDefaultVO searchVO) throws Exception {
 		System.out.println("==================== delete board =================");
 		System.out.println("삭제 아이디 : " + fileId);
 		System.out.println("==================== delete board =================");
 		searchVO.setFileId(fileId);
+		searchVO.setBoardIdx(boardIdx);
 
 		// DB에서 삭제
 		sampleService.deleteFile(fileId);
@@ -82,8 +83,9 @@ public class FileController {
 		if (deleteFile.exists()) {
 			deleteFile.delete();
 		}
-
-		String referer = request.getHeader("Referer");
-		return "redirect:" + referer;
+		/*
+		 * String referer = request.getHeader("Referer"); return "redirect:" + referer;
+		 */
+		return "redirect: testListUpdate.do?code=" + searchVO.getBoardIdx();
 	}
 }

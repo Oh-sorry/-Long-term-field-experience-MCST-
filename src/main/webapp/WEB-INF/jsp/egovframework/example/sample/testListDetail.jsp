@@ -95,7 +95,7 @@
 						<br>
 						<a>${reply.replyContent}</a>
 						<div style="float: right">
-							<a href="replyDelete.do?rno=${reply.rno}" type="button" class="btn btn-sm btn-danger" id="replyDelete">삭제</a>
+							<a href="replyDelete.do?rno=${reply.rno}&replyIdx=${reply.replyIdx}" type="button" class="btn btn-sm btn-danger" id="replyDelete">삭제</a>
 						</div>
 						<hr>
 						
