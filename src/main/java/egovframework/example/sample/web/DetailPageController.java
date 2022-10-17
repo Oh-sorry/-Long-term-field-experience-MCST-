@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.example.sample.service.EgovSampleService;
 import egovframework.example.sample.service.SampleDefaultVO;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Controller
 public class DetailPageController {
@@ -63,6 +64,11 @@ public class DetailPageController {
 			System.out.println("                                             ");
 		}
 		System.out.println("*************** 댓글 조회  ******************");
+		
+		//페이지 기억
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(searchVO.getPageIndex()); 
+		model.addAttribute("paginationInfo", paginationInfo);
 		
 		return "sample/testListDetail";
 	}

@@ -38,10 +38,12 @@
 		</div>
 	</nav>
 	<br>
+	${resultList.code}
 	<!-- 게시글 상세 조회 -->
 	<article>
 		<div class="container" role="main">
 			<form name="form" id="form" role="form" method="post" action="updateTest.do" encType="multipart/form-data" >
+				<input id="pageIndex" name="pageIndex" type="hidden" value="${paginationInfo.currentPageNo}">
 				<div class="form-group">
 					<label for="title">제목</label> <input type="text" class="form-control" name="title" id="title" value='<c:out value="${resultList.title}"></c:out>' readonly>
 				</div>
@@ -114,7 +116,9 @@
 	});
 	/* 목록 버튼 클릭 시 */
 	$("#btnList").click(function previous() {
-		$(location).attr('href', 'testList.do');
+		/* $(location).attr('href', 'testList.do'); */
+		document.form.action = "${pageContext.request.contextPath}/testList.do"
+		document.form.submit();
 	});
 	$("#replyInsert").click(function previous() {
 		alert("댓글을 입력합니다.");

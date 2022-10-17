@@ -14,6 +14,7 @@
 <!-- bootstrap css -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 </head>
 <!-- pagination link -->
 <script type="text/javascript" language="javascript" defer="defer">
@@ -30,6 +31,12 @@
 	function fn_egov_excel() {
 		document.listForm.action = "<c:url value= '/excelDownload.do'/>"
 		document.listForm.submit();
+	}
+	function goView(code) {
+		$('[id=listForm] #code').val(code);
+		$('#listForm').attr('action',
+				"${pageContext.request.contextPath}/testListDetail.do");
+		$('#listForm').submit();
 	}
 </script>
 <body
@@ -52,6 +59,8 @@
 		</div>
 	</nav>
 	<form:form commandName="searchVO" id="listForm" name="listForm" method="post">
+		 <input type="hidden" id="code" name="code" value="${resultList[0].code}">
+		
 		<div class="container">
 			<div id="table" margin="auto">
 				<br><br>
@@ -73,9 +82,8 @@
 						<tr>
 							<td align="center" class="listtd"><c:out
 									value="${result.rnum}" />&nbsp;</td>
-							<td align="center" class="listtd"><a
-								href="testListDetail.do?code=<c:out value="${result.code}"/>"><c:out
-										value="${result.title}" />&nbsp;</a></td>
+							<td><a href="javascript:goView('${result.code}');">${result.title}</a></td>
+
 							<td align="center" class="listtd"><c:out
 									value="${result.writer}" />&nbsp;</td>
 							<td align="center" class="listtd"><c:out
