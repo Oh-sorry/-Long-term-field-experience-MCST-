@@ -5,7 +5,11 @@ LongTermFieldExperience at MCST (22.09 ~ 22.12)
 
 - board_project -
 
+<<<<<<< HEAD
 DEV PERIOD : 22.09.01 ~ 22.10.05
+=======
+DEV PERIOD : 22.09.01 ~ 22.10.13
+>>>>>>> cf2fc9cca9f33b097d1e89494ba267d5052a8e9e
 
 SPRING : eGovFrameWorkDev ver.3.10.0 (eclipse)
 DB : Cubrid 11.0
@@ -25,6 +29,14 @@ FUNCTION
 + 첨부 파일 개별 추가
 + 첨부 파일 전체 삭제(글 삭제 시)
 + 게시글 리스트 엑셀화.( 다운로드 )
+<<<<<<< HEAD
+=======
++ 댓글 기능
++ 댓글 개별 삭제
++ 댓글 전체 삭제(글 삭제 시)
++ 로그인/로그아웃
++ 회원가입
+>>>>>>> cf2fc9cca9f33b097d1e89494ba267d5052a8e9e
 
 -메인페이지
 ![메인페이지](https://user-images.githubusercontent.com/33487961/194021946-cf0f2386-e8b3-43a8-85ad-15fd3d762de8.jpg)
