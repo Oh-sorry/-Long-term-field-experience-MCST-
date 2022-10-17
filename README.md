@@ -39,7 +39,7 @@ FUNCTION
 + 로그인/로그아웃
 + 회원가입
 + ===================
-피드백
++ 피드백
 + link 뒤 간결화
 +return referer => redirect로
 ( 왠만하면 referer 미사용)
