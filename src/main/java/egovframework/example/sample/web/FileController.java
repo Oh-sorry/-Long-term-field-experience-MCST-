@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.example.sample.service.EgovSampleService;
 import egovframework.example.sample.service.SampleDefaultVO;
+import egovframework.rte.fdl.property.EgovPropertyService;
 
 @Controller
 public class FileController {
@@ -23,6 +24,9 @@ public class FileController {
 	/** EgovSampleService */
 	@Resource(name = "sampleService")
 	private EgovSampleService sampleService;
+	
+	@Resource(name="propertiesService")
+    protected EgovPropertyService propertiesService;
 
 	// 파일 다운로드
 	@GetMapping("/fileDownload.do")
@@ -33,7 +37,9 @@ public class FileController {
 			System.out.println(searchVO.getFileId());
 			SampleDefaultVO downloadFile = sampleService.downloadFile(fileId);
 			
-			String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\" + downloadFile.getSaveFileName();
+			String filePath =  propertiesService.getString("filePath");
+			System.out.println(filePath);
+			String path = filePath + downloadFile.getSaveFileName();
 			String orgFileName = downloadFile.getOrgFileName();
 			
 			System.out.println("********DOWNLOAD FILE**********");
@@ -78,7 +84,8 @@ public class FileController {
 		System.out.println("====================delete File=================");
 		System.out.println("삭제 파일 이름 : " + searchVO.getSaveFileName());
 		System.out.println("====================delete File=================");
-		String path = "C:\\Users\\aug2322\\eclipse-workspace\\board_project\\file\\" + searchVO.getSaveFileName();
+		String filePath =  propertiesService.getString("filePath");
+		String path = filePath + searchVO.getSaveFileName();
 		File deleteFile = new File(path);
 		if (deleteFile.exists()) {
 			deleteFile.delete();
@@ -86,6 +93,6 @@ public class FileController {
 		/*
 		 * String referer = request.getHeader("Referer"); return "redirect:" + referer;
 		 */
-		return "redirect: testListUpdate.do?code=" + searchVO.getBoardIdx();
+		return "redirect: testListInsert.do?code=" + searchVO.getBoardIdx();
 	}
 }

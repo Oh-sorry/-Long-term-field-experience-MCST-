@@ -15,7 +15,6 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
-<script src="/resources/js/summernote-ko-KR.js"></script>
 <title>글 상세 조회</title>
 <script>
 	$(document).ready(function() {
@@ -38,7 +37,6 @@
 		</div>
 	</nav>
 	<br>
-	${resultList.code}
 	<!-- 게시글 상세 조회 -->
 	<article>
 		<div class="container" role="main">
@@ -112,7 +110,7 @@
 <script type="text/javascript">
 	/* 수정 버튼 클릭 시 */
 	$("#btnUpdate").click(function previous() {
-		$(location).attr('href', 'testListUpdate.do?code=${resultList.code}');
+		$(location).attr('href', 'testListInsert.do?code=${resultList.code}');
 	});
 	/* 목록 버튼 클릭 시 */
 	$("#btnList").click(function previous() {
