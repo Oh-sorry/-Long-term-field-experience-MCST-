@@ -41,9 +41,10 @@ FUNCTION
 + ===================
 + 피드백
 + link 뒤 간결화
-+return referer => redirect로
++ return referer => redirect로
 ( 왠만하면 referer 미사용)
 + 상세 페이지 parameter 파일 번호로만 받도록
++ 목록 버튼 클릭 시 paging 정보 불러오기(main, 등록, 수정 페이지)
 + ===================
 
 -메인페이지
