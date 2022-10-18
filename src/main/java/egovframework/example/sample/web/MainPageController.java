@@ -1,6 +1,7 @@
 package egovframework.example.sample.web;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import egovframework.example.sample.service.EgovSampleService;
 import egovframework.example.sample.service.SampleDefaultVO;
@@ -44,6 +47,9 @@ public class MainPageController {
 		List<SampleDefaultVO> testList = sampleService.testList(searchVO);
 		model.addAttribute("resultList", testList);
 
+		Map result = new ObjectMapper().convertValue(searchVO, Map.class);
+		model.addAttribute("searchFormData", result);
+		
 		System.out.println("*************** MAIN BOARD ******************");
 		return "sample/testList";
 	}

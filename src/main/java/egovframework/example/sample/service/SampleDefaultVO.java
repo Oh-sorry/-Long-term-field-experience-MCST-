@@ -169,6 +169,34 @@ public class SampleDefaultVO implements Serializable {
 	/* 회원 등록 날짜 */
 	private Date userRegdate;
 	
+	private String searchprojectid;
+	private String searchtitle;
+	private String searchusername;
+	
+	public String getSearchprojectid() {
+		return searchprojectid;
+	}
+
+	public void setSearchprojectid(String searchprojectid) {
+		this.searchprojectid = searchprojectid;
+	}
+
+	public String getSearchtitle() {
+		return searchtitle;
+	}
+
+	public void setSearchtitle(String searchtitle) {
+		this.searchtitle = searchtitle;
+	}
+
+	public String getSearchusername() {
+		return searchusername;
+	}
+
+	public void setSearchusername(String searchusername) {
+		this.searchusername = searchusername;
+	}
+
 	// 게시글 getter, ,setter
 	public String getIdx() {
 		return idx;

@@ -41,7 +41,8 @@
 	<article>
 		<div class="container" role="main">
 			<form name="form" id="form" role="form" method="post" action="updateTest.do" encType="multipart/form-data" >
-				<input id="pageIndex" name="pageIndex" type="hidden" value="${paginationInfo.currentPageNo}">
+				<input type="hidden" id="pageIndex" name="pageIndex" value="${paginationInfo.currentPageNo}">
+				<input type="hidden" id="searchtitle" name="searchtitle" value="${searchFormData.searchtitle}">
 				<div class="form-group">
 					<label for="title">제목</label> <input type="text" class="form-control" name="title" id="title" value='<c:out value="${resultList.title}"></c:out>' readonly>
 				</div>
@@ -110,11 +111,11 @@
 <script type="text/javascript">
 	/* 수정 버튼 클릭 시 */
 	$("#btnUpdate").click(function previous() {
-		$(location).attr('href', 'testListInsert.do?code=${resultList.code}');
+		document.form.action = "${pageContext.request.contextPath}/testListInsert.do"
+		document.form.submit();
 	});
 	/* 목록 버튼 클릭 시 */
 	$("#btnList").click(function previous() {
-		/* $(location).attr('href', 'testList.do'); */
 		document.form.action = "${pageContext.request.contextPath}/testList.do"
 		document.form.submit();
 	});

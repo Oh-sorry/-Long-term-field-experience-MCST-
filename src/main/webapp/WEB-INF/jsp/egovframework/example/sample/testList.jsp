@@ -12,9 +12,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>MAIN</title>
 <!-- bootstrap css -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<!-- include summernote css/js-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 </head>
 <!-- pagination link -->
 <script type="text/javascript" language="javascript" defer="defer">
@@ -38,6 +41,12 @@
 				"${pageContext.request.contextPath}/testListDetail.do");
 		$('#listForm').submit();
 	}
+	function goInsert(code) {
+		$('[id=listForm] #code').val(code);
+		$('#listForm').attr('action',
+				"${pageContext.request.contextPath}/testListInsert.do");
+		$('#listForm').submit();
+	}
 </script>
 <body
 	style="text-align: center; margin: 0 auto; display: inline; padding-top: 100px;">
@@ -50,7 +59,7 @@
 					<a href="${pageContext.request.contextPath}/login.do">로그인</a>
 				</c:when>
 				<c:otherwise>
-					${sessionScope.userName }님이 로그인 중입니다.
+					${sessionScope.userName}님이 로그인 중입니다.
 					<a href="${pageContext.request.contextPath}/logout.do">로그아웃</a>
 				</c:otherwise>
 			</c:choose>
@@ -59,7 +68,8 @@
 		</div>
 	</nav>
 	<form:form commandName="searchVO" id="listForm" name="listForm" method="post">
-		 <input type="hidden" id="code" name="code" value="${resultList[0].code}">
+		검색 제목 : ${searchFormData.searchtitle}, searchKeyword
+		<input type="hidden" id="code" name="code" value="${resultList[0].code}">
 		
 		<div class="container">
 			<div id="table" margin="auto">
@@ -93,25 +103,28 @@
 				</table>
 				<br> 
 				<!-- 글 작성 버튼 -->
-				<a href="testListInsert.do" type="button" class="btn btn-sm btn-primary" style="float: right">글쓰기</a>
+				<!-- <a href="testListInsert.do" type="button" class="btn btn-sm btn-primary" style="float: right">글쓰기</a> -->
+				<a href="javascript:goInsert(0);" type="button" class="btn btn-sm btn-primary" style="float: right">글쓰기</a>
 				<!-- excel -->
 				<a href="javascript:fn_egov_excel();" type="button" class="btn btn-sm btn-info" id="excelDownload" style="float: right">EXCEL</a> <br>
 			</div>
 			<!-- searching -->
 			<div id="search">
-				<label for="searchCondition" style="visibility: hidden;"> 
+				<label for="searchCondition" style="visibility: hidden;">
 				<spring:message code="search.choose" /></label>
-				<form:select path="searchCondition" cssClass="use">
+				
+				<form:select path="searchCondition" cssClass="use" value="${searchFormData.searchtitle}">
+					<form:option value="0" label="선택"/>
 					<form:option value="writer" label="작성자" />
 					<form:option value="idx" label="아이디" />
 					<form:option value="title" label="제목" />
 				</form:select>
+				
 				<label for="searchKeyword" style="visibility: hidden; display: none;">
 					<spring:message code="search.keyword" />
 				</label>
-				<form:input path="searchKeyword" cssClass="txt" />
+				<form:input path="searchKeyword" cssClass="txt"/>
 				<span> <a href="javascript:fn_egov_selectList();" class="btn btn-outline btn-primary"><spring:message code="button.search" /></a>
-	
 				</span>
 			</div>
 			<!-- paging -->

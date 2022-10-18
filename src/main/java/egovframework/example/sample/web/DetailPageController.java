@@ -1,6 +1,7 @@
 package egovframework.example.sample.web;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -9,6 +10,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import egovframework.example.sample.service.EgovSampleService;
 import egovframework.example.sample.service.SampleDefaultVO;
@@ -69,6 +72,9 @@ public class DetailPageController {
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(searchVO.getPageIndex()); 
 		model.addAttribute("paginationInfo", paginationInfo);
+		
+		Map result = new ObjectMapper().convertValue(searchVO, Map.class);
+		model.addAttribute("searchFormData", result);
 		
 		return "sample/testListDetail";
 	}

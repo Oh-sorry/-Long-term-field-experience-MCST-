@@ -32,8 +32,6 @@
 	});
 </script>
 </head>
-${searchVO.code}
-${registerFlag}
 <body style="text-align: auto; margin: 0 auto; display: inline; padding-top: 100px;">
 
 	<!-- nav bar -->
@@ -76,6 +74,8 @@ ${registerFlag}
 						</div>
 					</c:if>
 				</div>
+				<input id="pageIndex" name="pageIndex" type="hidden" value="${paginationInfo.currentPageNo}">
+				<input type="hidden" id="code" name="code" value="${code}">
 			</form>
 			<div style="float: right">
 				<button type="button" class="btn btn-sm btn-primary" id="btnSave">저장</button>
@@ -124,6 +124,7 @@ ${registerFlag}
 						<input type="hidden" class="form-control" name="code" id="code" value="${code}">
 						<input type="hidden" class="form-control" name="fileId" id="fileId" value="${fileId}">
 						<input type="hidden" class="form-control" name="saveFileName" id="saveFileName" value="${saveFileName}">
+						<input type="hidden" class="form-control" name="pageIndex" id="pageIndex" value="${paginationInfo.currentPageNo}">
 					</div>
 					<div style="float: right">
 						<button type="button" class="btn btn-sm btn-warning" id="btnUpdate">수정</button>
@@ -159,7 +160,9 @@ ${registerFlag}
 		}
 		//이전 클릭 시 testList로 이동
 		$("#btnList").click(function previous() {
-			$(location).attr('href', 'testList.do');
+			/* $(location).attr('href', 'testList.do'); */
+			document.form.action = "${pageContext.request.contextPath}/testList.do"
+			document.form.submit();
 		});
 		//글쓰기
 		$(document).on('click', '#btnSave', function(e) {
@@ -191,28 +194,22 @@ ${registerFlag}
 		function deleteFile(obj) {
 			obj.parent().remove();
 		}
-		$(document)
-				.ready(
-						function() {
-							$("#btnUpdate")
-									.click(
-											function() {
-												document.form.action = "${pageContext.request.contextPath}/updateTest.do"
-												alert("수정하시겠습니까?")
-												document.form.submit();
-											});
-							$("#btnList").click(function previous() {
-								$(location).attr('href', 'testList.do');
-							});
-							$("#btnDelete")
-									.click(
-											function previous() {
-												alert("( TITLE : ${title} )인 글을 삭제합니다.")
-												$(location)
-														.attr('href',
-																'deleteTest.do?code=${code}&saveFileName=${result.saveFileName}');
-											});
-						});
+		$(document).ready(function() {
+			$("#btnUpdate").click(function() {
+				document.form.action = "${pageContext.request.contextPath}/updateTest.do"
+				alert("수정하시겠습니까?")
+				document.form.submit();
+			});
+			$("#btnList").click(function previous() {
+				/* $(location).attr('href', 'testList.do'); */
+				document.form.action = "${pageContext.request.contextPath}/testList.do"
+				document.form.submit();
+			});
+			$("#btnDelete").click(function previous() {
+				alert("( TITLE : ${title} )인 글을 삭제합니다.")
+				$(location).attr('href', 'deleteTest.do?code=${code}&saveFileName=${result.saveFileName}');
+			});
+		});
 	</script>
 </c:if>
 </html>

@@ -17,9 +17,10 @@ import egovframework.example.sample.service.EgovSampleService;
 import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.SampleVO;
 import egovframework.rte.fdl.property.EgovPropertyService;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Controller
-public class InsertPageController {
+public class RegisterController {
 
 	/** EgovSampleService */
 	@Resource(name = "sampleService")
@@ -54,6 +55,11 @@ public class InsertPageController {
 		System.out.println("ID : " + testListUpdate.get(0).getIdx());
 		System.out.println("code : " + testListUpdate.get(0).getCode());
 		System.out.println("*************** UPDATE BOARD ******************");
+
+		// 페이지 기억
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
+		model.addAttribute("paginationInfo", paginationInfo);
 
 		return "sample/testListInsert";
 	}
