@@ -59,7 +59,6 @@
 						<div style="color: red">로그아웃되었습니다.</div>
 					</c:if>
 					
-					
 				</td>
 			</tr>
 		</table>

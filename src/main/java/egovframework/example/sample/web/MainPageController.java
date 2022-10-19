@@ -51,8 +51,6 @@ public class MainPageController {
 		Map result = mapper.convertValue(searchVO, Map.class);
 		model.addAttribute("searchFormData", result);
 		
-		/* searchVO.setSearchtitle(searchVO.getSearchKeyword()); */
-		
 		System.out.println("*************** MAIN BOARD ******************");
 		return "sample/testList";
 	}

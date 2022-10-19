@@ -53,7 +53,7 @@ public class MemberController {
 	public ModelAndView logout(@ModelAttribute("searchVO") SampleDefaultVO searchVO, HttpSession session) {
 		sampleService.logout(session);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("sample/login");
+		mav.setViewName("redirect:testList.do");
 		mav.addObject("msg", "logout");
 		return mav;
 	}

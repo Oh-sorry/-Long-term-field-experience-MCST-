@@ -58,6 +58,7 @@
 				<c:choose>
 					<c:when test="${sessionScope.userId == null }">
 						<button type="button" class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/login.do'">로그인</button>
+						<%-- <button type="button" class="btn btn-sm btn-primary" onclick="window.open('${pageContext.request.contextPath}/login.do', '로그인', 'top=10, left=10, width=500, height=600,resizable=no');">로그인</button> --%>
 					</c:when>
 					<c:otherwise>
 						${sessionScope.userName}님이 로그인 중입니다.
@@ -66,8 +67,9 @@
 				</c:choose>
 				
 				<tr>
-				<c:if test="${0 ne sessionScope.userId || null ne sessionScope.userId}">
+				<c:if test="${null ne sessionScope.userId}">
 					<button type="button" class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/memberUpdatePage.do?userId=${userId}'">회원 정보 수정</button>
+					<%-- <button type="button" class="btn btn-sm btn-primary" onclick="window.open('${pageContext.request.contextPath}/memberUpdatePage.do?userId=${userId}', '회원 정보 수정', 'width=500, height=600, resizable=no');">회원 정보 수정</button> --%>
 				</c:if>
 			</div>
 		</div>
@@ -79,7 +81,7 @@
 			<div id="table" margin="auto">
 				<br><br>
 				<!-- 게시글 리스트 테이블 -->
-				<table width="100%" border="1" cellpadding="0" cellspacing="0" class = "table table-hover">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class = "table table-hover">
 					<colgroup>
 						<col width="10%" />
 						<col width="50%" />
@@ -107,7 +109,6 @@
 				</table>
 				<br> 
 				<!-- 글 작성 버튼 -->
-				<!-- <a href="testListInsert.do" type="button" class="btn btn-sm btn-primary" style="float: right">글쓰기</a> -->
 				<a href="javascript:goInsert(0);" type="button" class="btn btn-sm btn-primary" style="float: right">글쓰기</a>
 				<!-- excel -->
 				<a href="javascript:fn_egov_excel();" type="button" class="btn btn-sm btn-info" id="excelDownload" style="float: right">EXCEL</a> <br>
