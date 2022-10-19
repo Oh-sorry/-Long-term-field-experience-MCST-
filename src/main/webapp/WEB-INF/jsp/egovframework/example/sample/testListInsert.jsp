@@ -74,7 +74,9 @@
 						</div>
 					</c:if>
 				</div>
-				<input id="pageIndex" name="pageIndex" type="hidden" value="${paginationInfo.currentPageNo}">
+				<input type="hidden" id="pageIndex" name="pageIndex" value="${paginationInfo.currentPageNo}">
+				<input type="hidden" id="searchCondition" name="searchCondition" value="${searchFormData.searchCondition}">
+				<input type="hidden" id="searchKeyword" name="searchKeyword" value="${searchFormData.searchKeyword}">
 				<input type="hidden" id="code" name="code" value="${code}">
 			</form>
 			<div style="float: right">
@@ -124,7 +126,9 @@
 						<input type="hidden" class="form-control" name="code" id="code" value="${code}">
 						<input type="hidden" class="form-control" name="fileId" id="fileId" value="${fileId}">
 						<input type="hidden" class="form-control" name="saveFileName" id="saveFileName" value="${saveFileName}">
-						<input type="hidden" class="form-control" name="pageIndex" id="pageIndex" value="${paginationInfo.currentPageNo}">
+						<input type="hidden" id="pageIndex" name="pageIndex" value="${paginationInfo.currentPageNo}">
+						<input type="hidden" id="searchCondition" name="searchCondition" value="${searchFormData.searchCondition}">
+						<input type="hidden" id="searchKeyword" name="searchKeyword" value="${searchFormData.searchKeyword}">
 					</div>
 					<div style="float: right">
 						<button type="button" class="btn btn-sm btn-warning" id="btnUpdate">수정</button>

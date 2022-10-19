@@ -41,8 +41,8 @@
 				"${pageContext.request.contextPath}/testListDetail.do");
 		$('#listForm').submit();
 	}
-	function goInsert(code) {
-		$('[id=listForm] #code').val(code);
+	function goInsert(code, condition, keyword) {
+		$('[id=listForm] #code, #condition, #keyword').val(code, condition, keyword);
 		$('#listForm').attr('action',
 				"${pageContext.request.contextPath}/testListInsert.do");
 		$('#listForm').submit();
@@ -66,7 +66,6 @@
 					</c:otherwise>
 				</c:choose>
 				
-				<tr>
 				<c:if test="${null ne sessionScope.userId}">
 					<button type="button" class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/memberUpdatePage.do?userId=${userId}'">회원 정보 수정</button>
 					<%-- <button type="button" class="btn btn-sm btn-primary" onclick="window.open('${pageContext.request.contextPath}/memberUpdatePage.do?userId=${userId}', '회원 정보 수정', 'width=500, height=600, resizable=no');">회원 정보 수정</button> --%>
@@ -88,12 +87,14 @@
 						<col width="20%" />
 						<col width="20%" />
 					</colgroup>
-					<tr>
-						<th align="center">No</th>
-						<th align="center">TITLE</th>
-						<th align="center">WRITER</th>
-						<th align="center">DATE</th>
-					</tr>
+					<thead class="thead-light">
+						<tr>
+							<th align="center">No</th>
+							<th align="center">TITLE</th>
+							<th align="center">WRITER</th>
+							<th align="center">DATE</th>
+						</tr>
+					</thead>
 					<c:forEach var="result" items="${resultList}" varStatus="status">
 						<tr>
 							<td align="center" class="listtd"><c:out
@@ -109,7 +110,7 @@
 				</table>
 				<br> 
 				<!-- 글 작성 버튼 -->
-				<a href="javascript:goInsert(0);" type="button" class="btn btn-sm btn-primary" style="float: right">글쓰기</a>
+				<a href="javascript:goInsert(0, '${searchFormData.searchCondition}', '${searchFormData.searchKeyword}');" type="button" class="btn btn-sm btn-primary" style="float: right">글쓰기</a>
 				<!-- excel -->
 				<a href="javascript:fn_egov_excel();" type="button" class="btn btn-sm btn-info" id="excelDownload" style="float: right">EXCEL</a> <br>
 			</div>
