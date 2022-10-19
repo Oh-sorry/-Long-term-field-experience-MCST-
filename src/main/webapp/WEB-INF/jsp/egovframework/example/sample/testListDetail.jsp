@@ -16,8 +16,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 <title>글 상세 조회</title>
-<script type="text/javascript">
-
+<script>
 	$(document).ready(function() {
 		$('#summernote').summernote({
 			placeholder : 'content',
@@ -29,33 +28,10 @@
 		});
 		$('#summernote').summernote('disable');
 	});
-	
-	/* 수정 버튼 클릭 시 */
-	$("#btnUpdate").click(function previous() {
-		document.form.action = "${pageContext.request.contextPath}/testListInsert.do"
-		document.form.submit();
-	});
-	
-	/* 목록 버튼 클릭 시 */
-	$("#btnList").click(function previous() {
-		document.form.action = "${pageContext.request.contextPath}/testList.do"
-		document.form.submit();
-	});
-	
-	$("#replyInsert").click(function previous() {
-		alert("댓글을 입력합니다.");
-		document.form.action = "${pageContext.request.contextPath}/replyInsert.do"
-		document.form.submit();
-	});
-	
-	$("#replyDelete").click(function previous() {
-		alert("선택한 댓글을 삭제합니다.")
-	});
-
 </script>
 </head>
 <body style="text-align: auto; margin: 0 auto; display: inline; padding-top: 200px;">
-	<nav class="navbar" style="background-color: #d6e6f5;">
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand">글 상세 조회</a>
 		</div>
@@ -81,7 +57,6 @@
 				<div class="form-group">
 					<label for="idx">아이디</label> <input type="text" class="form-control" name="idx" id="idx" value='<c:out value="${resultList.idx}"></c:out>' readonly>
 				</div>
-				
 				<!-- 첨부 파일 시작 -->
 				<div class="form-group">
 					<label for="orgFileName">첨부 파일</label>
@@ -95,7 +70,6 @@
 					</c:forEach>
 				</div>
 				<!-- 첨부 파일 끝 -->
-				
 				<div class="form-group">
 					<label for="idx">등록일</label> <input type="text" class="form-control" name="regDate" id="regDate" value='<fmt:formatDate pattern="yyyy-MM-dd" value="${resultList.regDate}"/>' readonly>
 				</div>
@@ -107,7 +81,6 @@
 					<button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button>
 				</div>
 				<br>
-				
 				<!-- 댓글 시작 -->
 				<hr />
 				<div class="form-group" id="file-list">
@@ -131,10 +104,31 @@
 					</c:forEach>
 				</div>
 				<!-- 댓글 끝 -->
-				
 			</form>
 			<br>
 		</div>
 	</article>
 </body>
+<script type="text/javascript">
+	/* 수정 버튼 클릭 시 */
+	$("#btnUpdate").click(function previous() {
+		document.form.action = "${pageContext.request.contextPath}/testListInsert.do"
+		document.form.submit();
+	});
+	/* 목록 버튼 클릭 시 */
+	$("#btnList").click(function previous() {
+		document.form.action = "${pageContext.request.contextPath}/testList.do"
+		document.form.submit();
+	});
+	$("#replyInsert").click(function previous() {
+		alert("댓글을 입력합니다.");
+		document.form.action = "${pageContext.request.contextPath}/replyInsert.do"
+		document.form.submit();
+	});
+	
+	$("#replyDelete").click(function previous() {
+		alert("선택한 댓글을 삭제합니다.")
+	});
+
+</script>
 </html>

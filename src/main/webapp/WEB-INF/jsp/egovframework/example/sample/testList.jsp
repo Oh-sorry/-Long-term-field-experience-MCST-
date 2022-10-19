@@ -18,6 +18,7 @@
 <!-- include summernote css/js-->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
 </head>
 <!-- pagination link -->
 <script type="text/javascript" language="javascript" defer="defer">
@@ -49,9 +50,9 @@
 	}
 </script>
 <body
-	style="text-align: center; margin: 0 auto; display: inline; padding-top: 100px;">
+	style="text-align: center; margin: 0 auto; display: inline; padding-top: auto;">
 	<!-- nav bar -->
-	<nav class="navbar" style="background-color: #d6e6f5;">
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark ">
 		<div class="container-fluid">
 			<a class="navbar-brand">Main Board</a>
 			<div style="float: right">
@@ -73,6 +74,21 @@
 			</div>
 		</div>
 	</nav>
+	
+	<!-- sidebar -->
+<!-- 	<div class="sidebar" id="sidebar">
+		<nav class="sidebar">
+			<div>
+				<div class="nav__brand">
+					<ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
+                    <a href="#" class="nav__logo">Main BOARD</a>
+				</div>
+				<div class="nav__list">
+					
+				</div>
+			</div>
+		</nav>
+	</div> -->
 	<form:form commandName="searchVO" id="listForm" name="listForm" method="post">
 		<%-- 검색  : ${searchFormData.searchKeyword}, ${searchFormData} --%>
 		<input type="hidden" id="code" name="code" value="${resultList[0].code}">
@@ -141,4 +157,36 @@
 		</div>
 	</form:form>
 </body>
+<br><br>
+<!-- Footer -->
+<footer class="bg-dark text-center text-white">
+	<div class="mb-4">
+		<br>
+		<!-- Facebook -->
+		<a class="btn btn-outline-light btn-floating m-1" href="#!" 
+			role="button"><ion-icon name="logo-facebook"></ion-icon></a>
+
+		<!-- Twitter -->
+		<a class="btn btn-outline-light btn-floating m-1" href="#!"
+			role="button"><ion-icon  name="logo-twitter"></ion-icon></a>
+
+		<!-- Google -->
+		<a class="btn btn-outline-light btn-floating m-1" href="#!"
+			role="button"><ion-icon name="logo-google"></ion-icon></a>
+
+		<!-- Instagram -->
+		<a class="btn btn-outline-light btn-floating m-1" href="#!"
+			role="button"><ion-icon name="logo-instagram"></ion-icon></a>
+
+		<!-- Github -->
+		<a class="btn btn-outline-light btn-floating m-1" href="#!"
+			role="button"><ion-icon name="logo-github"></ion-icon></a>
+	</div>
+	<!-- Copyright -->
+	<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+		© 2022 Copyright: <a class="text-white"
+			href="https://github.com/Oh-sorry/">Oh-sorry</a>
+	</div>
+	<!-- Copyright -->
+</footer>
 </html>

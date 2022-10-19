@@ -35,10 +35,12 @@
 <body style="text-align: auto; margin: 0 auto; display: inline; padding-top: 100px;">
 
 	<!-- nav bar -->
-	<nav class="navbar" style="background-color: #d6e6f5;">
-		<div class="container-fluid"> 글 
- 			<c:if test="${registerFlag == 'create'}"><spring:message code="button.create" /></c:if>
-            <c:if test="${registerFlag == 'modify'}"><spring:message code="button.modify" /></c:if>
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-white">
+		<div class="container-fluid">
+			<a class="navbar-brand">글 
+	 			<c:if test="${registerFlag == 'create'}"><spring:message code="button.create" /></c:if>
+	            <c:if test="${registerFlag == 'modify'}"><spring:message code="button.modify" /></c:if>
+			</a>
 		</div>
 	</nav>
 	<br>
