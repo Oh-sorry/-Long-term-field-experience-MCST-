@@ -47,8 +47,11 @@ public class MainPageController {
 		List<SampleDefaultVO> testList = sampleService.testList(searchVO);
 		model.addAttribute("resultList", testList);
 
-		Map result = new ObjectMapper().convertValue(searchVO, Map.class);
+		ObjectMapper mapper = new ObjectMapper();
+		Map result = mapper.convertValue(searchVO, Map.class);
 		model.addAttribute("searchFormData", result);
+		
+		/* searchVO.setSearchtitle(searchVO.getSearchKeyword()); */
 		
 		System.out.println("*************** MAIN BOARD ******************");
 		return "sample/testList";

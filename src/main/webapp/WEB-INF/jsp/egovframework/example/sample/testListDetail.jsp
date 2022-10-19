@@ -42,7 +42,8 @@
 		<div class="container" role="main">
 			<form name="form" id="form" role="form" method="post" action="updateTest.do" encType="multipart/form-data" >
 				<input type="hidden" id="pageIndex" name="pageIndex" value="${paginationInfo.currentPageNo}">
-				<input type="hidden" id="searchtitle" name="searchtitle" value="${searchFormData.searchtitle}">
+				<input type="hidden" id="searchCondition" name="searchCondition" value="${searchFormData.searchCondition}">
+				<input type="hidden" id="searchKeyword" name="searchKeyword" value="${searchFormData.searchKeyword}">
 				<div class="form-group">
 					<label for="title">제목</label> <input type="text" class="form-control" name="title" id="title" value='<c:out value="${resultList.title}"></c:out>' readonly>
 				</div>

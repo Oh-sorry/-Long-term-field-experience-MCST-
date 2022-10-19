@@ -35,8 +35,8 @@
 		document.listForm.action = "<c:url value= '/excelDownload.do'/>"
 		document.listForm.submit();
 	}
-	function goView(code) {
-		$('[id=listForm] #code').val(code);
+	function goView(code, condition, keyword) {
+		$('[id=listForm] #code, #condition, #keyword').val(code, condition, keyword);
 		$('#listForm').attr('action',
 				"${pageContext.request.contextPath}/testListDetail.do");
 		$('#listForm').submit();
@@ -54,23 +54,27 @@
 	<nav class="navbar" style="background-color: #d6e6f5;">
 		<div class="container-fluid">
 			<a class="navbar-brand">Main Board</a>
-			<c:choose>
-				<c:when test="${sessionScope.userId == null }">
-					<a href="${pageContext.request.contextPath}/login.do">로그인</a>
-				</c:when>
-				<c:otherwise>
-					${sessionScope.userName}님이 로그인 중입니다.
-					<a href="${pageContext.request.contextPath}/logout.do">로그아웃</a>
-				</c:otherwise>
-			</c:choose>
-			<br>
-			<button type="button" class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/memberUpdatePage.do?userId=${userId}'">회원 정보 수정</button>
+			<div style="float: right">
+				<c:choose>
+					<c:when test="${sessionScope.userId == null }">
+						<button type="button" class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/login.do'">로그인</button>
+					</c:when>
+					<c:otherwise>
+						${sessionScope.userName}님이 로그인 중입니다.
+						<button type="button" class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/logout.do'">로그아웃</button>
+					</c:otherwise>
+				</c:choose>
+				
+				<tr>
+				<c:if test="${0 ne sessionScope.userId || null ne sessionScope.userId}">
+					<button type="button" class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/memberUpdatePage.do?userId=${userId}'">회원 정보 수정</button>
+				</c:if>
+			</div>
 		</div>
 	</nav>
 	<form:form commandName="searchVO" id="listForm" name="listForm" method="post">
-		검색 제목 : ${searchFormData.searchtitle}, searchKeyword
+		<%-- 검색  : ${searchFormData.searchKeyword}, ${searchFormData} --%>
 		<input type="hidden" id="code" name="code" value="${resultList[0].code}">
-		
 		<div class="container">
 			<div id="table" margin="auto">
 				<br><br>
@@ -92,7 +96,7 @@
 						<tr>
 							<td align="center" class="listtd"><c:out
 									value="${result.rnum}" />&nbsp;</td>
-							<td><a href="javascript:goView('${result.code}');">${result.title}</a></td>
+							<td><a href="javascript:goView('${result.code}', '${searchFormData.searchCondition}', '${searchFormData.searchKeyword}');">${result.title}</a></td>
 
 							<td align="center" class="listtd"><c:out
 									value="${result.writer}" />&nbsp;</td>
@@ -113,7 +117,7 @@
 				<label for="searchCondition" style="visibility: hidden;">
 				<spring:message code="search.choose" /></label>
 				
-				<form:select path="searchCondition" cssClass="use" value="${searchFormData.searchtitle}">
+				<form:select path="searchCondition" cssClass="use">
 					<form:option value="0" label="선택"/>
 					<form:option value="writer" label="작성자" />
 					<form:option value="idx" label="아이디" />
